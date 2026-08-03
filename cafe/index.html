@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Corner Press — Sample build by Nui Mauri</title>
+<meta name="description" content="Sample website concept for a Sydney cafe. Built by Nui Mauri, web design Sydney.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bean:oklch(0.26 0.05 55);--bean-2:oklch(0.38 0.07 50);
+  --crema:oklch(0.96 0.024 80);--crema-2:oklch(0.91 0.04 75);
+  --leaf:oklch(0.52 0.09 150);
+  --ink:oklch(0.22 0.03 60);--ink-soft:oklch(0.46 0.025 60);
+  --line:oklch(0.85 0.03 70);
+  --serif:'Fraunces',Georgia,serif;--sans:'Inter',sans-serif;
+}
+@media (prefers-color-scheme:dark){:root{
+  --crema:oklch(0.17 0.02 60);--crema-2:oklch(0.23 0.03 55);
+  --ink:oklch(0.94 0.015 80);--ink-soft:oklch(0.74 0.02 70);--line:oklch(0.34 0.03 60);
+  --bean:oklch(0.9 0.05 80);--bean-2:oklch(0.78 0.07 65);--leaf:oklch(0.72 0.11 150);
+}}
+:root[data-theme="dark"]{
+  --crema:oklch(0.17 0.02 60);--crema-2:oklch(0.23 0.03 55);
+  --ink:oklch(0.94 0.015 80);--ink-soft:oklch(0.74 0.02 70);--line:oklch(0.34 0.03 60);
+  --bean:oklch(0.9 0.05 80);--bean-2:oklch(0.78 0.07 65);--leaf:oklch(0.72 0.11 150);
+}
+:root[data-theme="light"]{
+  --crema:oklch(0.96 0.024 80);--crema-2:oklch(0.91 0.04 75);
+  --ink:oklch(0.22 0.03 60);--ink-soft:oklch(0.46 0.025 60);--line:oklch(0.85 0.03 70);
+  --bean:oklch(0.26 0.05 55);--bean-2:oklch(0.38 0.07 50);--leaf:oklch(0.52 0.09 150);
+}
+body{background:var(--crema);color:var(--ink);font-family:var(--sans);font-weight:300;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.wrap{max-width:1060px;margin:0 auto;padding:0 clamp(20px,5vw,44px)}
+a{color:inherit;text-decoration:none}
+
+.demo-bar{background:var(--ink);color:var(--crema);font-size:.8rem;text-align:center;padding:9px 16px;letter-spacing:.03em}
+.demo-bar a{text-decoration:underline;text-underline-offset:3px}
+
+header{position:sticky;top:0;z-index:40;background:color-mix(in oklch,var(--crema) 90%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;justify-content:space-between;padding:15px 0;gap:14px}
+.logo{font-family:var(--serif);font-size:1.32rem;font-weight:700;letter-spacing:-.02em}
+.logo span{color:var(--leaf)}
+.call{border:1px solid var(--ink);border-radius:6px;padding:9px 18px;font-size:.85rem;white-space:nowrap;transition:.2s}
+.call:hover{background:var(--ink);color:var(--crema)}
+
+.hero{padding:clamp(52px,9vw,96px) 0 clamp(38px,6vw,64px);text-align:center}
+.open-now{display:inline-flex;align-items:center;gap:9px;background:color-mix(in oklch,var(--leaf) 16%,transparent);border:1px solid color-mix(in oklch,var(--leaf) 40%,transparent);color:var(--leaf);border-radius:100px;padding:7px 17px;font-size:.83rem;font-weight:500;margin-bottom:26px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--leaf);box-shadow:0 0 0 0 currentColor;animation:p 2.4s infinite}
+@keyframes p{0%{box-shadow:0 0 0 0 color-mix(in oklch,var(--leaf) 60%,transparent)}70%{box-shadow:0 0 0 9px transparent}100%{box-shadow:0 0 0 0 transparent}}
+h1{font-family:var(--serif);font-weight:700;font-size:clamp(2.5rem,7.5vw,4.6rem);line-height:1.02;letter-spacing:-.035em;margin-bottom:20px}
+h1 span{color:var(--bean-2)}
+.lede{font-size:clamp(1.02rem,2vw,1.18rem);color:var(--ink-soft);max-width:52ch;margin:0 auto 32px}
+.row{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--bean);color:var(--crema);padding:14px 28px;border-radius:6px;font-weight:500;font-size:.94rem;transition:transform .2s,opacity .2s}
+.btn:hover{transform:translateY(-2px);opacity:.92}
+.btn-2{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn-2:hover{border-color:var(--ink)}
+
+.band{height:clamp(180px,30vw,320px);margin:clamp(28px,5vw,48px) 0 0;background:
+  radial-gradient(ellipse at 22% 40%,oklch(0.62 0.1 60/.55),transparent 58%),
+  radial-gradient(ellipse at 78% 62%,oklch(0.44 0.08 45/.6),transparent 56%),
+  linear-gradient(120deg,var(--crema-2),oklch(0.72 0.08 65));
+  position:relative;overflow:hidden}
+.band::after{content:"";position:absolute;inset:0;background:
+  repeating-linear-gradient(90deg,transparent 0 58px,oklch(0.2 0.03 60/.055) 58px 60px)}
+
+.strip{background:var(--crema-2);border-block:1px solid var(--line)}
+.strip .wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:22px;padding-block:26px;text-align:center}
+.strip b{display:block;font-family:var(--serif);font-size:1.45rem;font-weight:700;letter-spacing:-.02em}
+.strip small{font-size:.82rem;color:var(--ink-soft)}
+
+section{padding:clamp(50px,8vw,88px) 0}
+.head{max-width:56ch;margin-bottom:clamp(30px,4vw,46px)}
+h2{font-family:var(--serif);font-weight:600;font-size:clamp(1.85rem,4.4vw,2.7rem);letter-spacing:-.03em;margin-bottom:11px}
+.head p{color:var(--ink-soft)}
+
+.menu{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:clamp(22px,3vw,38px)}
+.grp h3{font-family:var(--serif);font-size:1.25rem;font-weight:600;letter-spacing:-.01em;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--bean-2)}
+.grp dl{display:grid;gap:14px}
+.item{display:flex;justify-content:space-between;align-items:baseline;gap:14px}
+.item dd{font-family:var(--serif);font-weight:600;white-space:nowrap}
+.item small{display:block;font-size:.81rem;color:var(--ink-soft)}
+
+.revs{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:18px}
+.rev{border:1px solid var(--line);border-radius:10px;padding:22px;background:color-mix(in oklch,var(--crema-2) 45%,transparent)}
+.rev .s{color:oklch(0.7 0.13 75);letter-spacing:2px;margin-bottom:9px}
+.rev p{font-size:.94rem;margin-bottom:12px}
+.rev cite{font-style:normal;font-size:.83rem;color:var(--ink-soft)}
+
+.visit{background:var(--crema-2);border-block:1px solid var(--line)}
+.visit .wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:28px;padding-block:clamp(42px,6vw,68px)}
+.vb b{display:block;font-size:.74rem;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:9px;font-weight:500}
+.vb span,.vb a{font-family:var(--serif);font-size:1.14rem;font-weight:600;line-height:1.45;display:block}
+.hours{display:grid;gap:4px;font-family:var(--sans);font-weight:300;font-size:.92rem}
+.hours div{display:flex;justify-content:space-between;gap:14px;max-width:225px}
+
+footer{border-top:1px solid var(--line);padding:26px 0 38px;font-size:.83rem;color:var(--ink-soft);text-align:center}
+footer a{text-decoration:underline;text-underline-offset:3px}
+</style>
+</head>
+<body>
+
+<div class="demo-bar">Sample build — fictional cafe, created to demonstrate design. <a href="../">See more work by Nui Mauri →</a></div>
+
+<header>
+  <div class="wrap bar">
+    <div class="logo">The Corner Press<span>.</span></div>
+    <a class="call" href="tel:+61400000000">0400 000 000</a>
+  </div>
+</header>
+
+<div class="wrap hero">
+  <div class="open-now"><span class="dot"></span> Open now — until 3pm today</div>
+  <h1>Good coffee.<br>Same <span>corner</span> since 2014.</h1>
+  <p class="lede">Single-origin roasted in Marrickville, brunch until two, and a courtyard out the back that most people walk straight past.</p>
+  <div class="row">
+    <a class="btn" href="#menu">See the menu</a>
+    <a class="btn btn-2" href="tel:+61400000000">Call us</a>
+  </div>
+</div>
+
+<div class="band" role="img" aria-label="Cafe interior illustration"></div>
+
+<div class="strip">
+  <div class="wrap">
+    <div><b>4.7 ★</b><small>415 Google reviews</small></div>
+    <div><b>7am</b><small>Open every morning</small></div>
+    <div><b>Since 2014</b><small>Same owners</small></div>
+    <div><b>Dog friendly</b><small>Courtyard out back</small></div>
+  </div>
+</div>
+
+<section id="menu" class="wrap">
+  <div class="head"><h2>The menu</h2><p>Kitchen runs 7am to 2pm. Coffee until close.</p></div>
+  <div class="menu">
+    <div class="grp">
+      <h3>Coffee</h3>
+      <dl>
+        <div class="item"><dt>Espresso<small>House blend</small></dt><dd>$4.00</dd></div>
+        <div class="item"><dt>Flat white / latte / cap</dt><dd>$5.00</dd></div>
+        <div class="item"><dt>Batch brew<small>Rotating single origin</small></dt><dd>$5.00</dd></div>
+        <div class="item"><dt>Cold brew</dt><dd>$6.50</dd></div>
+        <div class="item"><dt>Alternative milks</dt><dd>+$0.70</dd></div>
+      </dl>
+    </div>
+    <div class="grp">
+      <h3>Brunch</h3>
+      <dl>
+        <div class="item"><dt>Smashed avo<small>Sourdough, feta, dukkah</small></dt><dd>$19</dd></div>
+        <div class="item"><dt>Bacon &amp; egg roll<small>Milk bun, house relish</small></dt><dd>$14</dd></div>
+        <div class="item"><dt>Big breakfast<small>Eggs, bacon, mushroom, tomato</small></dt><dd>$26</dd></div>
+        <div class="item"><dt>Ricotta hotcakes<small>Seasonal fruit, maple</small></dt><dd>$21</dd></div>
+        <div class="item"><dt>Eggs your way</dt><dd>$13</dd></div>
+      </dl>
+    </div>
+    <div class="grp">
+      <h3>Counter</h3>
+      <dl>
+        <div class="item"><dt>Almond croissant</dt><dd>$6.50</dd></div>
+        <div class="item"><dt>Banana bread<small>Toasted, butter</small></dt><dd>$7.00</dd></div>
+        <div class="item"><dt>Sausage roll</dt><dd>$8.00</dd></div>
+        <div class="item"><dt>Toastie of the day</dt><dd>$12</dd></div>
+        <div class="item"><dt>Retail beans<small>250g bag</small></dt><dd>$22</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="head"><h2>What the regulars say</h2><p>Straight from Google reviews.</p></div>
+  <div class="revs">
+    <div class="rev"><div class="s">★★★★★</div><p>"Best flat white in the inner west, and I've tried most of them. The staff know my order before I open my mouth."</p><cite>Tom R. — Google</cite></div>
+    <div class="rev"><div class="s">★★★★★</div><p>"The courtyard is a hidden gem. Brought the dog, nobody blinked, and the hotcakes were unreal."</p><cite>Amelia W. — Google</cite></div>
+    <div class="rev"><div class="s">★★★★★</div><p>"Ten years I've been coming here. Consistent every single time, which is rarer than it should be."</p><cite>Dave L. — Google</cite></div>
+  </div>
+</section>
+
+<div class="visit">
+  <div class="wrap">
+    <div class="vb"><b>Find us</b><span>88 Enmore Road<br>Newtown NSW 2042</span></div>
+    <div class="vb"><b>Call</b><a href="tel:+61400000000">0400 000 000</a></div>
+    <div class="vb"><b>Hours</b>
+      <div class="hours">
+        <div><span>Mon – Fri</span><span>7am – 3pm</span></div>
+        <div><span>Saturday</span><span>7am – 3pm</span></div>
+        <div><span>Sunday</span><span>8am – 2pm</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="wrap">
+  Sample build by <a href="../">Nui Mauri — Web design, Sydney</a> · ABN 95 249 609 295<br>
+  Fictional business. Created to demonstrate design work.
+</footer>
+
+<script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+</body>
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nui Mauri — Websites for Sydney small businesses</title>
+<meta name="description" content="I build fast, mobile-first websites for Sydney cafes, salons and trades. $690 all up, live in 48 hours, no monthly fees. Based in Sydney, ABN registered.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:oklch(0.18 0.015 260);
+  --ink-soft:oklch(0.42 0.012 260);
+  --paper:oklch(0.985 0.005 90);
+  --paper-2:oklch(0.955 0.008 85);
+  --line:oklch(0.88 0.008 260);
+  --accent:oklch(0.55 0.14 250);
+  --accent-soft:oklch(0.55 0.14 250 / 0.1);
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --ink:oklch(0.95 0.008 90);--ink-soft:oklch(0.72 0.01 260);
+    --paper:oklch(0.16 0.015 260);--paper-2:oklch(0.21 0.018 260);
+    --line:oklch(0.32 0.015 260);--accent:oklch(0.72 0.13 245);
+    --accent-soft:oklch(0.72 0.13 245 / 0.14);
+  }
+}
+:root[data-theme="dark"]{
+  --ink:oklch(0.95 0.008 90);--ink-soft:oklch(0.72 0.01 260);
+  --paper:oklch(0.16 0.015 260);--paper-2:oklch(0.21 0.018 260);
+  --line:oklch(0.32 0.015 260);--accent:oklch(0.72 0.13 245);
+  --accent-soft:oklch(0.72 0.13 245 / 0.14);
+}
+:root[data-theme="light"]{
+  --ink:oklch(0.18 0.015 260);--ink-soft:oklch(0.42 0.012 260);
+  --paper:oklch(0.985 0.005 90);--paper-2:oklch(0.955 0.008 85);
+  --line:oklch(0.88 0.008 260);--accent:oklch(0.55 0.14 250);
+  --accent-soft:oklch(0.55 0.14 250 / 0.1);
+}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-weight:300;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.wrap{max-width:1080px;margin:0 auto;padding:0 clamp(20px,5vw,48px)}
+a{color:inherit}
+
+/* ---------- header ---------- */
+header{border-bottom:1px solid var(--line);position:sticky;top:0;background:color-mix(in oklch,var(--paper) 88%,transparent);backdrop-filter:blur(12px);z-index:50}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0}
+.mark{font-family:var(--serif);font-size:1.15rem;font-weight:600;letter-spacing:-.01em}
+.mark span{color:var(--accent)}
+.bar nav{display:flex;gap:24px;align-items:center;font-size:.85rem;letter-spacing:.02em}
+.bar nav a{text-decoration:none;color:var(--ink-soft);transition:color .2s}
+.bar nav a:hover{color:var(--ink)}
+.cta-sm{border:1px solid var(--ink);border-radius:100px;padding:8px 18px;text-decoration:none;font-size:.85rem;font-weight:500;white-space:nowrap;transition:all .2s}
+.cta-sm:hover{background:var(--ink);color:var(--paper)}
+@media(max-width:680px){.bar nav a:not(.cta-sm){display:none}}
+
+/* ---------- hero ---------- */
+.hero{padding:clamp(64px,12vw,132px) 0 clamp(48px,8vw,88px)}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.78rem;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:26px}
+.eyebrow::before{content:"";width:28px;height:1px;background:var(--accent)}
+h1{font-family:var(--serif);font-weight:600;font-size:clamp(2.4rem,6.5vw,4.4rem);line-height:1.06;letter-spacing:-.025em;margin-bottom:24px}
+h1 em{font-style:italic;color:var(--accent)}
+.lede{font-size:clamp(1.05rem,2.2vw,1.3rem);color:var(--ink-soft);max-width:62ch;margin-bottom:38px}
+.actions{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:9px;background:var(--ink);color:var(--paper);text-decoration:none;padding:14px 28px;border-radius:100px;font-weight:500;font-size:.95rem;transition:transform .2s,opacity .2s}
+.btn:hover{transform:translateY(-2px);opacity:.9}
+.btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn-ghost:hover{border-color:var(--ink)}
+
+/* ---------- facts strip ---------- */
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;background:var(--line);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.fact{background:var(--paper);padding:30px clamp(18px,3vw,32px)}
+.fact b{display:block;font-family:var(--serif);font-size:1.9rem;font-weight:600;letter-spacing:-.02em;margin-bottom:4px}
+.fact span{font-size:.85rem;color:var(--ink-soft)}
+
+/* ---------- sections ---------- */
+section{padding:clamp(56px,9vw,104px) 0}
+.sec-head{margin-bottom:44px;max-width:64ch}
+h2{font-family:var(--serif);font-weight:600;font-size:clamp(1.7rem,4vw,2.6rem);letter-spacing:-.02em;line-height:1.15;margin-bottom:14px}
+.sec-head p{color:var(--ink-soft);font-size:1.02rem}
+
+/* ---------- work ---------- */
+.work{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:24px}
+.card{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--paper-2);display:flex;flex-direction:column;text-decoration:none;transition:transform .25s,border-color .25s}
+.card:hover{transform:translateY(-4px);border-color:var(--accent)}
+.thumb{aspect-ratio:16/10;position:relative;overflow:hidden;display:grid;place-items:center;font-family:var(--serif);font-size:1.5rem;font-weight:600;letter-spacing:-.01em;text-align:center;padding:20px;color:#fff}
+.t1{background:linear-gradient(145deg,oklch(0.28 0.07 255),oklch(0.16 0.03 260) 60%,oklch(0.42 0.1 55))}
+.t2{background:linear-gradient(145deg,oklch(0.72 0.11 20),oklch(0.42 0.09 350) 70%,oklch(0.3 0.05 320))}
+.t3{background:linear-gradient(145deg,oklch(0.55 0.09 145),oklch(0.34 0.06 160) 65%,oklch(0.62 0.1 90))}
+.card-body{padding:22px;flex:1;display:flex;flex-direction:column;gap:8px}
+.tag{font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);font-weight:500}
+.card h3{font-family:var(--serif);font-size:1.22rem;font-weight:600;letter-spacing:-.01em}
+.card p{font-size:.92rem;color:var(--ink-soft);flex:1}
+.card .go{font-size:.87rem;font-weight:500;display:inline-flex;gap:6px;align-items:center;margin-top:6px}
+
+/* ---------- offer ---------- */
+.offer{background:var(--paper-2);border:1px solid var(--line);border-radius:18px;padding:clamp(28px,5vw,52px);display:grid;grid-template-columns:1fr auto;gap:34px;align-items:center}
+@media(max-width:760px){.offer{grid-template-columns:1fr}}
+.price{font-family:var(--serif);font-size:clamp(3rem,9vw,4.6rem);font-weight:600;letter-spacing:-.03em;line-height:1}
+.price small{display:block;font-family:var(--sans);font-size:.85rem;font-weight:400;letter-spacing:.04em;color:var(--ink-soft);margin-top:8px;text-transform:uppercase}
+ul.inc{list-style:none;display:grid;gap:13px;margin-top:6px}
+ul.inc li{display:flex;gap:12px;align-items:flex-start;font-size:.97rem}
+ul.inc li::before{content:"";flex:none;width:17px;height:17px;margin-top:4px;border-radius:50%;background:var(--accent-soft);border:1px solid var(--accent);
+  background-image:linear-gradient(45deg,transparent 44%,var(--accent) 44%,var(--accent) 56%,transparent 56%),linear-gradient(-45deg,transparent 44%,var(--accent) 44%,var(--accent) 56%,transparent 56%);
+  background-size:9px 9px;background-position:center;background-repeat:no-repeat}
+
+/* ---------- contact ---------- */
+.contact{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:22px;margin-top:8px}
+.ccard{border:1px solid var(--line);border-radius:12px;padding:24px;text-decoration:none;transition:border-color .2s,transform .2s}
+.ccard:hover{border-color:var(--accent);transform:translateY(-2px)}
+.ccard b{display:block;font-size:.75rem;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:9px;font-weight:500}
+.ccard span{font-family:var(--serif);font-size:1.24rem;font-weight:600;letter-spacing:-.01em;word-break:break-word}
+
+footer{border-top:1px solid var(--line);padding:34px 0 46px;font-size:.85rem;color:var(--ink-soft);display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between}
+.note{font-size:.82rem;color:var(--ink-soft);margin-top:20px;font-style:italic}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <div class="mark">Nui Mauri<span>.</span></div>
+    <nav>
+      <a href="#work">Work</a>
+      <a href="#pricing">Pricing</a>
+      <a class="cta-sm" href="tel:+61421633401">Call 0421 633 401</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap hero">
+  <div class="eyebrow">Web design · Sydney</div>
+  <h1>Your business is on Google.<br>Your <em>website</em> should be too.</h1>
+  <p class="lede">I build fast, mobile-first websites for Sydney cafes, salons, restaurants and trades. Flat price, live in 48 hours, and you own it outright — no monthly fees, no subscription, no lock-in.</p>
+  <div class="actions">
+    <a class="btn" href="tel:+61421633401">Call me — 0421 633 401</a>
+    <a class="btn btn-ghost" href="#work">See sample builds</a>
+  </div>
+</div>
+
+<div class="facts">
+  <div class="fact"><b>$690</b><span>Flat price, all up</span></div>
+  <div class="fact"><b>48 hrs</b><span>From go-ahead to live</span></div>
+  <div class="fact"><b>$0</b><span>Monthly fees, forever</span></div>
+  <div class="fact"><b>100%</b><span>Yours — files and domain</span></div>
+</div>
+
+<section id="work" class="wrap">
+  <div class="sec-head">
+    <h2>Sample builds</h2>
+    <p>These are concept builds — my own designs for fictional venues, made to show what I can do. They are not client work. If you want to see what yours would look like, I'll build you a real sample with your photos and your Google reviews, free, before you pay anything.</p>
+  </div>
+  <div class="work">
+    <a class="card" href="azure-rooftop/">
+      <div class="thumb t1">The Azure<br>Rooftop Bar</div>
+      <div class="card-body">
+        <div class="tag">Bar · Restaurant</div>
+        <h3>The Azure Rooftop Bar</h3>
+        <p>Full venue site with menus, gallery and a working table-booking flow. Built to show what a hospitality venue can look like beyond a Facebook page.</p>
+        <div class="go">View the build →</div>
+      </div>
+    </a>
+    <a class="card" href="nail-salon/">
+      <div class="thumb t2">Nail salon<br>concept</div>
+      <div class="card-body">
+        <div class="tag">Salon · Beauty</div>
+        <h3>Nail salon concept</h3>
+        <p>Service menu with pricing, gallery, Google reviews front and centre, and one-tap booking. Designed for salons running on Fresha with no site of their own.</p>
+        <div class="go">View the build →</div>
+      </div>
+    </a>
+    <a class="card" href="cafe/">
+      <div class="thumb t3">Cafe<br>concept</div>
+      <div class="card-body">
+        <div class="tag">Cafe · Coffee</div>
+        <h3>Cafe concept</h3>
+        <p>Menu, opening hours, location map and click-to-call, all readable on a phone in three seconds. For cafes that only exist on Uber Eats right now.</p>
+        <div class="go">View the build →</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<section id="pricing" class="wrap">
+  <div class="sec-head">
+    <h2>What it costs</h2>
+    <p>One price, paid in two halves. Nothing to pay until you've seen your own sample.</p>
+  </div>
+  <div class="offer">
+    <div>
+      <ul class="inc">
+        <li>A sample homepage built for your business, free, before you commit</li>
+        <li>Up to 5 pages — home, menu or services, gallery, about, contact</li>
+        <li>Works properly on phones, which is where your customers actually are</li>
+        <li>Your Google reviews and rating displayed on the page</li>
+        <li>Click-to-call, opening hours, map and directions</li>
+        <li>Connected to your own domain name</li>
+        <li>Live within 48 hours of go-ahead</li>
+        <li>You own the files. Leave any time, nothing to cancel.</li>
+      </ul>
+      <p class="note">Half up front, half when it goes live. Invoiced with my ABN. Payment by bank transfer or PayID.</p>
+    </div>
+    <div class="price">$690<small>All up · AUD</small></div>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="sec-head">
+    <h2>Get in touch</h2>
+    <p>Fastest way is a phone call. I'm in Sydney, same time zone, and I answer.</p>
+  </div>
+  <div class="contact">
+    <a class="ccard" href="tel:+61421633401"><b>Phone</b><span>0421 633 401</span></a>
+    <a class="ccard" href="mailto:nui.mauri@gmail.com"><b>Email</b><span>nui.mauri@gmail.com</span></a>
+    <div class="ccard"><b>Based in</b><span>Sydney, NSW</span></div>
+  </div>
+</section>
+
+<footer class="wrap">
+  <div>Nui Mauri — Web design, Sydney</div>
+  <div>ABN 95 249 609 295</div>
+</footer>
+
+<script>
+// respect an explicit choice if one was ever stored, otherwise follow the OS
+try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t}catch(e){}
+</script>
+</body>
+</html>
