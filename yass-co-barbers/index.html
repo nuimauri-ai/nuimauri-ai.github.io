@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0A0A0A">
+
+<!-- ===================================================================
+     ZONE A — CE QUE GOOGLE AFFICHE
+     ⚠️ noindex tant que c'est une maquette : cette page ne doit pas sortir
+     dans Google à la place de leur fiche. À RETIRER le jour de la vente.
+     =================================================================== -->
+<meta name="robots" content="noindex,nofollow">
+<title>Yass &amp; Co Barbers — Norton Street, Leichhardt</title>
+<meta name="description" content="Skin fades, beard shaping, threading and facials on Norton Street, Leichhardt. 4.9 stars from 225 reviews. Call (02) 8386 9020.">
+<meta property="og:title" content="Yass &amp; Co Barbers — Norton Street, Leichhardt">
+<meta property="og:description" content="Skin fades, beard shaping and a proper hot towel finish. Seven days on Norton Street.">
+<meta property="og:type" content="website">
+<link rel="icon" href="img/logo.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Roboto+Slab:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* ===================================================================
+   ZONE B — COULEURS ET POLICES
+
+   PALETTE : noir dominant, blanc, doré. Le doré est le SEUL accent,
+   ne jamais en ajouter un deuxième. Aucune couleur en dur ailleurs
+   que dans ce bloc :root — sinon un changement de palette laisse des
+   résidus dans les ombres et les dégradés.
+
+   POLICES : le lettrage du badge (YASS&CO) est un slab serif ultra-gras
+   à empattements rectangulaires. Alfa Slab One en est l'équivalent le
+   plus proche : elle porte tous les titres, les chiffres et l'adresse.
+   Alfa Slab One n'existe QU'EN UNE SEULE GRAISSE et reste illisible en
+   petit corps — les paragraphes passent donc en Roboto Slab, même genre,
+   mêmes empattements, mais déclinée en plusieurs graisses.
+   Pour tout basculer sur une seule police : mettre la même valeur dans
+   --display et --body (à ne faire que si le client le demande).
+   =================================================================== */
+:root{
+  --black:     #0A0A0A;   /* fond de page */
+  --black-2:   #121212;   /* bandes de section alternées */
+  --black-3:   #191919;   /* cartes posées sur les bandes */
+  --paper:     #FFFFFF;   /* titres et texte fort */
+  --line:      #262626;   /* filets 1px */
+  --line-gold: #3A3116;   /* filet doré assourdi, séparations */
+  --gold:      #C9A227;   /* accent unique */
+  --gold-soft: #E3C567;   /* doré éclairci, sur fond noir */
+  --dim:       #A29B90;   /* texte secondaire */
+  --dim-2:     #7C766D;   /* texte tertiaire, mentions */
+
+  --display: 'Alfa Slab One', 'Rockwell', Georgia, serif;
+  --body:    'Roboto Slab', Georgia, 'Times New Roman', serif;
+
+  --radius: 8px;
+  --pill: 999px;
+  --maxw: 1040px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--body);font-weight:300;background:var(--black);color:var(--paper);
+  font-size:17px;line-height:1.75}
+img{max-width:100%;display:block}
+a{color:inherit}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 26px}
+
+h1,h2{font-family:var(--display);font-weight:400;line-height:1.12;letter-spacing:0.005em;
+  text-transform:uppercase}
+h1{font-size:clamp(2.4rem,7vw,4.2rem)}
+h2{font-size:clamp(1.7rem,4.2vw,2.5rem);margin-bottom:14px}
+h3{font-family:var(--body);font-weight:800;font-size:1.22rem;line-height:1.3;letter-spacing:0.005em}
+/* micro-libellé espacé — écho du mot BARBERS sous le badge */
+.eyebrow{font-family:var(--body);font-size:0.7rem;letter-spacing:0.34em;text-transform:uppercase;
+  font-weight:700;color:var(--gold);margin-bottom:18px}
+.sub{color:var(--dim);max-width:50ch;margin-bottom:44px;font-size:1.04rem}
+section{padding:84px 0}
+.band{background:var(--black-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.rule{height:1px;background:var(--line);max-width:var(--maxw);margin:0 auto}
+
+/* ===================================================================
+   ZONE C — LE BOUTON TÉLÉPHONE
+   Affichage : (02) 8386 9020
+   Lien      : tel:+61283869020   ← international, sans espaces
+   =================================================================== */
+.btn{display:inline-block;font-family:var(--body);font-weight:700;font-size:0.95rem;
+  letter-spacing:0.04em;padding:15px 30px;border-radius:var(--pill);text-decoration:none;
+  border:1.5px solid transparent;transition:background .15s,color .15s,opacity .15s}
+.btn-call{background:var(--gold);color:var(--black)}
+.btn-call:hover{background:var(--gold-soft)}
+.btn-ghost{border-color:var(--paper);color:var(--paper);background:transparent}
+.btn-ghost:hover{background:var(--paper);color:var(--black)}
+
+.callbar{position:fixed;left:0;right:0;bottom:0;z-index:50;display:none;
+  background:var(--gold);color:var(--black);text-align:center;padding:15px;
+  font-family:var(--body);font-weight:700;text-decoration:none}
+@media(max-width:700px){.callbar{display:block} body{padding-bottom:58px}}
+
+/* ---------- EN-TÊTE + LOGO ROND ----------
+   Le logo est un badge circulaire. Il est cliquable et mène à l'Instagram
+   du salon. Le PNG est déjà détouré en cercle ; border-radius:50% garantit
+   la forme ronde même si on remplace un jour le fichier par un carré.
+   Sur fond noir, le disque blanc du badge ressort seul : pas de cadre. */
+header{padding:20px 0;border-bottom:1px solid var(--line);background:var(--black)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brandwrap{display:flex;align-items:center;gap:14px}
+.logo{display:block;width:62px;height:62px;border-radius:50%;overflow:hidden;
+  flex:0 0 62px;background:var(--paper);transition:box-shadow .18s,transform .18s}
+.logo img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.logo:hover{box-shadow:0 0 0 3px var(--gold);transform:scale(1.04)}
+.brand{font-family:var(--display);font-size:1.32rem;line-height:1.05;text-transform:uppercase}
+.brand small{display:block;font-family:var(--body);font-size:0.6rem;letter-spacing:0.32em;
+  text-transform:uppercase;color:var(--gold);font-weight:700;margin-top:4px}
+.nav .tel{font-family:var(--body);text-decoration:none;font-weight:700;letter-spacing:0.02em}
+.nav .tel:hover{color:var(--gold-soft)}
+
+/* ---------- HERO ----------
+   Panneau légèrement plus clair que la page, cerné d'un filet doré
+   assourdi : c'est ce qui le détache maintenant que tout est noir. */
+.hero{background:var(--black-2);border:1px solid var(--line-gold);border-radius:var(--radius);
+  padding:70px 40px;text-align:center;margin-top:26px}
+.hero .eyebrow{color:var(--gold-soft)}
+.hero .logo-big{width:112px;height:112px;margin:0 auto 26px;border-radius:50%;overflow:hidden;
+  display:block;background:var(--paper);box-shadow:0 0 0 2px var(--gold)}
+.hero .logo-big img{width:100%;height:100%;object-fit:cover}
+.hero h1{margin-bottom:18px}
+.hero h1 em{font-style:normal;color:var(--gold)}
+.hero p{color:var(--dim);max-width:46ch;margin:0 auto 32px;font-size:1.08rem}
+.hero-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+/* ---------- CHIFFRES ---------- */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:24px;
+  text-align:center;padding:52px 0}
+.stat b{display:block;font-family:var(--display);font-weight:400;font-size:2.6rem;
+  color:var(--gold);line-height:1.1}
+.stat span{font-family:var(--body);font-size:0.68rem;letter-spacing:0.26em;text-transform:uppercase;
+  color:var(--dim-2);font-weight:700}
+
+/* ===================================================================
+   ZONE D — SERVICES
+   Titre "Six services" ↔ 6 blocs .svc. Recompte à chaque modification.
+   =================================================================== */
+.svc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
+.svc{background:var(--black-2);border:1px solid var(--line);border-radius:var(--radius);padding:30px 26px;
+  transition:border-color .18s}
+.svc:hover{border-color:var(--line-gold)}
+.svc h3{margin-bottom:8px;color:var(--paper)}
+.svc p{color:var(--dim);font-size:0.96rem}
+.svc .dot{width:36px;height:2px;background:var(--gold);margin-bottom:20px}
+.price-note{margin-top:28px;color:var(--dim-2);font-size:0.94rem}
+
+/* ---------- GALERIE DE COUPES ----------
+   Photos réelles fournies par le salon (issues de leur Instagram).
+   ⚠️ Ce sont leurs clients : confirmer avec le patron à la livraison
+   qu'il a bien leur accord pour un usage sur son site. */
+.w-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
+.w-item{border-radius:var(--radius);overflow:hidden;background:var(--black-3);
+  border:1px solid var(--line)}
+.w-item img{width:100%;height:auto;aspect-ratio:1/1;object-fit:cover}
+.w-item span{display:block;padding:13px 16px;font-family:var(--body);font-size:0.68rem;
+  letter-spacing:0.24em;text-transform:uppercase;font-weight:700;color:var(--gold-soft)}
+.w-cta{margin-top:34px;text-align:center}
+
+/* ===================================================================
+   ZONE E — AVIS
+   ⚠️ Les trois avis sont RÉELS et publics. Ne rien inventer.
+   Pour en ajouter : copier-coller depuis Google, avec le nom exact.
+   =================================================================== */
+.rev-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
+.rev{background:var(--black-3);border:1px solid var(--line);border-radius:var(--radius);padding:28px}
+.rev .stars{color:var(--gold);letter-spacing:0.12em;margin-bottom:12px}
+.rev q{display:block;font-family:var(--body);font-weight:400;font-size:1.1rem;line-height:1.55;
+  margin-bottom:16px;color:var(--paper)}
+.rev cite{font-style:normal;font-weight:700;font-size:0.68rem;letter-spacing:0.2em;
+  text-transform:uppercase;color:var(--gold-soft)}
+.rev-src{margin-top:24px;font-size:0.85rem;color:var(--dim-2)}
+
+/* ===================================================================
+   ZONE F — HORAIRES  /  ZONE G — LIEU
+   =================================================================== */
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:48px;align-items:start}
+.hours dl{border-top:1px solid var(--line)}
+.hours div{display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid var(--line)}
+.hours dt{font-weight:700}
+.hours dd{color:var(--dim)}
+.hours .late{color:var(--gold)}
+address{font-style:normal;font-family:var(--display);font-weight:400;font-size:1.3rem;
+  line-height:1.45;text-transform:uppercase;margin-bottom:22px}
+.travel{color:var(--dim-2);margin-top:22px;font-size:0.94rem}
+
+/* ===================================================================
+   ZONE H — FORMULAIRE
+   Web3Forms. Jamais mailto:. Les name= deviennent les libellés du mail.
+   =================================================================== */
+.form-card{background:var(--black-2);border:1px solid var(--line-gold);border-radius:var(--radius);
+  padding:52px 40px}
+form{display:grid;gap:15px;max-width:520px}
+label{font-family:var(--body);font-size:0.66rem;letter-spacing:0.24em;text-transform:uppercase;
+  font-weight:700;color:var(--gold-soft)}
+input,select,textarea{font-family:var(--body);font-weight:300;font-size:1rem;width:100%;
+  padding:14px 16px;border:1px solid var(--line);border-radius:var(--radius);
+  background:var(--black);color:var(--paper)}
+textarea{min-height:100px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--gold);outline-offset:1px}
+.hp{position:absolute;left:-9999px}
+
+footer{padding:44px 0;text-align:center;color:var(--dim-2);font-size:0.88rem;
+  border-top:1px solid var(--line)}
+footer .logo{width:54px;height:54px;margin:0 auto 14px}
+footer a:hover{color:var(--gold-soft)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <div class="brandwrap">
+      <!-- LOGO ROND CLIQUABLE -> Instagram du salon -->
+      <a class="logo" href="https://www.instagram.com/yassandcobarbers/" target="_blank" rel="noopener" aria-label="Yass &amp; Co Barbers on Instagram">
+        <img src="img/logo.png" alt="Yass &amp; Co Barbers logo" width="400" height="400">
+      </a>
+      <div class="brand">Yass &amp; Co<small>Barbers</small></div>
+    </div>
+    <!-- ZONE C — affichage avec espaces -->
+    <a class="tel" href="tel:+61283869020">(02) 8386 9020</a>
+  </div>
+</header>
+
+<!-- =================== HERO =================== -->
+<div class="wrap">
+  <div class="hero">
+    <!-- Le badge est aussi cliquable ici, même destination -->
+    <a class="logo-big" href="https://www.instagram.com/yassandcobarbers/" target="_blank" rel="noopener" aria-label="Yass &amp; Co Barbers on Instagram">
+      <img src="img/logo.png" alt="Yass &amp; Co Barbers logo" width="400" height="400">
+    </a>
+    <div class="eyebrow">50 Norton Street · Leichhardt</div>
+    <h1>The fresh<br><em>fade</em> people.</h1>
+    <p>Skin fades, beard shaping and a proper hot towel finish. Seven days on Norton Street, and yes — we cut kids too.</p>
+    <div class="hero-actions">
+      <!-- ZONE C — lien international, sans espaces -->
+      <a class="btn btn-call" href="tel:+61283869020">Call (02) 8386 9020</a>
+      <a class="btn btn-ghost" href="#work">See the work</a>
+    </div>
+  </div>
+</div>
+
+<!-- =================== CHIFFRES ===================
+     ⚠️ 4.9 / 225 relevés publiquement. La fiche Google de mars 2026 indiquait
+     263 avis à 4.8 — les deux ne concordent pas. REVÉRIFIER avant l'envoi.
+================================================================= -->
+<div class="wrap">
+  <div class="stats">
+    <div class="stat"><b>4.9</b><span>Average rating</span></div>
+    <div class="stat"><b>225</b><span>Reviews</span></div>
+    <div class="stat"><b>7</b><span>Days open</span></div>
+  </div>
+</div>
+<div class="rule"></div>
+
+<!-- =================== ZONE D — SERVICES ===================
+     Titre "Six services" ↔ 6 blocs .svc.
+================================================================= -->
+<section id="services">
+  <div class="wrap">
+    <div class="eyebrow">Services</div>
+    <h2>Six services, one chair</h2>
+    <p class="sub">Everything on this list is done in the shop by the same hands. Nothing gets rushed because the next booking is waiting.</p>
+
+    <div class="svc-grid">
+      <div class="svc"><div class="dot"></div><h3>Skin fades</h3><p>Taken as high or as low as you want, blended out so there's no line where the clipper stopped.</p></div>
+      <div class="svc"><div class="dot"></div><h3>Beard shaping</h3><p>Shaped to your face, lined with a razor, and left long enough that it still looks right in two weeks.</p></div>
+      <div class="svc"><div class="dot"></div><h3>Face waxing</h3><p>Ears, nose, cheekbones and neckline. Two minutes, and it makes more difference than most people expect.</p></div>
+      <div class="svc"><div class="dot"></div><h3>Threading</h3><p>Precise work on brows and around the eyes, without the redness you get from wax on thin skin.</p></div>
+      <div class="svc"><div class="dot"></div><h3>Facials</h3><p>Cleanse, steam, extraction and a mask. Book it with a cut and you're out in under an hour.</p></div>
+      <div class="svc"><div class="dot"></div><h3>Kids cuts</h3><p>Patient with the ones who won't sit still, and quick with the ones who'd rather be anywhere else.</p></div>
+    </div>
+
+    <!-- ⚠️ TARIFS : demander la grille au patron. Ne rien inventer. -->
+    <p class="price-note">Prices are up in the shop — call and we'll tell you before you come in, not after.</p>
+  </div>
+</section>
+
+<!-- =================== GALERIE DE COUPES ===================
+     Titre "Four cuts" ↔ 4 blocs .w-item. Recompte si tu en ajoutes.
+     Photos fournies par le salon (Instagram). ⚠️ Ce sont leurs clients :
+     confirmer leur accord à la livraison.
+================================================================= -->
+<section class="band" id="work">
+  <div class="wrap">
+    <div class="eyebrow">The work</div>
+    <h2>Four cuts,<br>straight off the floor</h2>
+    <p class="sub">No filters and no stock photos. These walked out of the shop on Norton Street.</p>
+
+    <div class="w-grid">
+      <figure class="w-item">
+        <img src="img/cut-blonde-crop.jpg" alt="A blonde textured crop with a tapered side, cut in the shop" width="760" height="760" loading="lazy">
+        <span>Blonde crop</span>
+      </figure>
+      <figure class="w-item">
+        <img src="img/cut-textured-back.jpg" alt="Back view of a textured cut with a clean tapered neckline" width="760" height="760" loading="lazy">
+        <span>Textured taper</span>
+      </figure>
+      <figure class="w-item">
+        <img src="img/cut-skin-fade.jpg" alt="A high skin fade blended into the top, with a lined beard" width="760" height="760" loading="lazy">
+        <span>High skin fade</span>
+      </figure>
+      <figure class="w-item">
+        <img src="img/cut-beard-fade.jpg" alt="A skin fade with a full beard shaped and lined to the jaw" width="760" height="760" loading="lazy">
+        <span>Fade &amp; beard</span>
+      </figure>
+    </div>
+
+    <div class="w-cta">
+      <a class="btn btn-ghost" href="https://www.instagram.com/yassandcobarbers/" target="_blank" rel="noopener">More on Instagram</a>
+    </div>
+  </div>
+</section>
+
+<!-- =================== ZONE E — AVIS ===================
+     ⚠️ Trois avis RÉELS et publics. Ne pas les modifier, ne pas en inventer.
+================================================================= -->
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Reviews</div>
+    <h2>In their words</h2>
+    <p class="sub">Three of the 225 reviews left on Google, copied exactly as they were written.</p>
+    <div class="rev-grid">
+      <div class="rev">
+        <div class="stars">★★★★★</div>
+        <q>The Fresh Fade People! My only go to for a cut anymore. Been back again and again the last 6 months and I'm never disappointed.</q>
+        <cite>andrew lim</cite>
+      </div>
+      <div class="rev">
+        <div class="stars">★★★★★</div>
+        <q>Great guys, highly recommended!</q>
+        <cite>Yahya Burai</cite>
+      </div>
+      <div class="rev">
+        <div class="stars">★★★★★</div>
+        <q>the best there is</q>
+        <cite>Joshua Dansie</cite>
+      </div>
+    </div>
+    <p class="rev-src">Reviews published on Google. We don't edit them and we don't choose which ones show up on our listing.</p>
+  </div>
+</section>
+
+<!-- =================== ZONE F + ZONE G =================== -->
+<section class="band">
+  <div class="wrap two">
+    <div class="hours">
+      <div class="eyebrow">Hours</div>
+      <h2 style="margin-bottom:8px">Opening hours</h2>
+      <p class="sub" style="margin-bottom:20px">Last cut goes in half an hour before close.</p>
+      <dl>
+        <div><dt>Monday</dt><dd>9:00am – 6:00pm</dd></div>
+        <div><dt>Tuesday</dt><dd>9:00am – 6:00pm</dd></div>
+        <div><dt>Wednesday</dt><dd>9:00am – 6:00pm</dd></div>
+        <div><dt>Thursday</dt><dd class="late">9:00am – 7:00pm</dd></div>
+        <div><dt>Friday</dt><dd>9:00am – 6:00pm</dd></div>
+        <div><dt>Saturday</dt><dd>8:30am – 5:00pm</dd></div>
+        <div><dt>Sunday</dt><dd>9:00am – 4:00pm</dd></div>
+      </dl>
+    </div>
+
+    <!-- ZONE G — pas d'iframe de carte. Lien sortant vers Google Maps. -->
+    <div>
+      <div class="eyebrow">Find us</div>
+      <h2 style="margin-bottom:8px">Where we are</h2>
+      <p class="sub" style="margin-bottom:20px">Middle of Norton Street, on the Little Italy strip.</p>
+      <address>50 Norton Street<br>Leichhardt NSW 2040</address>
+      <a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&query=50+Norton+Street+Leichhardt+NSW+2040" target="_blank" rel="noopener">Open in Google Maps</a>
+      <p class="travel">The 440 and 445 stop on Norton Street. Two hour street parking out front, and the Marketplace car park is a three minute walk if it's full.</p>
+    </div>
+  </div>
+</section>
+
+<!-- =================== ZONE H — FORMULAIRE ===================
+     ⚠️ Remplacer VOTRE_CLE_WEB3FORMS (web3forms.com, 30 secondes).
+     Rétention 30 jours : le mail EST l'archive, prévenir le client.
+================================================================= -->
+<section>
+  <div class="wrap">
+    <div class="form-card">
+      <div class="eyebrow">Get in touch</div>
+      <h2>Send us a message</h2>
+      <p class="sub">Quickest way to get a chair is still the phone. This is for everything else — a question about a service, a group booking, or a time that isn't on the list.</p>
+
+      <form action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="VOTRE_CLE_WEB3FORMS">
+        <input type="hidden" name="subject" value="Yass & Co Barbers — message from the website">
+        <input type="hidden" name="redirect" value="merci.html">
+        <input type="text" name="botcheck" class="hp" tabindex="-1" autocomplete="off">
+
+        <div><label for="n">Name</label><input id="n" type="text" name="Name" required></div>
+        <div><label for="e">Email</label><input id="e" type="email" name="email" required></div>
+        <div><label for="s">Service</label>
+          <select id="s" name="Service">
+            <option>Skin fade</option><option>Beard shaping</option><option>Face waxing</option>
+            <option>Threading</option><option>Facial</option><option>Kids cut</option><option>Something else</option>
+          </select>
+        </div>
+        <div><label for="m">Message</label><textarea id="m" name="Message"></textarea></div>
+        <button class="btn btn-call" type="submit" style="cursor:pointer">Send message</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <a class="logo" href="https://www.instagram.com/yassandcobarbers/" target="_blank" rel="noopener" aria-label="Yass &amp; Co Barbers on Instagram">
+      <img src="img/logo.png" alt="Yass &amp; Co Barbers logo" width="400" height="400">
+    </a>
+    <p>Yass &amp; Co Barbers · 50 Norton Street, Leichhardt NSW 2040 · <a href="tel:+61283869020">(02) 8386 9020</a></p>
+  </div>
+</footer>
+
+<a class="callbar" href="tel:+61283869020">Call the shop — (02) 8386 9020</a>
+
+</body>
+</html>
