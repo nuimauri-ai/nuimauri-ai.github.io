@@ -11,10 +11,10 @@
      dans Google à la place de leur fiche. À RETIRER le jour de la vente.
      =================================================================== -->
 <meta name="robots" content="noindex,nofollow">
-<title>Yass &amp; Co Barbers — Norton Street, Leichhardt</title>
-<meta name="description" content="Skin fades, beard shaping, threading and facials on Norton Street, Leichhardt. 4.9 stars from 225 reviews. Call (02) 8386 9020.">
-<meta property="og:title" content="Yass &amp; Co Barbers — Norton Street, Leichhardt">
-<meta property="og:description" content="Skin fades, beard shaping and a proper hot towel finish. Seven days on Norton Street.">
+<title>Yass &amp; Co Barbers — Leichhardt, Rozelle &amp; Balmain</title>
+<meta name="description" content="Three barbershops in the inner west — Leichhardt, Rozelle and Balmain. Skin fades, beard shaping, threading and facials. 427 Google reviews.">
+<meta property="og:title" content="Yass &amp; Co Barbers — Leichhardt, Rozelle &amp; Balmain">
+<meta property="og:description" content="Three barbershops in the inner west. Skin fades, beard shaping and a proper hot towel finish.">
 <meta property="og:type" content="website">
 <link rel="icon" href="img/logo.png">
 
@@ -152,6 +152,25 @@ header{padding:20px 0;border-bottom:1px solid var(--line);background:var(--black
 .svc .dot{width:36px;height:2px;background:var(--gold);margin-bottom:20px}
 .price-note{margin-top:28px;color:var(--dim-2);font-size:0.94rem}
 
+/* ---------- LES TROIS BOUTIQUES ----------
+   Chaque carte porte SON adresse, SON numéro et SA note Google.
+   ⚠️ Les horaires détaillés ne sont connus que pour Leichhardt : ne pas
+   inventer ceux de Rozelle et Balmain, on renvoie vers Google Maps. */
+.shops{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:16px;margin-top:8px}
+.shop{background:var(--black-3);border:1px solid var(--line);border-radius:var(--radius);
+  padding:28px 26px;transition:border-color .18s}
+.shop:hover{border-color:var(--line-gold)}
+.shop .badge{display:inline-block;font-size:0.66rem;letter-spacing:0.2em;text-transform:uppercase;
+  font-weight:700;background:var(--gold);color:var(--black);padding:5px 11px;border-radius:4px;margin-bottom:16px}
+.shop h3{margin-bottom:6px;color:var(--paper)}
+.shop .addr{color:var(--dim);font-size:0.96rem;margin-bottom:16px}
+.shop .score{font-family:var(--display);font-size:1.5rem;color:var(--gold);margin-bottom:16px}
+.shop .score small{font-family:var(--body);font-size:0.74rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--dim-2);font-weight:700}
+.shop .tel{display:block;font-weight:800;font-size:1.18rem;color:var(--paper);text-decoration:none;margin-bottom:14px}
+.shop .tel:hover{color:var(--gold-soft)}
+.shop .map{font-size:0.86rem;font-weight:700;color:var(--dim-2);text-decoration:none}
+.shop .map:hover{color:var(--gold-soft)}
+
 /* ---------- GALERIE DE COUPES ----------
    Photos réelles fournies par le salon (issues de leur Instagram).
    ⚠️ Ce sont leurs clients : confirmer avec le patron à la livraison
@@ -236,9 +255,9 @@ footer a:hover{color:var(--gold-soft)}
     <a class="logo-big" href="https://www.instagram.com/yassandcobarbers/" target="_blank" rel="noopener" aria-label="Yass &amp; Co Barbers on Instagram">
       <img src="img/logo.png" alt="Yass &amp; Co Barbers logo" width="400" height="400">
     </a>
-    <div class="eyebrow">50 Norton Street · Leichhardt</div>
+    <div class="eyebrow">Leichhardt · Rozelle · Balmain</div>
     <h1>The fresh<br><em>fade</em> people.</h1>
-    <p>Skin fades, beard shaping and a proper hot towel finish. Seven days on Norton Street, and yes — we cut kids too.</p>
+    <p>Skin fades, beard shaping and a proper hot towel finish. Three shops across the inner west, seven days — and yes, we cut kids too.</p>
     <div class="hero-actions">
       <!-- ZONE C — lien international, sans espaces -->
       <a class="btn btn-call" href="tel:+61283869020">Call (02) 8386 9020</a>
@@ -253,8 +272,8 @@ footer a:hover{color:var(--gold-soft)}
 ================================================================= -->
 <div class="wrap">
   <div class="stats">
-    <div class="stat"><b>4.9</b><span>Average rating</span></div>
-    <div class="stat"><b>225</b><span>Reviews</span></div>
+    <div class="stat"><b>3</b><span>Shops</span></div>
+    <div class="stat"><b>427</b><span>Google reviews</span></div>
     <div class="stat"><b>7</b><span>Days open</span></div>
   </div>
 </div>
@@ -353,8 +372,8 @@ footer a:hover{color:var(--gold-soft)}
   <div class="wrap two">
     <div class="hours">
       <div class="eyebrow">Hours</div>
-      <h2 style="margin-bottom:8px">Opening hours</h2>
-      <p class="sub" style="margin-bottom:20px">Last cut goes in half an hour before close.</p>
+      <h2 style="margin-bottom:8px">Leichhardt hours</h2>
+      <p class="sub" style="margin-bottom:20px">Last cut goes in half an hour before close. Rozelle and Balmain hours are on their Google listings below.</p>
       <dl>
         <div><dt>Monday</dt><dd>9:00am – 6:00pm</dd></div>
         <div><dt>Tuesday</dt><dd>9:00am – 6:00pm</dd></div>
@@ -366,14 +385,54 @@ footer a:hover{color:var(--gold-soft)}
       </dl>
     </div>
 
-    <!-- ZONE G — pas d'iframe de carte. Lien sortant vers Google Maps. -->
+    <!-- ZONE G — le siège. Les trois boutiques sont détaillées plus bas. -->
     <div>
-      <div class="eyebrow">Find us</div>
-      <h2 style="margin-bottom:8px">Where we are</h2>
+      <div class="eyebrow">Head shop</div>
+      <h2 style="margin-bottom:8px">Norton Street</h2>
       <p class="sub" style="margin-bottom:20px">Middle of Norton Street, on the Little Italy strip.</p>
       <address>50 Norton Street<br>Leichhardt NSW 2040</address>
       <a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&query=50+Norton+Street+Leichhardt+NSW+2040" target="_blank" rel="noopener">Open in Google Maps</a>
-      <p class="travel">The 440 and 445 stop on Norton Street. Two hour street parking out front, and the Marketplace car park is a three minute walk if it's full.</p>
+      <p style="color:var(--muted);margin-top:22px;font-size:0.95rem">The 440 and 445 stop on Norton Street. Two hour street parking out front, and the Marketplace car park is a three minute walk if it's full.</p>
+    </div>
+  </div>
+</section>
+
+<!-- =================== LES TROIS BOUTIQUES ===================
+     Titre "Three shops" ↔ 3 blocs .shop. Recompte si une quatrième ouvre.
+     Notes et nombres d'avis relevés sur Google le 03/09/2026 — À REVÉRIFIER
+     avant d'envoyer le lien. Chaque carte a SON PROPRE numéro de téléphone.
+================================================================= -->
+<section id="shops" style="background:var(--black-2)">
+  <div class="wrap">
+    <div class="eyebrow">Where to find us</div>
+    <h2>Three shops,<br>one standard</h2>
+    <p class="sub">Same barbers, same training, same finish. Ring the one closest to you.</p>
+
+    <div class="shops">
+      <div class="shop">
+        <span class="badge">Leichhardt</span>
+        <h3>50 Norton Street</h3>
+        <p class="addr">Leichhardt NSW 2040</p>
+        <p class="score">4.8 <small>on Google</small></p>
+        <a class="tel" href="tel:+61283869020">(02) 8386 9020</a>
+        <a class="map" href="https://www.google.com/maps/search/?api=1&query=50+Norton+Street+Leichhardt+NSW+2040" target="_blank" rel="noopener">Open in Google Maps →</a>
+      </div>
+      <div class="shop">
+        <span class="badge">Rozelle</span>
+        <h3>Unit 1/602 Darling Street</h3>
+        <p class="addr">Rozelle NSW 2039</p>
+        <p class="score">5.0 <small>on Google</small></p>
+        <a class="tel" href="tel:+61289575141">(02) 8957 5141</a>
+        <a class="map" href="https://www.google.com/maps/search/?api=1&query=602+Darling+Street+Rozelle+NSW+2039" target="_blank" rel="noopener">Open in Google Maps →</a>
+      </div>
+      <div class="shop">
+        <span class="badge">Balmain</span>
+        <h3>Shop 2/328 Darling Street</h3>
+        <p class="addr">Balmain NSW 2041</p>
+        <p class="score">4.6 <small>on Google</small></p>
+        <a class="tel" href="tel:+61283309875">(02) 8330 9875</a>
+        <a class="map" href="https://www.google.com/maps/search/?api=1&query=328+Darling+Street+Balmain+NSW+2041" target="_blank" rel="noopener">Open in Google Maps →</a>
+      </div>
     </div>
   </div>
 </section>
@@ -415,7 +474,8 @@ footer a:hover{color:var(--gold-soft)}
     <a class="logo" href="https://www.instagram.com/yassandcobarbers/" target="_blank" rel="noopener" aria-label="Yass &amp; Co Barbers on Instagram">
       <img src="img/logo.png" alt="Yass &amp; Co Barbers logo" width="400" height="400">
     </a>
-    <p>Yass &amp; Co Barbers · 50 Norton Street, Leichhardt NSW 2040 · <a href="tel:+61283869020">(02) 8386 9020</a></p>
+    <p>Yass &amp; Co Barbers · Leichhardt · Rozelle · Balmain</p>
+    <p style="margin-top:6px">50 Norton Street, Leichhardt NSW 2040 · <a href="tel:+61283869020">(02) 8386 9020</a></p>
   </div>
 </footer>
 
