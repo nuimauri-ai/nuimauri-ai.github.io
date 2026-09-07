@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#f6f4ef">
-<title>Scrollytelling survey — 6 questions, mobile-first prototype</title>
+<title>Scrollytelling survey — 6 scenes, 6 questions, mobile-first prototype</title>
 <style>
   :root{
     --ink:#101418; --muted:#5b6670; --paper:#f6f4ef; --accent:#1f6f5f; --accent-soft:#e8f3ef; --warm:#e0b34a;
@@ -18,7 +18,7 @@
 
   /* progress: bar + step dots */
   #progress{position:fixed;top:0;left:0;height:4px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:var(--accent);z-index:50}
-  #steps{position:fixed;top:12px;right:12px;z-index:50;display:flex;gap:6px;padding:8px 10px;border-radius:999px;background:rgba(16,20,24,.55);backdrop-filter:blur(8px)}
+  #steps{position:fixed;top:12px;right:12px;z-index:50;display:flex;gap:6px;padding:8px 10px;border-radius:999px;background:rgba(16,20,24,.72)}
   #steps i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.35);transition:background .3s,transform .3s}
   #steps i.done{background:var(--warm)}
   #steps i.now{background:#fff;transform:scale(1.35)}
@@ -29,7 +29,7 @@
   .stage{position:absolute;inset:0}
   .copy{position:absolute;left:0;right:0;bottom:0;padding:0 22px calc(env(safe-area-inset-bottom) + 34px);max-width:560px;margin:0 auto}
   .copy.top{bottom:auto;top:calc(env(safe-area-inset-top) + 64px)}
-  .line{opacity:0;transform:translateY(18px);font-size:clamp(26px,6.2vw,40px);line-height:1.12;font-weight:700;letter-spacing:-.02em;margin:0 0 10px;text-shadow:0 2px 24px rgba(0,0,0,.35);color:#fff}
+  .line{opacity:0;transform:translateY(18px);will-change:transform,opacity;font-size:clamp(26px,6.2vw,40px);line-height:1.12;font-weight:700;letter-spacing:-.02em;margin:0 0 10px;text-shadow:0 2px 24px rgba(0,0,0,.35);color:#fff}
   .line.small{font-size:clamp(16px,4.2vw,20px);font-weight:500;line-height:1.4;text-shadow:0 1px 14px rgba(0,0,0,.4)}
   .copy.dark .line{color:var(--ink);text-shadow:none}
   .copy.dark .line.small{color:var(--muted)}
@@ -45,15 +45,18 @@
 
   /* scene 1: video + person who stays */
   .video-wrap{position:absolute;inset:0}
-  .video-wrap video{width:100%;height:100%;object-fit:cover;display:block}
+  .video-wrap video{width:100%;height:100%;object-fit:cover;display:block;transform:translateZ(0);will-change:transform}
   .shade{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.72) 0%,rgba(0,0,0,.15) 55%,rgba(0,0,0,0) 100%)}
-  .wipe{position:absolute;inset:0;background:var(--paper);clip-path:circle(0% at 50% 38%)}
-  .person{position:absolute;left:50%;top:38%;width:min(62vw,300px);transform:translate(-50%,-50%);opacity:0;filter:drop-shadow(0 24px 40px rgba(0,0,0,.35))}
+  .wipe{position:absolute;left:50%;top:38%;width:260vmax;height:260vmax;margin:-130vmax 0 0 -130vmax;border-radius:50%;background:var(--paper);transform:scale(0);will-change:transform}
+  .person{position:absolute;left:50%;top:38%;width:min(62vw,300px);transform:translate(-50%,-50%);opacity:0;will-change:transform,opacity}
+  .person::after{content:"";position:absolute;left:18%;right:18%;bottom:-6%;height:10%;border-radius:50%;background:rgba(0,0,0,.28);filter:blur(10px);opacity:var(--sh,1)}
   .person svg{width:100%;height:auto;display:block}
 
   /* scene 2: parallax illustration */
   .img-wrap{position:absolute;inset:-12% 0}
   .img-wrap svg{width:100%;height:100%;display:block}
+  .img-wrap{will-change:transform}
+  #hills{will-change:transform}
   .scene2 .shade{background:linear-gradient(to top,rgba(0,0,0,.6) 0%,rgba(0,0,0,.05) 60%,rgba(0,0,0,0) 100%)}
 
   /* scene 3: line drawing scrubbed by scroll */
@@ -72,9 +75,26 @@
   .big .lbl{opacity:0;transform:translateY(12px);font-size:clamp(15px,4vw,19px);margin:14px auto 0;max-width:30ch;line-height:1.35}
   .big .note{opacity:0;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-top:18px}
 
+
+  /* scene 5: phone with the doctor on screen */
+  .scene5 .stage{background:#182530}
+  .phone{position:absolute;left:50%;top:44%;width:min(58vw,260px);aspect-ratio:9/18.5;transform:translate(-50%,-50%) rotate(-6deg) scale(.9);opacity:0;will-change:transform,opacity}
+  .phone-screen{position:absolute;inset:0;border-radius:34px;background:var(--paper);border:8px solid #0d1419;box-shadow:0 30px 80px rgba(0,0,0,.5);overflow:hidden}
+  .phone-doc{position:absolute;left:12%;right:12%;top:14%;aspect-ratio:300/360;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 360'%3E%3Cpath d='M60 360C60 270 90 240 150 236c60 4 90 34 90 124Z' fill='%23f1f3f5'/%3E%3Crect x='132' y='252' width='36' height='48' rx='6' fill='%232b6f8f'/%3E%3Cpath d='M120 258c-2 42 12 60 30 60s32-18 30-60' fill='none' stroke='%231f2a33' stroke-width='5' stroke-linecap='round'/%3E%3Crect x='132' y='196' width='36' height='46' rx='14' fill='%23e8b89a'/%3E%3Cellipse cx='150' cy='150' rx='58' ry='66' fill='%23f0c4a6'/%3E%3Cpath d='M92 150c-2-58 38-76 58-76 26 0 62 18 58 76-8-28-32-38-58-38s-50 10-58 38Z' fill='%232c2a2a'/%3E%3Ccircle cx='128' cy='152' r='5' fill='%231f2a33'/%3E%3Ccircle cx='172' cy='152' r='5' fill='%231f2a33'/%3E%3Cpath d='M136 186c8 8 20 8 28 0' fill='none' stroke='%23a8613f' stroke-width='4' stroke-linecap='round'/%3E%3Ccircle cx='128' cy='152' r='15' fill='none' stroke='%231f2a33' stroke-width='3'/%3E%3Ccircle cx='172' cy='152' r='15' fill='none' stroke='%231f2a33' stroke-width='3'/%3E%3Cpath d='M143 152h14' stroke='%231f2a33' stroke-width='3'/%3E%3C/svg%3E") center/contain no-repeat;opacity:0;transform:translateY(16px);will-change:transform,opacity}
+  .phone-bar{position:absolute;left:0;right:0;bottom:0;height:16%;background:#101418;display:flex;justify-content:center;align-items:center;gap:14px}
+  .phone-bar i{width:34px;height:34px;border-radius:50%;background:#2a3540}
+  .phone-bar i:nth-child(2){background:#c0392b}
+  .scene5 .copy .line{color:#fff}
+
+  /* scene 6: morning light */
+  .scene6 .stage{background:linear-gradient(180deg,#0f1a2a 0%,#2b3f5c 55%,#d9a066 100%)}
+  .dawn{position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,214,150,0) 0%,rgba(255,214,150,0) 60%,rgba(255,214,150,.55) 100%);opacity:0;will-change:opacity}
+  .orb{position:absolute;left:50%;top:60%;width:38vw;max-width:220px;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 50% 40%,#fff2c8,#ffc76a 60%,rgba(255,199,106,0) 72%);transform:translate(-50%,40%);will-change:transform}
+  .scene6 .copy .line{color:#fff}
+
   /* question blocks */
   .q{min-height:100svh;display:grid;place-items:center;padding:24px 20px}
-  .card{width:100%;max-width:520px;background:var(--card);border-radius:var(--radius);padding:26px 22px 22px;box-shadow:0 20px 60px rgba(16,20,24,.10);opacity:0;transform:translateY(30px) scale(.98)}
+  .card{width:100%;max-width:520px;background:var(--card);border-radius:var(--radius);padding:26px 22px 22px;box-shadow:0 20px 60px rgba(16,20,24,.10);opacity:0;transform:translateY(30px) scale(.98);will-change:transform,opacity}
   .card .k{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 10px}
   .card h2{font-size:clamp(21px,5.4vw,28px);line-height:1.2;letter-spacing:-.02em;margin:0 0 18px}
   .card .help{color:var(--muted);font-size:14px;margin:-8px 0 16px}
@@ -114,7 +134,7 @@
   .summary li span:last-child{font-weight:700;color:var(--accent);text-align:right;max-width:55%}
   .foot{margin-top:14px;color:var(--muted);font-size:13px;line-height:1.5}
   .meta{margin-top:12px;font-size:12px;color:var(--muted);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--paper);border-radius:10px;padding:10px 12px;word-break:break-all}
-  .tag{position:fixed;left:12px;bottom:calc(env(safe-area-inset-bottom) + 10px);z-index:40;font-size:11px;letter-spacing:.1em;text-transform:uppercase;background:rgba(16,20,24,.75);color:#fff;padding:6px 10px;border-radius:999px;backdrop-filter:blur(6px)}
+  .tag{position:fixed;left:12px;bottom:calc(env(safe-area-inset-bottom) + 10px);z-index:40;font-size:11px;letter-spacing:.1em;text-transform:uppercase;background:rgba(16,20,24,.75);color:#fff;padding:6px 10px;border-radius:999px}
 
   /* desktop: keep the story column readable, scenes stay full-bleed */
   @media (min-width:900px){
@@ -133,7 +153,7 @@
 <body>
 <div id="progress"></div>
 <div id="steps" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
-<div class="tag">Prototype · 4 scenes · 6 questions</div>
+<div class="tag">Prototype · 6 scenes · 6 questions</div>
 
 <!-- INTRO -->
 <section class="intro">
@@ -152,7 +172,7 @@
   <div class="pin" id="pin1">
     <div class="stage">
       <div class="video-wrap">
-        <video id="v1" playsinline muted loop autoplay preload="metadata" poster="poster1.jpg">
+        <video id="v1" playsinline muted loop autoplay preload="auto" poster="poster1.jpg">
           <source src="scene1.webm" type="video/webm">
           <source src="scene1.mp4" type="video/mp4">
         </video>
@@ -259,22 +279,6 @@
       <button class="pill" data-v="Over a year ago">Over a year ago</button>
       <button class="pill" data-v="Can't remember">Can't remember</button>
     </div>
-    <button class="next" data-next="#q3s" disabled>Continue</button>
-  </div>
-</section>
-
-<!-- Q3: multi-select -->
-<section class="q" id="q3s">
-  <div class="card" data-card data-step="3">
-    <p class="k">Question 3 of 6</p>
-    <h2>What usually gets in the way of booking?</h2>
-    <p class="help">Pick as many as apply.</p>
-    <div class="pills one" id="q3">
-      <button class="pill" data-v="Finding the time"><span class="box"><svg viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.5l2.6 2.5L10 3.5"/></svg></span>Finding the time</button>
-      <button class="pill" data-v="The cost"><span class="box"><svg viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.5l2.6 2.5L10 3.5"/></svg></span>The cost</button>
-      <button class="pill" data-v="Waiting weeks for a slot"><span class="box"><svg viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.5l2.6 2.5L10 3.5"/></svg></span>Waiting weeks for a slot</button>
-      <button class="pill" data-v="It doesn't feel serious enough"><span class="box"><svg viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.5l2.6 2.5L10 3.5"/></svg></span>It doesn't feel serious enough</button>
-    </div>
     <button class="next" data-next="#pin3" disabled>Continue</button>
   </div>
 </section>
@@ -297,15 +301,19 @@
   </div>
 </section>
 
-<!-- Q4: slider, trust -->
-<section class="q">
-  <div class="card" data-card data-step="4">
-    <p class="k">Question 4 of 6</p>
-    <h2>How much do you trust health advice you find online?</h2>
-    <p class="val" id="q4val">5</p>
-    <input class="range" id="q4" type="range" min="0" max="10" step="1" value="5" aria-label="Trust in online health advice, 0 to 10">
-    <div class="scale"><span>Not at all</span><span>Completely</span></div>
-    <button class="next" data-next="#pin4">Continue</button>
+<!-- Q3: multi-select -->
+<section class="q" id="q3s">
+  <div class="card" data-card data-step="3">
+    <p class="k">Question 3 of 6</p>
+    <h2>What usually gets in the way of booking?</h2>
+    <p class="help">Pick as many as apply.</p>
+    <div class="pills one" id="q3">
+      <button class="pill" data-v="Finding the time"><span class="box"><svg viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.5l2.6 2.5L10 3.5"/></svg></span>Finding the time</button>
+      <button class="pill" data-v="The cost"><span class="box"><svg viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.5l2.6 2.5L10 3.5"/></svg></span>The cost</button>
+      <button class="pill" data-v="Waiting weeks for a slot"><span class="box"><svg viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.5l2.6 2.5L10 3.5"/></svg></span>Waiting weeks for a slot</button>
+      <button class="pill" data-v="It doesn't feel serious enough"><span class="box"><svg viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.5l2.6 2.5L10 3.5"/></svg></span>It doesn't feel serious enough</button>
+    </div>
+    <button class="next" data-next="#pin4" disabled>Continue</button>
   </div>
 </section>
 
@@ -322,6 +330,36 @@
   </div>
 </section>
 
+<!-- Q4: slider, trust -->
+<section class="q">
+  <div class="card" data-card data-step="4">
+    <p class="k">Question 4 of 6</p>
+    <h2>How much do you trust health advice you find online?</h2>
+    <p class="val" id="q4val">5</p>
+    <input class="range" id="q4" type="range" min="0" max="10" step="1" value="5" aria-label="Trust in online health advice, 0 to 10">
+    <div class="scale"><span>Not at all</span><span>Completely</span></div>
+    <button class="next" data-next="#pin5">Continue</button>
+  </div>
+</section>
+
+<!-- SCENE 5: the appointment comes to you (phone + doctor), transform/opacity only -->
+<section class="scene scene5">
+  <div class="pin" id="pin5">
+    <div class="stage">
+      <div class="phone" id="phone5">
+        <div class="phone-screen">
+          <div class="phone-doc" id="phonedoc"></div>
+          <div class="phone-bar"><i></i><i></i><i></i></div>
+        </div>
+      </div>
+    </div>
+    <div class="copy" id="copy5">
+      <p class="line l9">What if the appointment came to you?</p>
+      <p class="line small l10">Ten minutes, on your phone, on your lunch break. The same illustration is reused here, so nothing new has to load.</p>
+    </div>
+  </div>
+</section>
+
 <!-- Q5: yes / no / maybe -->
 <section class="q">
   <div class="card" data-card data-step="5">
@@ -332,7 +370,21 @@
       <button class="pill" data-v="Maybe">Maybe</button>
       <button class="pill" data-v="No">No</button>
     </div>
-    <button class="next" data-next="#q6s" disabled>Continue</button>
+    <button class="next" data-next="#pin6" disabled>Continue</button>
+  </div>
+</section>
+
+<!-- SCENE 6: last one, morning light, transform/opacity only -->
+<section class="scene scene6">
+  <div class="pin" id="pin6">
+    <div class="stage">
+      <div class="dawn" id="dawn"></div>
+      <div class="orb" id="orb"></div>
+    </div>
+    <div class="copy" id="copy6">
+      <p class="line l11">Last one. No story, just you.</p>
+      <p class="line small l12">A quiet scene before the final question, so the answer is about today and not about the video.</p>
+    </div>
   </div>
 </section>
 
@@ -378,6 +430,9 @@
 <script>
 (function(){
   gsap.registerPlugin(ScrollTrigger);
+  ScrollTrigger.config({ignoreMobileResize:true});
+  const touch = matchMedia('(hover: none) and (pointer: coarse)').matches;
+  if(touch) ScrollTrigger.normalizeScroll({allowNestedScroll:true});
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const answers = {};
 
@@ -398,21 +453,21 @@
 
   if(!reduce){
     // SCENE 1: copy in, person appears, wipe, person stays, second copy
-    gsap.timeline({scrollTrigger:{trigger:'#pin1',start:'top top',end:'+=300%',pin:true,scrub:.6,anticipatePin:1}})
+    gsap.timeline({scrollTrigger:{trigger:'#pin1',start:'top top',end:'+=240%',pin:true,scrub:.35,anticipatePin:1}})
       .to('.l1',{opacity:1,y:0,duration:.6})
       .to('.l2',{opacity:1,y:0,duration:.6},'-=.2')
       .to({}, {duration:.5})
       .fromTo('#person1',{opacity:0,y:40,scale:.92},{opacity:1,y:0,scale:1,duration:.9,ease:'power2.out'})
       .to({}, {duration:.4})
       .to('.l1,.l2',{opacity:0,y:-14,duration:.4})
-      .to('#wipe1',{clipPath:'circle(150% at 50% 38%)',duration:1.4,ease:'power2.inOut'},'<')
-      .to('#person1',{filter:'drop-shadow(0 12px 24px rgba(0,0,0,.18))',duration:1.4},'<')
+      .to('#wipe1',{scale:1,duration:1.4,ease:'power2.inOut'},'<')
+      .to('#person1',{'--sh':.45,duration:1.4},'<')
       .to('.l3',{opacity:1,y:0,duration:.6},'-=.5')
       .to('.l4',{opacity:1,y:0,duration:.6},'-=.2')
       .to({}, {duration:.8});
 
     // SCENE 2: parallax + staggered copy
-    gsap.timeline({scrollTrigger:{trigger:'#pin2',start:'top top',end:'+=180%',pin:true,scrub:.6,anticipatePin:1}})
+    gsap.timeline({scrollTrigger:{trigger:'#pin2',start:'top top',end:'+=160%',pin:true,scrub:.35,anticipatePin:1}})
       .fromTo('#img2',{yPercent:-6,scale:1.08},{yPercent:6,scale:1,duration:3,ease:'none'},0)
       .fromTo('#hills',{y:30},{y:-30,duration:3,ease:'none'},0)
       .to('.l5',{opacity:1,y:0,duration:.6},.3)
@@ -424,7 +479,7 @@
     gsap.set(path,{strokeDasharray:L,strokeDashoffset:L});
     const dot=document.getElementById('ecgdot');
     const prog={t:0};
-    gsap.timeline({scrollTrigger:{trigger:'#pin3',start:'top top',end:'+=200%',pin:true,scrub:.5,anticipatePin:1}})
+    gsap.timeline({scrollTrigger:{trigger:'#pin3',start:'top top',end:'+=170%',pin:true,scrub:.35,anticipatePin:1}})
       .to(dot,{opacity:1,duration:.1},0)
       .to(path,{strokeDashoffset:0,duration:2.2,ease:'none'},0)
       .to(prog,{t:1,duration:2.2,ease:'none',onUpdate(){const p=path.getPointAtLength(prog.t*L);dot.setAttribute('cx',p.x);dot.setAttribute('cy',p.y);}},0)
@@ -434,19 +489,35 @@
 
     // SCENE 4: number counts up with the scroll
     const c={v:0}, el=document.getElementById('counter');
-    gsap.timeline({scrollTrigger:{trigger:'#pin4',start:'top top',end:'+=160%',pin:true,scrub:.5,anticipatePin:1}})
+    gsap.timeline({scrollTrigger:{trigger:'#pin4',start:'top top',end:'+=130%',pin:true,scrub:.35,anticipatePin:1}})
       .to(c,{v:64,duration:1.6,ease:'power1.out',onUpdate(){el.textContent=Math.round(c.v);}},0)
       .to('#lbl4',{opacity:1,y:0,duration:.6},.9)
       .to('#note4',{opacity:1,duration:.4},1.3)
       .to({}, {duration:.6});
 
+    // SCENE 5: phone tilts in, doctor appears on screen
+    gsap.timeline({scrollTrigger:{trigger:'#pin5',start:'top top',end:'+=150%',pin:true,scrub:.35,anticipatePin:1}})
+      .to('#phone5',{opacity:1,rotate:0,scale:1,xPercent:-50,yPercent:-50,duration:1,ease:'power2.out'},0)
+      .to('#phonedoc',{opacity:1,y:0,duration:.7},.5)
+      .to('.l9',{opacity:1,y:0,duration:.6},.7)
+      .to('.l10',{opacity:1,y:0,duration:.6},1.1)
+      .to({}, {duration:.6});
+
+    // SCENE 6: sun rises, light warms, copy in
+    gsap.timeline({scrollTrigger:{trigger:'#pin6',start:'top top',end:'+=150%',pin:true,scrub:.35,anticipatePin:1}})
+      .to('#orb',{yPercent:-50,duration:1.6,ease:'power1.out'},0)
+      .to('#dawn',{opacity:1,duration:1.6,ease:'none'},0)
+      .to('.l11',{opacity:1,y:0,duration:.6},.6)
+      .to('.l12',{opacity:1,y:0,duration:.6},1.0)
+      .to({}, {duration:.5});
+
     // cards rise in when they enter
     document.querySelectorAll('[data-card]').forEach(c=>{
-      gsap.to(c,{opacity:1,y:0,scale:1,duration:.7,ease:'power3.out',
-        scrollTrigger:{trigger:c,start:'top 80%',toggleActions:'play none none reverse'}});
+      gsap.to(c,{opacity:1,y:0,scale:1,duration:.55,ease:'power2.out',
+        scrollTrigger:{trigger:c,start:'top 85%',toggleActions:'play none none none'}});
     });
   } else {
-    gsap.set('.line,[data-card],#person1,#lbl4,#note4',{opacity:1,y:0,scale:1});
+    gsap.set('.line,[data-card],#person1,#lbl4,#note4,#phone5,#phonedoc,#dawn',{opacity:1,y:0,scale:1});
     document.getElementById('counter').textContent='64';
   }
 
