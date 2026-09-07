@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#14121C">
+
+<!-- ===================================================================
+     ZONE A — CE QUE GOOGLE AFFICHE
+     ⚠️ noindex tant que c'est une maquette : cette page ne doit pas sortir
+     dans Google avant que la propriétaire ait dit oui. À RETIRER le jour
+     de la vente, avec la mention "concept mockup" en pied de page.
+     =================================================================== -->
+<meta name="robots" content="noindex,nofollow">
+<title>Mii Nails &amp; Lashes — Russian manicure, extensions and lashes on Oxford St, Darlinghurst</title>
+<meta name="description" content="Russian manicure, acrylic and gel extensions, nail art and lashes on Oxford Street, Darlinghurst. Open 7 days. Call (02) 8018 4199.">
+<meta property="og:title" content="Mii Nails &amp; Lashes — Oxford St, Darlinghurst">
+<meta property="og:description" content="Russian manicure, extensions, nail art and lashes on Oxford Street. Open 7 days.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="img/set-pink-french.jpg">
+
+<link rel="icon" href="img/logo.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+/* ===================================================================
+   ZONE B — COULEURS ET POLICES
+   Parti pris : fond sombre. Oxford Street le soir, pas un spa de jour.
+   Aucune couleur d'accent en dur ailleurs que dans :root.
+   =================================================================== */
+:root{
+  --ink:      #14121C;   /* fond principal */
+  --ink-2:    #1E1B2B;   /* cartes */
+  --cream:    #F5F2EC;   /* texte principal */
+  --lilac:    #B79BFF;   /* accent */
+  --lilac-ink:#14121C;   /* texte posé sur le lilas */
+  --gold:     #D9C48A;   /* rappel du logo (goutte dorée) */
+  --muted:    #8F8AA3;
+  --line:     #2C2839;
+
+  --display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  --body:    'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --radius: 18px;
+  --pill: 999px;
+  --maxw: 1040px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--body);background:var(--ink);color:var(--cream);font-size:17px;line-height:1.7}
+img{max-width:100%;display:block}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 26px}
+
+h1,h2,h3{font-family:var(--display);font-weight:700;line-height:1.05;letter-spacing:-0.03em}
+h1{font-size:clamp(2.6rem,8vw,4.8rem)}
+h2{font-size:clamp(2rem,5.5vw,3.1rem);margin-bottom:16px}
+h3{font-size:1.3rem;letter-spacing:-0.02em}
+.eyebrow{font-size:0.74rem;letter-spacing:0.24em;text-transform:uppercase;color:var(--lilac);font-weight:500;margin-bottom:18px}
+.sub{color:var(--muted);max-width:50ch;font-size:1.06rem;margin-bottom:44px}
+section{padding:88px 0}
+
+/* ===================================================================
+   ZONE C — LE BOUTON TÉLÉPHONE
+   Affichage : (02) 8018 4199        Lien : tel:+61280184199
+   Mobile    : 0478 886 168          Lien : tel:+61478886168
+   Les deux numéros sont publics : le fixe est dans la bio Instagram et
+   sur chaque post, le mobile est celui affiché sur la fiche Google.
+   =================================================================== -->
+.btn{display:inline-block;font-weight:500;font-size:1rem;padding:16px 32px;border-radius:var(--pill);
+  text-decoration:none;border:1px solid transparent;transition:opacity .15s}
+.btn:hover{opacity:.86}
+.btn-call{background:var(--lilac);color:var(--lilac-ink);font-weight:700}
+.btn-ghost{border-color:var(--line);color:var(--cream)}
+
+.callbar{position:fixed;left:0;right:0;bottom:0;z-index:50;display:none;background:var(--lilac);
+  color:var(--lilac-ink);text-align:center;padding:15px;font-weight:700;text-decoration:none}
+@media(max-width:700px){.callbar{display:block} body{padding-bottom:58px}}
+
+/* ---------- EN-TÊTE ---------- */
+header{padding:18px 0;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:40;
+  background:color-mix(in srgb,var(--ink) 88%,transparent);backdrop-filter:blur(10px)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--cream);font-weight:700;font-size:1.2rem;letter-spacing:-0.03em}
+.brand img{width:44px;height:44px;border-radius:50%;box-shadow:0 0 0 2px var(--gold)}
+.brand span{color:var(--lilac)}
+.nav a{color:var(--cream);text-decoration:none;font-size:0.95rem}
+.nav .links{display:flex;gap:22px;align-items:center}
+@media(max-width:700px){.nav .links a:not(.phone){display:none}}
+
+/* ---------- HERO ---------- */
+.hero{padding:72px 0 64px}
+.hero-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:48px;align-items:center}
+.hero h1{margin-bottom:22px}
+.hero h1 span{color:var(--lilac)}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap}
+.chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:40px}
+.chip{border:1px solid var(--line);border-radius:var(--pill);padding:9px 18px;font-size:0.86rem;color:var(--muted)}
+.hero-photo{border-radius:var(--radius);overflow:hidden;aspect-ratio:4/5;background:var(--ink-2)}
+.hero-photo img{width:100%;height:100%;object-fit:cover}
+.hero-photo figcaption{display:none}
+
+/* ---------- CHIFFRES ---------- */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px}
+.stat{background:var(--ink-2);border-radius:var(--radius);padding:28px 24px}
+.stat b{display:block;font-size:2.4rem;font-weight:700;color:var(--lilac);line-height:1;letter-spacing:-0.04em}
+.stat span{font-size:0.74rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted)}
+
+/* ---------- L'ARGUMENT RUSSIAN MANICURE ---------- */
+.pitch{background:var(--lilac);color:var(--lilac-ink);border-radius:var(--radius);padding:44px 38px;
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:32px;align-items:center}
+.pitch .eyebrow{color:var(--lilac-ink);opacity:.6}
+.pitch h2{color:var(--lilac-ink);font-size:clamp(1.8rem,4vw,2.5rem);margin-bottom:12px}
+.pitch p{font-size:1.02rem;opacity:.85}
+.pitch .steps{display:grid;gap:12px}
+.pitch .step{background:color-mix(in srgb,var(--lilac-ink) 10%,transparent);border-radius:12px;padding:14px 18px;font-size:0.95rem}
+.pitch .step b{display:block;font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;opacity:.6;margin-bottom:2px}
+
+/* ===================================================================
+   ZONE D — SERVICES
+   Le titre dit "Six things" ↔ 6 blocs .svc. Recompte si tu modifies.
+   Liste tirée de la fiche Fresha + des highlights Instagram du salon.
+   =================================================================== */
+.svc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.svc{background:var(--ink-2);border-radius:var(--radius);padding:30px 26px;border:1px solid var(--line)}
+.svc h3{margin-bottom:10px}
+.svc p{color:var(--muted);font-size:0.97rem}
+.svc .idx{display:inline-block;font-size:0.72rem;letter-spacing:0.2em;color:var(--lilac);margin-bottom:16px}
+.price-note{margin-top:30px;color:var(--muted);font-size:0.95rem;max-width:54ch}
+
+/* ---------- GALERIE ----------
+   4 photos = les publications Instagram du salon (reprises pour la
+   proposition, voir mention en pied de page) + la vitrine du salon. */
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.gallery figure{margin:0;border-radius:var(--radius);overflow:hidden;aspect-ratio:4/5;background:var(--ink-2);position:relative}
+.gallery img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.gallery figure:hover img{transform:scale(1.03)}
+.gallery figcaption{position:absolute;left:0;right:0;bottom:0;padding:32px 16px 14px;font-size:0.82rem;color:var(--cream);
+  background:linear-gradient(to top,color-mix(in srgb,var(--ink) 85%,transparent),transparent)}
+.ig{display:inline-flex;align-items:center;gap:10px;margin-top:28px;color:var(--cream);text-decoration:none;font-weight:500}
+.ig svg{width:22px;height:22px}
+.ig:hover{color:var(--lilac)}
+
+/* ===================================================================
+   ZONE E — AVIS
+   Un seul avis textuel vérifié (fiche Google, 07/09/2026), copié tel quel.
+   Les deux autres blocs restent en pointillés jusqu'à ce que la
+   propriétaire fournisse de VRAIS avis. N'en écris jamais un toi-même :
+   conduite trompeuse (ACCC) et c'est SA fiche Google qui saute.
+   =================================================================== */
+.rev-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
+.rev{border:1px dashed var(--lilac);border-radius:var(--radius);padding:30px;min-height:190px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+  color:var(--muted);font-size:0.9rem}
+.rev.real{border-style:solid;border-color:var(--line);background:var(--ink-2);color:var(--cream);
+  font-size:1.05rem;align-items:flex-start;text-align:left;justify-content:space-between}
+.rev .stars{color:var(--lilac);letter-spacing:0.16em;margin-bottom:12px;font-size:1.05rem}
+.rev .who{color:var(--muted);font-size:0.85rem;margin-top:16px}
+.google-link{display:inline-block;margin-top:26px;color:var(--muted);font-size:0.9rem}
+.google-link a{color:var(--cream)}
+
+/* ===================================================================
+   ZONE F — HORAIRES  /  ZONE G — LIEU
+   =================================================================== */
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:52px;align-items:start}
+.hours div{display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid var(--line)}
+.hours dt{font-weight:500}
+.hours dd{color:var(--muted)}
+address{font-style:normal;font-size:1.5rem;font-weight:500;line-height:1.4;margin:20px 0 24px;letter-spacing:-0.02em}
+.shopfront{border-radius:var(--radius);overflow:hidden;margin-top:26px;aspect-ratio:16/10;background:var(--ink-2)}
+.shopfront img{width:100%;height:100%;object-fit:cover}
+
+/* ===================================================================
+   ZONE H — FORMULAIRE
+   ⚠️ Aucun champ santé, allergie ou antécédent : information sensible
+   au sens du Privacy Act 1988. Ça se dit en cabine.
+   =================================================================== */
+.form-card{background:var(--ink-2);border:1px solid var(--line);border-radius:var(--radius);padding:52px 40px}
+@media(max-width:600px){.form-card{padding:36px 22px}}
+form{display:grid;gap:16px;max-width:520px}
+label{font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted)}
+input,select,textarea{font-family:var(--body);font-size:1rem;width:100%;padding:15px 18px;
+  border:1px solid var(--line);border-radius:12px;background:var(--ink);color:var(--cream)}
+textarea{min-height:100px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--lilac);outline-offset:1px}
+.hp{position:absolute;left:-9999px}
+.privacy{font-size:0.85rem;color:var(--muted)}
+
+footer{padding:46px 0 40px;border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:0.9rem}
+footer a{color:var(--cream)}
+footer .logo{width:64px;height:64px;border-radius:50%;margin:0 auto 18px;box-shadow:0 0 0 2px var(--gold)}
+.mockup{margin-top:28px;padding-top:22px;border-top:1px dashed var(--line);font-size:0.8rem;max-width:66ch;margin-left:auto;margin-right:auto;line-height:1.6}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top"><img src="img/logo.png" alt="Mii Nails &amp; Lashes logo" width="400" height="400">Mii <span>·</span> Nails &amp; Lashes</a>
+    <div class="links">
+      <a href="#services">Services</a>
+      <a href="#work">Our work</a>
+      <a href="#find">Find us</a>
+      <!-- ZONE C — affichage avec espaces -->
+      <a class="phone" href="tel:+61280184199">(02) 8018 4199</a>
+    </div>
+  </div>
+</header>
+
+<!-- =================== HERO =================== -->
+<div class="wrap hero" id="top">
+ <div class="hero-grid">
+  <div>
+  <div class="eyebrow">Oxford Street · Darlinghurst · Open 7 days</div>
+  <h1>Cuticles clean.<br>Lines <span>sharp</span>.<br>No lifting.</h1>
+  <p class="sub" style="margin-bottom:34px">Russian manicure, extensions, nail art and lashes on Oxford Street. Precision work under a lamp, by people who care about the edge you can't see from a metre away.</p>
+  <div class="hero-actions">
+    <!-- ZONE C — lien international sans espaces -->
+    <a class="btn btn-call" href="tel:+61280184199">Call (02) 8018 4199</a>
+    <a class="btn btn-ghost" href="#work">See our work</a>
+  </div>
+  <div class="chips">
+    <span class="chip">Walk-ins when we're free</span>
+    <span class="chip">Bookings by phone</span>
+    <span class="chip">Men welcome</span>
+    <span class="chip">Open Sundays</span>
+  </div>
+  </div>
+
+  <!-- Photo du salon : publication Instagram @mii.nailsandlashes (mai 2024). -->
+  <figure class="hero-photo">
+    <img src="img/set-pink-french.jpg" alt="Long square nails with a hot pink French tip and pearl and flower details, done at Mii Nails &amp; Lashes" width="900" height="686" fetchpriority="high">
+    <figcaption>Pink French with pearl and flower tips</figcaption>
+  </figure>
+ </div>
+</div>
+
+<!-- =================== CHIFFRES ===================
+     ✅ 4.5 / 279 relevés sur la fiche Google le 07/09/2026.
+     ✅ 35.2K abonnés relevés sur @mii.nailsandlashes le 07/09/2026.
+     REVÉRIFIER avant chaque envoi du lien.
+================================================================= -->
+<div class="wrap">
+  <div class="stats">
+    <div class="stat"><b>4.5</b><span>Google rating</span></div>
+    <div class="stat"><b>279</b><span>Google reviews</span></div>
+    <div class="stat"><b>35k</b><span>Instagram followers</span></div>
+    <div class="stat"><b>7 days</b><span>Open every week</span></div>
+  </div>
+</div>
+
+<!-- =================== L'ARGUMENT =================== -->
+<section style="padding-bottom:0">
+  <div class="wrap">
+    <div class="pitch">
+      <div>
+        <div class="eyebrow">Why Russian</div>
+        <h2>It's about the fold</h2>
+        <p>A standard manicure cleans up to the cuticle. A Russian manicure goes into it: dry, with a fine bit, so the product sits right against the skin. That's why the regrowth line takes three weeks to show instead of one, and why it costs a little more.</p>
+      </div>
+      <div class="steps">
+        <div class="step"><b>01</b>Dry prep, no soaking. The skin stays firm so the bit can work clean.</div>
+        <div class="step"><b>02</b>Cuticle lifted and removed with an e-file, not clipped.</div>
+        <div class="step"><b>03</b>Product laid right into the fold, then cured under the lamp.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== ZONE D — SERVICES ===================
+     Titre "Six things" ↔ 6 blocs .svc. Recompte si tu modifies.
+================================================================= -->
+<section id="services">
+  <div class="wrap">
+    <div class="eyebrow">Services</div>
+    <h2>Six things we're good at</h2>
+    <p class="sub">Short list on purpose. Everything here is done in the salon, by hand, with the lamp times we actually mean.</p>
+
+    <div class="svc-grid">
+      <div class="svc"><span class="idx">01</span><h3>Russian manicure</h3><p>Dry cuticle work with an e-file, right into the fold. Colour sits flush against the skin and the regrowth line takes twice as long to show.</p></div>
+      <div class="svc"><span class="idx">02</span><h3>Acrylic &amp; gel extensions</h3><p>Built to the shape and length you ask for, square, almond, coffin or stiletto, thin at the free edge so they don't feel like someone else's hands.</p></div>
+      <div class="svc"><span class="idx">03</span><h3>Nail art</h3><p>French tips, chrome, 3D flowers, pearls and charms. Bring a photo or describe it and we'll tell you honestly what will hold up.</p></div>
+      <div class="svc"><span class="idx">04</span><h3>Manicure &amp; pedicure</h3><p>Shape, tidy, and a polish or gel. Combo bookings if you want both done in one sitting. Men's pedicures too, no polish unless you ask.</p></div>
+      <div class="svc"><span class="idx">05</span><h3>Lashes</h3><p>Classic, hybrid, wispy, cat eye or doll eye, mapped to your eye shape. Infills booked before you leave so you're never caught out with gaps.</p></div>
+      <div class="svc"><span class="idx">06</span><h3>Waxing &amp; brows</h3><p>Brow shaping and tinting, and face and body waxing while you're in the chair.</p></div>
+    </div>
+
+    <!-- ⚠️ TARIFS : ne rien inventer. Demander la grille et remplacer ce paragraphe. -->
+    <p class="price-note">Prices are on the board in the salon. Ring us with what you're after and we'll give you the number before you come in.</p>
+  </div>
+</section>
+
+<!-- =================== GALERIE ===================
+     Photos = publications Instagram du salon, reprises pour la proposition.
+     Le jour de la vente : demander les originaux, elles seront plus nettes.
+================================================================= -->
+<section id="work" style="padding-top:0">
+  <div class="wrap">
+    <div class="eyebrow">Our work</div>
+    <h2>Straight from the chair</h2>
+    <p class="sub">A few recent sets. There are eight hundred more on Instagram if you're choosing a design.</p>
+    <div class="gallery">
+      <figure><img src="img/set-pink-french.jpg" alt="Long square nails with hot pink French tips and pearl and flower details" width="900" height="686" loading="lazy"><figcaption>Pink French, pearl tips</figcaption></figure>
+      <figure><img src="img/set-stiletto-pink.jpg" alt="Long stiletto nails in sheer pink with white tips, bows and 3D flowers" width="900" height="869" loading="lazy"><figcaption>Stiletto, bows and 3D flowers</figcaption></figure>
+      <figure><img src="img/set-red-french.jpg" alt="Long square nails with a red French tip and white smiley and dot art" width="900" height="1010" loading="lazy"><figcaption>Red French, smiley art</figcaption></figure>
+      <figure><img src="img/salon-interior.jpg" alt="Inside the salon on Oxford Street, a technician at the front counter" width="700" height="655" loading="lazy"><figcaption>The salon, Oxford Street</figcaption></figure>
+    </div>
+    <!-- Lien SORTANT vers l'Instagram principal (35.2K abonnés). Jamais d'embed. -->
+    <a class="ig" href="https://www.instagram.com/mii.nailsandlashes/" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      @mii.nailsandlashes on Instagram
+    </a>
+  </div>
+</section>
+
+<!-- =================== ZONE E — AVIS ===================
+     Un seul avis réel (fiche Google, relevé le 07/09/2026), copié tel quel.
+     Les deux autres blocs restent VIDES jusqu'à réception de vrais avis.
+================================================================= -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="eyebrow">Reviews</div>
+    <h2>What clients say</h2>
+    <p class="sub">Real Google reviews, copied exactly as they were written.</p>
+    <div class="rev-grid">
+      <div class="rev real">
+        <div><div class="stars">★★★★★</div>"Very very good service, they also provide yummy coffee and biscuits."</div>
+        <div class="who">Google review</div>
+      </div>
+      <div class="rev"><div class="stars">★★★★★</div>Emplacement pour un vrai avis Google —<br>à copier-coller tel quel</div>
+      <div class="rev"><div class="stars">★★★★★</div>Emplacement pour un vrai avis Google —<br>à copier-coller tel quel</div>
+    </div>
+    <p class="google-link">279 reviews and counting. <a href="https://www.google.com/maps/search/?api=1&query=Mii+Nails+%26+Lashes+Shop+4+6-14+Oxford+St+Darlinghurst+NSW+2010" target="_blank" rel="noopener">Read them all on Google</a></p>
+  </div>
+</section>
+
+<!-- =================== ZONE F + ZONE G =================== -->
+<section id="find" style="padding-top:0">
+  <div class="wrap two">
+    <div>
+      <div class="eyebrow">Hours</div>
+      <h2 style="margin-bottom:22px">Open 7 days</h2>
+      <!-- ✅ Horaires tels qu'affichés par le salon lui-même dans la bio
+           Instagram @miinailsandlashes (relevés le 07/09/2026) :
+           Mon–Fri 9–6:30, Sat 9–6, Sun 9:30–5. Fresha affiche la même chose.
+           Confirmer de vive voix quand même. -->
+      <div class="hours">
+        <div><dt>Monday – Friday</dt><dd>9:00am – 6:30pm</dd></div>
+        <div><dt>Saturday</dt><dd>9:00am – 6:00pm</dd></div>
+        <div><dt>Sunday</dt><dd>9:30am – 5:00pm</dd></div>
+      </div>
+      <p style="color:var(--muted);margin-top:24px;font-size:0.95rem">Last appointments go in about an hour before close. Sunday is our quietest day if you want the chair without the wait.</p>
+    </div>
+
+    <!-- ZONE G — adresse en texte + lien sortant. Pas d'iframe.
+         ✅ Adresse vérifiée sur Google le 07/09/2026 : Shop 4/6-14 Oxford St,
+         Darlinghurst 2010, dans Parkridge Apartments. -->
+    <div>
+      <div class="eyebrow">Find us</div>
+      <h2>Oxford Street</h2>
+      <address>Shop 4, 6–14 Oxford Street<br>Darlinghurst NSW 2010</address>
+      <a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&query=Shop+4+6-14+Oxford+Street+Darlinghurst+NSW+2010" target="_blank" rel="noopener">Open in Google Maps</a>
+      <p style="color:var(--muted);margin-top:24px;font-size:0.95rem">Top of Oxford Street, the Hyde Park end, at street level of Parkridge Apartments. Museum station is a five minute walk and every bus down Oxford stops within a block.</p>
+      <div class="shopfront"><img src="img/salon-interior.jpg" alt="The Mii Nails &amp; Lashes shopfront on Oxford Street" width="700" height="655" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== ZONE H — FORMULAIRE ===================
+     Clé Web3Forms active (testée le 07/09/2026 : soumission acceptée).
+     Les messages arrivent sur la boîte rattachée à cette clé.
+     Rétention 30 jours : le mail EST l'archive.
+     ⚠️ redirect = URL ABSOLUE obligatoire.
+================================================================= -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="form-card">
+      <div class="eyebrow">Enquiries</div>
+      <h2>Send us a message</h2>
+      <p class="sub">Calling gets you a time faster. Use this for a question about a set you've seen, a group booking, or anything that can wait until we're between clients. You can also text <a href="sms:+61478886168" style="color:var(--cream)">0478 886 168</a>.</p>
+
+      <form action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="192e2413-8ded-4ad2-bbe5-e38ff736c986">
+        <input type="hidden" name="subject" value="Mii Nails & Lashes — website enquiry">
+        <input type="hidden" name="from_name" value="Mii Nails & Lashes website">
+        <input type="hidden" name="redirect" value="https://nuimauri-ai.github.io/mii-nails/merci.html">
+        <input type="text" name="botcheck" class="hp" tabindex="-1" autocomplete="off">
+
+        <div><label for="n">Name</label><input id="n" type="text" name="Name" required autocomplete="name"></div>
+        <div><label for="e">Email</label><input id="e" type="email" name="email" required autocomplete="email"></div>
+        <div><label for="s">Service</label>
+          <select id="s" name="Service">
+            <option>Russian manicure</option><option>Acrylic or gel extensions</option><option>Nail art</option>
+            <option>Manicure &amp; pedicure</option><option>Lashes</option><option>Waxing &amp; brows</option><option>Something else</option>
+          </select>
+        </div>
+        <div><label for="a">When suits you</label><input id="a" type="text" name="Availability" placeholder="e.g. after work, or a Sunday"></div>
+        <div><label for="m">Message</label><textarea id="m" name="Message" placeholder="A design you've seen, how many of you, anything we should know"></textarea></div>
+        <button class="btn btn-call" type="submit" style="cursor:pointer">Send enquiry</button>
+        <p class="privacy">Anything to do with allergies or skin sensitivity we'll go through in person at your appointment. Please don't put it in this form.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <img class="logo" src="img/logo.png" alt="Mii Nails &amp; Lashes logo" width="400" height="400">
+    <p>Mii Nails &amp; Lashes · Shop 4, 6–14 Oxford Street, Darlinghurst NSW 2010 · <a href="tel:+61280184199">(02) 8018 4199</a> · <a href="https://www.instagram.com/mii.nailsandlashes/" target="_blank" rel="noopener">Instagram</a></p>
+    <!-- ⚠️ MENTION MAQUETTE — à retirer le jour de la vente, avec le noindex.
+         Elle dit trois choses : ce n'est pas le site officiel, le logo et
+         les photos appartiennent au salon, et c'est une proposition. -->
+    <p class="mockup">Concept mockup prepared by Nui Mauri for Mii Nails &amp; Lashes. This is not an official Mii Nails &amp; Lashes website. The logo and photographs remain the property of Mii Nails &amp; Lashes and are shown here for this proposal only. <a href="mailto:nui.mauri@gmail.com">Ask and it comes down.</a></p>
+  </div>
+</footer>
+
+<a class="callbar" href="tel:+61280184199">Call the salon — (02) 8018 4199</a>
+
+</body>
+</html>
