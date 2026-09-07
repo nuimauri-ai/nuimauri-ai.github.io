@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<!-- ===================================================================
+     ZONE A — CE QUE GOOGLE AFFICHE
+     noindex ACTIF tant que le site n'est pas vendu. À retirer à la vente.
+     =================================================================== -->
+<meta name="robots" content="noindex">
+<title>Salon D'Art — Colour &amp; Japanese straightening, Parramatta</title>
+<meta name="description" content="L'Oréal Professionnel salon on Church Street, Parramatta. Balayage, colour, keratin and Japanese straightening. Call (02) 9687 2520.">
+<meta property="og:title" content="Salon D'Art — Colour &amp; Japanese straightening, Parramatta">
+<meta property="og:description" content="An atelier for colour on Church Street, Parramatta. Reviewed publicly since 2010.">
+<meta property="og:type" content="website">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+
+<style>
+/* ===================================================================
+   ZONE B — COULEURS ET POLICES
+   Parti pris : l'atelier de nuit. Noir prune, un seul accent or rosé.
+   Toute couleur dérivée passe par color-mix() sur ces variables.
+   =================================================================== */
+:root{
+  --night:   #0e090c;                 /* fond principal */
+  --night-2: #17101a;                 /* fond des chapitres */
+  --gold:    #d6a97c;                 /* accent unique, or rosé */
+  --gold-ink:#0e090c;                 /* texte sur bouton or */
+  --cream:   #f1e6d8;                 /* texte principal */
+  --muted:   #9d8c93;                 /* texte secondaire */
+  --hair:    color-mix(in srgb, var(--gold) 28%, transparent);   /* filets */
+  --hair-2:  color-mix(in srgb, var(--gold) 12%, transparent);   /* line-art de fond */
+  --glow:    color-mix(in srgb, var(--gold) 22%, transparent);   /* halos */
+
+  --display: 'Cormorant Garamond', 'Times New Roman', serif;
+  --body:    'EB Garamond', Georgia, serif;
+
+  --maxw: 1180px;
+  --ease: cubic-bezier(.22,.61,.36,1);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--body);background:var(--night);color:var(--cream);font-size:18px;line-height:1.75;overflow-x:hidden}
+img,svg{max-width:100%;display:block}
+a{color:inherit}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px}
+
+h1,h2,h3{font-family:var(--display);font-weight:300;line-height:1.05;letter-spacing:.005em}
+h1{font-size:clamp(2.6rem,7.2vw,5.6rem)}
+h2{font-size:clamp(2.2rem,5.4vw,4rem)}
+h3{font-size:1.55rem;font-weight:400}
+em{font-style:italic;color:var(--gold)}
+.eyebrow{font-family:var(--body);font-size:.72rem;letter-spacing:.34em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:22px}
+.lede{max-width:52ch;font-size:1.12rem;color:var(--muted)}
+
+/* grain */
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.055;mix-blend-mode:screen;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* ===================================================================
+   ZONE C — LE BOUTON TÉLÉPHONE
+   Affichage : (02) 9687 2520
+   Lien      : tel:+61296872520   ← international, sans espaces
+   =================================================================== */
+.btn{display:inline-block;font-family:var(--body);font-size:.78rem;letter-spacing:.26em;text-transform:uppercase;
+  text-decoration:none;padding:17px 34px;border:1px solid var(--gold);color:var(--gold);
+  transition:background .25s var(--ease),color .25s var(--ease),transform .25s var(--ease)}
+.btn:hover{background:var(--gold);color:var(--gold-ink);transform:translateY(-1px)}
+.btn-solid{background:var(--gold);color:var(--gold-ink)}
+.btn-solid:hover{background:var(--cream);border-color:var(--cream)}
+.link{font-size:.78rem;letter-spacing:.26em;text-transform:uppercase;text-decoration:none;color:var(--gold);
+  padding-bottom:6px;border-bottom:1px solid var(--hair);transition:border-color .25s}
+.link:hover{border-color:var(--gold)}
+
+.callbar{position:fixed;left:0;right:0;bottom:0;z-index:60;display:none;background:var(--gold);color:var(--gold-ink);
+  text-align:center;padding:16px;font-size:.8rem;letter-spacing:.24em;text-transform:uppercase;text-decoration:none}
+@media(max-width:700px){.callbar{display:block} body{padding-bottom:58px}}
+
+/* ---------- BARRE FIXE : MENU + BOOK ---------- */
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:space-between;align-items:center;
+  padding:26px 38px;mix-blend-mode:difference}
+.bar a,.bar button{font-family:var(--body);font-size:.78rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);
+  background:none;border:none;cursor:pointer;text-decoration:none;display:flex;align-items:center;gap:12px;padding:0}
+.bar .lines{width:22px;display:grid;gap:5px}
+.bar .lines i{display:block;height:1px;background:var(--gold)}
+.bar .lines i:nth-child(2){width:70%}
+.bar .book{padding-bottom:6px;border-bottom:1px solid var(--gold)}
+@media(max-width:700px){.bar{padding:20px 22px}.bar .book span{display:none}.scroll{display:none}.hero-inner{padding-bottom:70px}}
+
+/* ---------- MENU PLEIN ÉCRAN ---------- */
+.menu{position:fixed;inset:0;z-index:70;background:var(--night);display:grid;place-items:center;
+  opacity:0;visibility:hidden;transition:opacity .4s var(--ease),visibility .4s}
+.menu.open{opacity:1;visibility:visible}
+.menu nav{display:grid;gap:8px;text-align:center}
+.menu nav a{font-family:var(--display);font-size:clamp(2rem,6vw,3.6rem);font-weight:300;text-decoration:none;color:var(--cream);
+  transition:color .2s,letter-spacing .3s}
+.menu nav a:hover{color:var(--gold);letter-spacing:.04em}
+.menu nav a small{display:block;font-family:var(--body);font-size:.68rem;letter-spacing:.34em;text-transform:uppercase;color:var(--gold);margin-bottom:2px}
+.menu .close{position:absolute;top:26px;right:38px;font-family:var(--body);font-size:.78rem;letter-spacing:.26em;text-transform:uppercase;
+  color:var(--gold);background:none;border:none;cursor:pointer}
+.menu .foot{position:absolute;bottom:34px;left:0;right:0;text-align:center;font-size:.9rem;color:var(--muted)}
+.menu .foot a{color:var(--gold);text-decoration:none}
+
+/* ---------- HERO PLEIN ÉCRAN ---------- */
+.hero{position:relative;min-height:100vh;min-height:100svh;display:grid;place-items:center;text-align:center;overflow:hidden;
+  background:
+    radial-gradient(ellipse 60% 45% at 50% 0%, var(--glow), transparent 70%),
+    radial-gradient(ellipse 80% 60% at 50% 110%, color-mix(in srgb, var(--gold) 8%, transparent), transparent 60%),
+    var(--night)}
+.hero .beam{position:absolute;left:50%;top:-10%;width:34vw;min-width:260px;height:120%;transform:translateX(-50%);pointer-events:none;
+  background:linear-gradient(180deg, color-mix(in srgb, var(--gold) 16%, transparent), transparent 75%);
+  clip-path:polygon(42% 0,58% 0,100% 100%,0 100%);opacity:.8;animation:beam 9s ease-in-out infinite alternate}
+@keyframes beam{from{opacity:.55;transform:translateX(-52%)}to{opacity:.95;transform:translateX(-48%)}}
+.hero .strands{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.hero .strands path{fill:none;stroke:var(--gold);stroke-width:.8;opacity:.45;
+  stroke-dasharray:1600;stroke-dashoffset:1600;animation:draw 3.6s var(--ease) forwards}
+.hero .strands path:nth-child(2){animation-delay:.25s;opacity:.3}
+.hero .strands path:nth-child(3){animation-delay:.5s;opacity:.35}
+.hero .strands path:nth-child(4){animation-delay:.7s;opacity:.25}
+.hero .strands path:nth-child(5){animation-delay:.9s;opacity:.3}
+.hero .strands path:nth-child(6){animation-delay:1.1s;opacity:.2}
+@keyframes draw{to{stroke-dashoffset:0}}
+.hero-inner{position:relative;z-index:2;padding:120px 24px 90px;max-width:900px}
+.hero-inner > *{opacity:0;transform:translateY(18px);animation:rise 1.1s var(--ease) forwards}
+.hero-inner > *:nth-child(1){animation-delay:.3s}
+.hero-inner > *:nth-child(2){animation-delay:.55s}
+.hero-inner > *:nth-child(3){animation-delay:.8s}
+.hero-inner > *:nth-child(4){animation-delay:1.05s}
+@keyframes rise{to{opacity:1;transform:none}}
+.hero h1{margin:0 auto}
+.hero .rule{display:flex;align-items:center;justify-content:center;gap:22px;margin:30px auto 26px}
+.hero .rule i{flex:0 0 clamp(50px,12vw,150px);height:1px;background:var(--hair)}
+.hero .rule span{font-size:.72rem;letter-spacing:.34em;text-transform:uppercase;color:var(--gold)}
+.hero p{max-width:46ch;margin:0 auto 38px;color:var(--muted);font-size:1.12rem}
+.hero .actions{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;align-items:center}
+.scroll{position:absolute;bottom:34px;left:50%;transform:translateX(-50%);z-index:2;font-size:.66rem;letter-spacing:.34em;
+  text-transform:uppercase;color:var(--muted);display:grid;justify-items:center;gap:12px}
+.scroll i{width:1px;height:46px;background:linear-gradient(var(--gold),transparent);animation:drop 2.2s ease-in-out infinite}
+@keyframes drop{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ---------- CHAPITRES ---------- */
+.chapter{position:relative;padding:150px 0;background:var(--night-2);overflow:hidden}
+.chapter + .chapter{border-top:1px solid var(--hair-2)}
+.chapter .bg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.chapter .bg path,.chapter .bg circle,.chapter .bg line{fill:none;stroke:var(--hair-2);stroke-width:.8}
+.numeral{font-family:var(--display);font-weight:300;font-size:clamp(5rem,14vw,11rem);line-height:.8;color:var(--gold);
+  position:relative;display:inline-block;margin-bottom:34px}
+.numeral::after{content:"";position:absolute;left:0;bottom:-16px;width:60px;height:1px;background:var(--gold)}
+.chapter .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:64px;align-items:start;position:relative}
+.chapter .right{padding-top:clamp(0px,6vw,90px)}
+.chapter p{max-width:52ch;margin-bottom:22px}
+.chapter p.big{font-family:var(--display);font-size:clamp(1.5rem,2.6vw,2rem);line-height:1.3;color:var(--cream);max-width:34ch}
+.chapter .cta{margin-top:36px;display:flex;gap:22px;align-items:center;flex-wrap:wrap}
+
+/* révélation au scroll */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.15s}.reveal.d2{transition-delay:.3s}.reveal.d3{transition-delay:.45s}
+
+/* ===================================================================
+   ZONE D — SERVICES
+   Liste typographique. "Nine services" ↔ 9 lignes .svc. Recompte si tu modifies.
+   =================================================================== */
+.svc-list{margin-top:18px;border-top:1px solid var(--hair-2)}
+.svc{display:grid;grid-template-columns:54px 1fr auto;gap:18px;align-items:baseline;padding:20px 0;border-bottom:1px solid var(--hair-2);
+  transition:padding-left .3s var(--ease)}
+.svc:hover{padding-left:8px}
+.svc i{font-style:normal;font-size:.7rem;letter-spacing:.24em;color:var(--gold)}
+.svc h3{font-size:1.5rem}
+.svc span{font-size:.92rem;color:var(--muted);font-style:italic;text-align:right;max-width:26ch}
+@media(max-width:560px){.svc{grid-template-columns:40px 1fr}.svc span{grid-column:2;text-align:left}}
+
+/* ---------- SIGNATURE : LISSAGE ---------- */
+.notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:40px;margin-top:44px}
+.notes div{border-top:1px solid var(--hair);padding-top:20px}
+.notes h3{color:var(--gold);font-size:1.25rem;margin-bottom:10px}
+.notes p{font-size:.98rem;color:var(--muted);margin:0}
+
+/* ===================================================================
+   ZONE E — AVIS
+   ⚠️ Trois avis RÉELS, publiés publiquement, avec leur année. Ne rien inventer.
+   =================================================================== */
+.reviews{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:0;margin-top:56px;border-top:1px solid var(--hair)}
+.rev{padding:44px 36px 44px 0;border-bottom:1px solid var(--hair-2)}
+.rev .stars{color:var(--gold);letter-spacing:.2em;font-size:.85rem;margin-bottom:18px}
+.rev q{quotes:"\201C" "\201D";display:block;font-family:var(--display);font-size:1.6rem;line-height:1.3;margin-bottom:22px}
+.rev cite{font-style:normal;font-size:.7rem;letter-spacing:.28em;text-transform:uppercase;color:var(--muted)}
+
+/* ===================================================================
+   ZONE F — HORAIRES  /  ZONE G — LIEU
+   =================================================================== */
+.hours dl div{display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid var(--hair-2)}
+.hours dt{font-family:var(--display);font-size:1.25rem}
+.hours dd{color:var(--muted)}
+.hours .shut{color:var(--gold);font-style:italic}
+address{font-style:normal;font-family:var(--display);font-size:clamp(1.8rem,3vw,2.4rem);line-height:1.25;margin:20px 0 28px}
+
+/* ===================================================================
+   ZONE H — FORMULAIRE
+   Web3Forms. Les name= deviennent les libellés du mail reçu.
+   =================================================================== */
+form{display:grid;gap:22px;margin-top:10px}
+label{font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:6px}
+input,select,textarea{font-family:var(--body);font-size:1.05rem;width:100%;padding:12px 0;border:none;border-radius:0;
+  border-bottom:1px solid var(--hair);background:transparent;color:var(--cream)}
+select{appearance:none;-webkit-appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--gold) 50%),linear-gradient(135deg,var(--gold) 50%,transparent 50%);
+  background-position:calc(100% - 14px) 50%,calc(100% - 9px) 50%;background-size:5px 5px;background-repeat:no-repeat;padding-right:32px}
+select option{background:var(--night-2);color:var(--cream)}
+textarea{min-height:96px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:none;border-bottom-color:var(--gold)}
+::placeholder{color:var(--muted);opacity:.7}
+.hp{position:absolute;left:-9999px}
+form button{justify-self:start;cursor:pointer;font-family:var(--body)}
+
+/* ---------- FINALE PLEIN ÉCRAN ---------- */
+.finale{position:relative;min-height:88vh;display:grid;place-items:center;text-align:center;overflow:hidden;
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 100%, color-mix(in srgb, var(--gold) 26%, transparent), transparent 65%),
+    var(--night)}
+.finale .embers{position:absolute;inset:0;pointer-events:none}
+.finale .embers circle{fill:var(--gold);opacity:0;animation:ember 7s linear infinite}
+@keyframes ember{0%{opacity:0;transform:translateY(0)}15%{opacity:.7}100%{opacity:0;transform:translateY(-260px)}}
+.finale .inner{position:relative;z-index:2;padding:120px 24px}
+.finale h2{font-size:clamp(2.4rem,6.5vw,5rem);max-width:16ch;margin:0 auto 22px}
+.finale p{color:var(--gold);font-size:.78rem;letter-spacing:.34em;text-transform:uppercase;margin-bottom:44px}
+
+footer{padding:44px 0 40px;border-top:1px solid var(--hair-2);color:var(--muted);font-size:.9rem;text-align:center}
+footer a{color:var(--gold);text-decoration:none}
+footer .notice{margin-top:14px;font-size:.78rem;opacity:.7}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .hero-inner > *,.reveal{opacity:1;transform:none}
+  .hero .strands path{stroke-dashoffset:0}
+}
+</style>
+</head>
+<body>
+
+<!-- =================== BARRE FIXE =================== -->
+<div class="bar">
+  <button type="button" id="open" aria-label="Open menu"><span class="lines"><i></i><i></i><i></i></span> Menu</button>
+  <!-- Lien SORTANT vers l'outil de réservation déjà utilisé par le salon (Fresha). Jamais d'embed. -->
+  <a class="book" href="https://www.fresha.com/lvp/salon-dart-church-street-parramatta-QvAxvg" target="_blank" rel="noopener">Book <span>online</span></a>
+</div>
+
+<!-- =================== MENU PLEIN ÉCRAN =================== -->
+<div class="menu" id="menu" aria-hidden="true">
+  <button type="button" class="close" id="close">Close</button>
+  <nav>
+    <a href="#colour"><small>I</small>Colour</a>
+    <a href="#straightening"><small>II</small>Straightening</a>
+    <a href="#salon"><small>III</small>The salon</a>
+    <a href="#find"><small>IV</small>Find us</a>
+    <a href="#enquire"><small>V</small>Enquire</a>
+  </nav>
+  <!-- ZONE C — affichage avec espaces -->
+  <p class="foot">151 Church Street, Parramatta · <a href="tel:+61296872520">(02) 9687 2520</a></p>
+</div>
+
+<!-- =================== HERO =================== -->
+<section class="hero">
+  <div class="beam"></div>
+  <svg class="strands" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <path d="M-40 120 C 240 60, 420 300, 700 240 S 1180 80, 1500 220"/>
+    <path d="M-40 260 C 300 180, 520 420, 820 360 S 1240 220, 1500 380"/>
+    <path d="M-40 640 C 260 700, 480 520, 760 600 S 1200 760, 1500 640"/>
+    <path d="M-40 760 C 320 820, 560 640, 880 720 S 1260 860, 1500 780"/>
+    <path d="M-40 420 C 200 470, 380 380, 520 500 S 860 520, 1500 470"/>
+    <path d="M-40 900 C 400 880, 600 760, 960 840 S 1300 900, 1500 860"/>
+  </svg>
+
+  <div class="hero-inner">
+    <span class="eyebrow">Church Street · Parramatta</span>
+    <h1>Colour that behaves<br>when it <em>grows out</em></h1>
+    <div class="rule"><i></i><span>Salon D'Art</span><i></i></div>
+    <p>A L'Oréal Professionnel atelier where every appointment starts with a conversation about what your hair actually does. Balayage, colour, and the Japanese straightening people cross Sydney for.</p>
+    <div class="actions">
+      <a class="btn btn-solid" href="https://www.fresha.com/lvp/salon-dart-church-street-parramatta-QvAxvg" target="_blank" rel="noopener">Book online</a>
+      <!-- ZONE C — lien international sans espaces -->
+      <a class="link" href="tel:+61296872520">or call (02) 9687 2520</a>
+    </div>
+  </div>
+  <div class="scroll"><span>Step inside</span><i></i></div>
+</section>
+
+<!-- =================== I — COLOUR (ZONE D) =================== -->
+<section class="chapter" id="colour">
+  <svg class="bg" viewBox="0 0 1440 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <path d="M-20 100 C 300 40, 500 260, 820 180 S 1300 60, 1460 160"/>
+    <path d="M-20 700 C 260 760, 520 560, 840 660 S 1240 780, 1460 700"/>
+    <circle cx="1180" cy="420" r="170"/><circle cx="1180" cy="420" r="230"/>
+    <line x1="1180" y1="120" x2="1180" y2="720"/><line x1="880" y1="420" x2="1460" y2="420"/>
+  </svg>
+  <div class="wrap grid">
+    <div class="reveal">
+      <span class="numeral">I</span>
+      <span class="eyebrow">Colour</span>
+      <p class="big">Hand painted, so the regrowth line is soft and you come back when you want to, not when you have to.</p>
+      <p>Colour is quoted before we start, not after. Tell us your hair's history, the length, the last colour, whether it has been straightened, and you will get a range on the phone before you sit down.</p>
+      <div class="cta">
+        <a class="btn" href="https://www.fresha.com/lvp/salon-dart-church-street-parramatta-QvAxvg" target="_blank" rel="noopener">Book online</a>
+        <a class="link" href="#enquire">Ask about your hair</a>
+      </div>
+    </div>
+    <div class="right reveal d1">
+      <span class="eyebrow">Nine services</span>
+      <div class="svc-list">
+        <div class="svc"><i>01</i><h3>Balayage</h3><span>soft regrowth, no hard line</span></div>
+        <div class="svc"><i>02</i><h3>Highlights</h3><span>foils placed to your part and face</span></div>
+        <div class="svc"><i>03</i><h3>Hair colouring</h3><span>full colour, roots, corrections</span></div>
+        <div class="svc"><i>04</i><h3>Permanent straightening</h3><span>bio ionic and rebonding</span></div>
+        <div class="svc"><i>05</i><h3>Keratin treatment</h3><span>frizz down, movement kept</span></div>
+        <div class="svc"><i>06</i><h3>Curly hair</h3><span>cut dry, curl by curl</span></div>
+        <div class="svc"><i>07</i><h3>Women's haircut</h3><span>cut, wash and finish</span></div>
+        <div class="svc"><i>08</i><h3>Blow dry</h3><span>smooth, or with body</span></div>
+        <div class="svc"><i>09</i><h3>Children's haircut</h3><span>quick and calm</span></div>
+      </div>
+      <!-- ⚠️ TARIFS : ne rien inventer. Demander la grille à la propriétaire avant livraison. -->
+    </div>
+  </div>
+</section>
+
+<!-- =================== II — STRAIGHTENING =================== -->
+<section class="chapter" id="straightening">
+  <svg class="bg" viewBox="0 0 1440 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <line x1="120" y1="-20" x2="120" y2="820"/><line x1="180" y1="-20" x2="180" y2="820"/><line x1="240" y1="-20" x2="240" y2="820"/>
+    <line x1="300" y1="-20" x2="300" y2="820"/><line x1="360" y1="-20" x2="360" y2="820"/>
+    <path d="M900 -20 C 880 200, 940 400, 900 820"/><path d="M980 -20 C 960 220, 1020 420, 980 820"/><path d="M1060 -20 C 1040 240, 1100 440, 1060 820"/>
+  </svg>
+  <div class="wrap grid">
+    <div class="reveal">
+      <span class="numeral">II</span>
+      <span class="eyebrow">The one people travel for</span>
+      <p class="big">Japanese straightening is permanent. That is the whole point of it, and why it is not something to book casually.</p>
+      <p>Bio ionic straightening and rebonding break the bonds in the hair and reset them flat. New growth comes in with your natural texture, so the line has to be managed properly at every retouch.</p>
+    </div>
+    <div class="right reveal d1">
+      <div class="notes">
+        <div><h3>It's structural</h3><p>Once done, it stays done. We plan the retouch schedule with you on the first day.</p></div>
+        <div><h3>It takes time</h3><p>Depending on length and density, allow most of a day. We would rather block out too much than rush the neutralising stage.</p></div>
+        <div><h3>Consultation first</h3><p>Bleached, previously rebonded or heavily damaged hair may not be a candidate. We tell you in the chair, before you have paid for anything.</p></div>
+      </div>
+      <div class="cta">
+        <a class="btn" href="tel:+61296872520">Call to consult</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== III — THE SALON (ZONE E) =================== -->
+<section class="chapter" id="salon">
+  <svg class="bg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <circle cx="260" cy="180" r="120"/><circle cx="260" cy="180" r="180"/><circle cx="260" cy="180" r="240"/>
+    <path d="M-20 820 C 300 700, 600 900, 900 780 S 1300 700, 1460 800"/>
+  </svg>
+  <div class="wrap">
+    <div class="reveal">
+      <span class="numeral">III</span>
+      <span class="eyebrow">The salon</span>
+      <!-- ⚠️ Partenariat L'Oréal Professionnel : référencé dans l'annuaire officiel. À confirmer par la propriétaire avant livraison.
+           ⚠️ "since 2010" s'appuie sur un avis public daté de 2010. Demander l'année d'ouverture exacte. -->
+      <p class="big">A L'Oréal Professionnel salon on the Eat Street stretch of Church Street, reviewed publicly since 2010 with the same note: they take the time.</p>
+      <p>The colour line, the training, and the shade charts that go with it. And a team that would rather take an extra hour than hand you something you have to fix at home.</p>
+    </div>
+    <div class="reviews">
+      <div class="rev reveal d1">
+        <div class="stars">★★★★★</div>
+        <q>Michael is very meticulous, professional and sort of a perfectionist.</q>
+        <cite>elizabethr179 · 2017</cite>
+      </div>
+      <div class="rev reveal d2">
+        <div class="stars">★★★★★</div>
+        <q>Amazing hair stylists they really do treat your hair so carefully. Very friendly service.</q>
+        <cite>christinak4 · 2014</cite>
+      </div>
+      <div class="rev reveal d3">
+        <div class="stars">★★★★★</div>
+        <q>The people here treat your hair like its the only thing that matters, and really do take the time to manage it well.</q>
+        <cite>waynez · 2010</cite>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== IV — FIND US (ZONE F + ZONE G) =================== -->
+<section class="chapter" id="find">
+  <svg class="bg" viewBox="0 0 1440 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <line x1="-20" y1="400" x2="1460" y2="400"/><line x1="720" y1="-20" x2="720" y2="820"/>
+    <circle cx="720" cy="400" r="90"/><circle cx="720" cy="400" r="300"/>
+    <line x1="420" y1="100" x2="1020" y2="700"/><line x1="1020" y1="100" x2="420" y2="700"/>
+  </svg>
+  <div class="wrap grid">
+    <div class="reveal">
+      <span class="numeral">IV</span>
+      <span class="eyebrow">Find us</span>
+      <address>151 Church Street<br>Parramatta NSW 2150</address>
+      <p>On the Eat Street stretch, a six minute walk from Parramatta station and two minutes from the Riverside stop.</p>
+      <div class="cta">
+        <!-- ZONE G — adresse en texte + lien sortant. Pas d'iframe. -->
+        <a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=151+Church+Street+Parramatta+NSW+2150" target="_blank" rel="noopener">Open in Google Maps</a>
+      </div>
+    </div>
+    <div class="right hours reveal d1">
+      <span class="eyebrow">Six days</span>
+      <dl>
+        <div><dt>Monday</dt><dd>9:00am – 6:00pm</dd></div>
+        <div><dt>Tuesday</dt><dd class="shut">Closed</dd></div>
+        <div><dt>Wednesday</dt><dd>9:00am – 6:00pm</dd></div>
+        <div><dt>Thursday</dt><dd>9:00am – 7:00pm</dd></div>
+        <div><dt>Friday</dt><dd>9:00am – 6:00pm</dd></div>
+        <div><dt>Saturday</dt><dd>9:00am – 6:00pm</dd></div>
+        <div><dt>Sunday</dt><dd>9:00am – 6:00pm</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- =================== V — ENQUIRE (ZONE H) ===================
+     Clé Web3Forms active. Rétention 30 jours côté Web3Forms : le mail EST l'archive.
+================================================================= -->
+<section class="chapter" id="enquire">
+  <div class="wrap grid">
+    <div class="reveal">
+      <span class="numeral">V</span>
+      <span class="eyebrow">Enquire</span>
+      <p class="big">Tell us about your hair.</p>
+      <p>The more you can tell us before you come in, the closer the quote will be to the final number. Colour history, length, anything that has been straightened.</p>
+      <div class="cta"><a class="link" href="tel:+61296872520">Or call (02) 9687 2520</a></div>
+    </div>
+    <div class="right reveal d1">
+      <form action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="192e2413-8ded-4ad2-bbe5-e38ff736c986">
+        <input type="hidden" name="subject" value="Salon D'Art — website enquiry">
+        <input type="hidden" name="redirect" value="https://nuimauri-ai.github.io/salon-dart/merci.html">
+        <input type="text" name="botcheck" class="hp" tabindex="-1" autocomplete="off">
+
+        <div><label for="n">Name</label><input id="n" type="text" name="Name" required></div>
+        <div><label for="e">Email</label><input id="e" type="email" name="email" required></div>
+        <div><label for="s">Service</label>
+          <select id="s" name="Service">
+            <option>Balayage</option><option>Highlights</option><option>Hair colouring</option>
+            <option>Permanent straightening</option><option>Keratin treatment</option><option>Curly hair</option>
+            <option>Women's haircut</option><option>Blow dry</option><option>Children's haircut</option>
+          </select>
+        </div>
+        <div><label for="a">When suits you</label><input id="a" type="text" name="Availability" placeholder="Thursday evening, a Saturday morning…"></div>
+        <div><label for="m">Your hair's history</label><textarea id="m" name="Message"></textarea></div>
+        <button class="btn btn-solid" type="submit">Send enquiry</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- =================== FINALE =================== -->
+<section class="finale">
+  <svg class="embers" viewBox="0 0 1440 600" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <circle cx="200" cy="560" r="1.4" style="animation-delay:0s"/><circle cx="380" cy="590" r="1" style="animation-delay:1.2s"/>
+    <circle cx="560" cy="570" r="1.6" style="animation-delay:2.4s"/><circle cx="720" cy="600" r="1.2" style="animation-delay:.6s"/>
+    <circle cx="900" cy="580" r="1.5" style="animation-delay:3.1s"/><circle cx="1080" cy="595" r="1" style="animation-delay:1.8s"/>
+    <circle cx="1260" cy="565" r="1.4" style="animation-delay:4.2s"/><circle cx="640" cy="590" r=".9" style="animation-delay:5s"/>
+    <circle cx="300" cy="600" r="1.1" style="animation-delay:3.7s"/><circle cx="1180" cy="585" r="1.3" style="animation-delay:.3s"/>
+  </svg>
+  <div class="inner reveal">
+    <h2>We would rather take the <em>extra hour</em>.</h2>
+    <p>The chair is waiting</p>
+    <a class="btn btn-solid" href="https://www.fresha.com/lvp/salon-dart-church-street-parramatta-QvAxvg" target="_blank" rel="noopener">Book online</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>Salon D'Art · 151 Church Street, Parramatta NSW 2150 · <a href="tel:+61296872520">(02) 9687 2520</a></p>
+    <!-- Mention à RETIRER le jour de la vente, avec le noindex de la ZONE A. -->
+    <p class="notice">Design proposal by Nui Mauri. This is not an official Salon D'Art website.</p>
+  </div>
+</footer>
+
+<a class="callbar" href="tel:+61296872520">Call the salon · (02) 9687 2520</a>
+
+<script>
+(function(){
+  var menu=document.getElementById('menu');
+  function toggle(on){menu.classList.toggle('open',on);menu.setAttribute('aria-hidden',on?'false':'true');document.body.style.overflow=on?'hidden':''}
+  document.getElementById('open').addEventListener('click',function(){toggle(true)});
+  document.getElementById('close').addEventListener('click',function(){toggle(false)});
+  menu.querySelectorAll('nav a').forEach(function(a){a.addEventListener('click',function(){toggle(false)})});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')toggle(false)});
+
+  var els=document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target)}});
+    },{threshold:.15});
+    els.forEach(function(el){io.observe(el)});
+  }else{els.forEach(function(el){el.classList.add('in')})}
+})();
+</script>
+</body>
+</html>
