@@ -29,8 +29,8 @@
   .stage{position:absolute;inset:0}
   .copy{position:absolute;left:0;right:0;bottom:0;padding:0 22px calc(env(safe-area-inset-bottom) + 34px);max-width:560px;margin:0 auto}
   .copy.top{bottom:auto;top:calc(env(safe-area-inset-top) + 64px)}
-  .line{opacity:0;transform:translateY(18px);will-change:transform,opacity;font-size:clamp(26px,6.2vw,40px);line-height:1.12;font-weight:700;letter-spacing:-.02em;margin:0 0 10px;text-shadow:0 2px 24px rgba(0,0,0,.35);color:#fff}
-  .line.small{font-size:clamp(16px,4.2vw,20px);font-weight:500;line-height:1.4;text-shadow:0 1px 14px rgba(0,0,0,.4)}
+  .line{opacity:0;transform:translateY(18px);will-change:transform,opacity;font-size:clamp(26px,6.2vw,40px);line-height:1.12;font-weight:700;letter-spacing:-.02em;margin:0 0 10px;color:#fff}
+  .line.small{font-size:clamp(16px,4.2vw,20px);font-weight:500;line-height:1.4}
   .copy.dark .line{color:var(--ink);text-shadow:none}
   .copy.dark .line.small{color:var(--muted)}
 
@@ -46,15 +46,15 @@
   /* scene 1: video + person who stays */
   .video-wrap{position:absolute;inset:0}
   .video-wrap video{width:100%;height:100%;object-fit:cover;display:block;transform:translateZ(0);will-change:transform}
-  .shade{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.72) 0%,rgba(0,0,0,.15) 55%,rgba(0,0,0,0) 100%)}
+  .shade{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.8) 0%,rgba(0,0,0,.45) 38%,rgba(0,0,0,0) 70%)}
   .wipe{position:absolute;left:50%;top:38%;width:260vmax;height:260vmax;margin:-130vmax 0 0 -130vmax;border-radius:50%;background:var(--paper);transform:scale(0);will-change:transform}
   .person{position:absolute;left:50%;top:38%;width:min(62vw,300px);transform:translate(-50%,-50%);opacity:0;will-change:transform,opacity}
-  .person::after{content:"";position:absolute;left:18%;right:18%;bottom:-6%;height:10%;border-radius:50%;background:rgba(0,0,0,.28);filter:blur(10px);opacity:var(--sh,1)}
+  .person::after{content:"";position:absolute;left:8%;right:8%;bottom:-10%;height:16%;border-radius:50%;background:radial-gradient(ellipse at center,rgba(0,0,0,.32),rgba(0,0,0,0) 70%);opacity:var(--sh,1)}
   .person svg{width:100%;height:auto;display:block}
 
   /* scene 2: parallax illustration */
   .img-wrap{position:absolute;inset:-12% 0}
-  .img-wrap svg{width:100%;height:100%;display:block}
+  .img-wrap svg{position:absolute;inset:0;width:100%;height:100%;display:block}
   .img-wrap{will-change:transform}
   #hills{will-change:transform}
   .scene2 .shade{background:linear-gradient(to top,rgba(0,0,0,.6) 0%,rgba(0,0,0,.05) 60%,rgba(0,0,0,0) 100%)}
@@ -244,7 +244,7 @@
   <div class="pin" id="pin2">
     <div class="stage">
       <div class="img-wrap" id="img2">
-        <svg viewBox="0 0 390 844" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+        <svg class="sky-layer" viewBox="0 0 390 844" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1c2a3a"/><stop offset="1" stop-color="#3b6f8f"/></linearGradient>
             <radialGradient id="sun" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#ffe6a3"/><stop offset="1" stop-color="#ffe6a3" stop-opacity="0"/></radialGradient>
@@ -252,11 +252,11 @@
           <rect width="390" height="844" fill="url(#sky)"/>
           <circle cx="290" cy="260" r="150" fill="url(#sun)"/>
           <circle cx="290" cy="260" r="46" fill="#ffd77a"/>
-          <g id="hills">
-            <path d="M0 620 C 90 560, 160 640, 250 590 S 360 600, 390 560 V844 H0Z" fill="#244a52"/>
-            <path d="M0 690 C 110 640, 200 720, 300 660 S 370 690, 390 660 V844 H0Z" fill="#1a373d"/>
-            <path d="M0 760 C 120 720, 220 790, 390 740 V844 H0Z" fill="#12272b"/>
-          </g>
+        </svg>
+        <svg class="hills-layer" id="hills" viewBox="0 0 390 844" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 620 C 90 560, 160 640, 250 590 S 360 600, 390 560 V844 H0Z" fill="#244a52"/>
+          <path d="M0 690 C 110 640, 200 720, 300 660 S 370 690, 390 660 V844 H0Z" fill="#1a373d"/>
+          <path d="M0 760 C 120 720, 220 790, 390 740 V844 H0Z" fill="#12272b"/>
         </svg>
       </div>
       <div class="shade"></div>
@@ -427,9 +427,10 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
 <script>
 (function(){
-  gsap.registerPlugin(ScrollTrigger);
+  gsap.registerPlugin(ScrollTrigger,ScrollToPlugin);
   ScrollTrigger.config({ignoreMobileResize:true});
   const touch = matchMedia('(hover: none) and (pointer: coarse)').matches;
   if(touch) ScrollTrigger.normalizeScroll({allowNestedScroll:true});
@@ -439,8 +440,11 @@
   // progress bar
   gsap.to('#progress',{scaleX:1,ease:'none',scrollTrigger:{scrub:.3,start:0,end:'max'}});
 
-  // muted autoplay on iOS
-  document.querySelectorAll('video').forEach(v=>{const p=v.play(); if(p&&p.catch) p.catch(()=>{});});
+  // muted autoplay on iOS, and only while scene 1 is on screen
+  const vid=document.getElementById('v1');
+  const play=()=>{const p=vid.play(); if(p&&p.catch) p.catch(()=>{});};
+  play();
+  ScrollTrigger.create({trigger:'#pin1',start:'top bottom',end:'bottom top',onEnter:play,onEnterBack:play,onLeave:()=>vid.pause(),onLeaveBack:()=>vid.pause()});
 
   // step dots follow the question cards
   const dots=[...document.querySelectorAll('#steps i')];
@@ -457,7 +461,7 @@
       .to('.l1',{opacity:1,y:0,duration:.6})
       .to('.l2',{opacity:1,y:0,duration:.6},'-=.2')
       .to({}, {duration:.5})
-      .fromTo('#person1',{opacity:0,y:40,scale:.92},{opacity:1,y:0,scale:1,duration:.9,ease:'power2.out'})
+      .fromTo('#person1',{opacity:0,y:40},{opacity:1,y:0,duration:.9,ease:'power2.out'})
       .to({}, {duration:.4})
       .to('.l1,.l2',{opacity:0,y:-14,duration:.4})
       .to('#wipe1',{scale:1,duration:1.4,ease:'power2.inOut'},'<')
@@ -468,8 +472,8 @@
 
     // SCENE 2: parallax + staggered copy
     gsap.timeline({scrollTrigger:{trigger:'#pin2',start:'top top',end:'+=160%',pin:true,scrub:.35,anticipatePin:1}})
-      .fromTo('#img2',{yPercent:-6,scale:1.08},{yPercent:6,scale:1,duration:3,ease:'none'},0)
-      .fromTo('#hills',{y:30},{y:-30,duration:3,ease:'none'},0)
+      .fromTo('#img2',{yPercent:-5},{yPercent:5,duration:3,ease:'none'},0)
+      .fromTo('#hills',{yPercent:4},{yPercent:-4,duration:3,ease:'none'},0)
       .to('.l5',{opacity:1,y:0,duration:.6},.3)
       .to('.l6',{opacity:1,y:0,duration:.6},.8)
       .to({}, {duration:1});
@@ -523,7 +527,7 @@
 
   // helpers
   const $=s=>document.querySelector(s);
-  const goto=sel=>$(sel).scrollIntoView({behavior:reduce?'auto':'smooth'});
+  const goto=sel=>gsap.to(window,{scrollTo:{y:$(sel),autoKill:false},duration:reduce?0:.9,ease:'power2.inOut'});
   document.querySelectorAll('[data-next]').forEach(b=>b.addEventListener('click',()=>{goto(b.dataset.next); render();}));
 
   // Q1 + Q4 sliders
