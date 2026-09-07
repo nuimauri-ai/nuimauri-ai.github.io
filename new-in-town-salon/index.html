@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<!-- ===================================================================
+     ZONE A — CE QUE GOOGLE AFFICHE
+     ⚠️ noindex VOLONTAIRE tant que c'est une maquette : cette page ne doit
+     pas apparaître dans Google à la place de leur fiche. À RETIRER le jour
+     où le salon achète le site.
+     =================================================================== -->
+<meta name="robots" content="noindex,nofollow">
+<title>New in Town Salon — Unisex hair salon on King St, Newtown</title>
+<meta name="description" content="Unisex hair salon on King Street, Newtown. Cuts, colour, fades, beard trims and hot towel shaves. Over 35 years of experience. Call 0416 015 242.">
+<meta property="og:title" content="New in Town Salon — King St, Newtown">
+<meta property="og:description" content="Unisex hair salon on King Street, Newtown. Over 35 years of experience.">
+<meta property="og:type" content="website">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+<style>
+/* ===================================================================
+   ZONE B — COULEURS ET POLICES
+   Palette relevée SUR LEURS PROPRES MURS : les murales cosmiques du salon
+   (violet, or, magenta) sur mur noir. Ne pas remplacer par du générique.
+   =================================================================== */
+:root{
+  --ink:      #16121C;   /* le noir des murs */
+  --ink-2:    #221A2B;   /* cartes sur fond sombre */
+  --paper:    #FBF7F1;   /* fond clair */
+  --grape:    #7A3FA6;   /* violet des murales — accent principal */
+  --sun:      #E8A31E;   /* or des lampes et de l'enseigne */
+  --hot:      #E0459B;   /* magenta des murales */
+  --on-accent:#FFFFFF;
+  --muted:    #7D7489;
+  --line:     #E6DED3;
+
+  --script:  'Caveat', 'Brush Script MT', cursive;   /* écho de l'enseigne peinte */
+  --body:    'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  --radius: 20px;
+  --pill: 999px;
+  --maxw: 1080px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--body);font-weight:300;background:var(--paper);color:var(--ink);font-size:17px;line-height:1.7}
+img{max-width:100%;display:block}
+a{color:inherit}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+
+h1,h2,h3{font-family:var(--body);font-weight:700;line-height:1.1;letter-spacing:-0.02em}
+h1{font-size:clamp(2.5rem,7.5vw,4.4rem)}
+h2{font-size:clamp(1.9rem,5vw,2.9rem);margin-bottom:14px}
+h3{font-size:1.25rem}
+.eyebrow{font-size:0.74rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--grape);font-weight:500;margin-bottom:16px}
+.sub{color:var(--muted);max-width:50ch;font-size:1.06rem;margin-bottom:40px}
+section{padding:84px 0}
+
+/* ===================================================================
+   ZONE C — LE BOUTON TÉLÉPHONE
+   Affichage : 0416 015 242
+   Lien      : tel:+61416015242   ← international, sans espaces
+   Changer l'un SANS l'autre = le bouton appelle le mauvais numéro.
+   =================================================================== */
+.btn{display:inline-block;font-weight:500;font-size:1rem;padding:15px 30px;border-radius:var(--pill);
+  text-decoration:none;border:1.5px solid transparent;transition:opacity .15s}
+.btn:hover{opacity:.87}
+.btn-call{background:var(--grape);color:var(--on-accent);font-weight:700}
+.btn-ghost{border-color:currentColor;color:var(--ink)}
+
+.callbar{position:fixed;left:0;right:0;bottom:0;z-index:50;display:none;background:var(--grape);
+  color:var(--on-accent);text-align:center;padding:15px;font-weight:700;text-decoration:none}
+@media(max-width:700px){.callbar{display:block} body{padding-bottom:58px}}
+
+/* ---------- EN-TÊTE ---------- */
+header{padding:22px 0}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.brand{font-family:var(--script);font-size:2.1rem;line-height:1;color:var(--ink);display:inline-flex;align-items:center;gap:12px;text-decoration:none}
+/* Logo : photo de profil Instagram @newintown_salon (07/09/2026). Demander l'original. */
+.brand img{width:48px;height:48px;border-radius:50%;box-shadow:0 0 0 2px var(--sun)}
+.nav a{color:var(--ink);text-decoration:none;font-weight:500}
+
+/* ---------- HERO ---------- */
+.hero{padding-top:44px;padding-bottom:76px}
+.hero h1{margin-bottom:20px}
+.hero h1 em{font-style:normal;color:var(--grape)}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:44px}
+/* Photo réelle du salon : l'enseigne peinte et les murales.
+   C'est leur identité visuelle — ils n'ont pas de logo. */
+.shot{border-radius:var(--radius);overflow:hidden;box-shadow:0 18px 50px rgba(22,18,28,.18)}
+.shot img{width:100%;height:auto}
+.shot-cap{font-size:0.84rem;color:var(--muted);margin-top:12px;text-align:center}
+
+/* ---------- CHIFFRES ---------- */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-top:56px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:24px 22px;text-align:center}
+.stat b{display:block;font-size:2.2rem;font-weight:700;line-height:1;color:var(--grape)}
+.stat:nth-child(2) b{color:var(--hot)}
+.stat:nth-child(3) b{color:var(--sun)}
+.stat span{font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted)}
+
+/* ===================================================================
+   ZONE D — SERVICES
+   Titre "Six things" ↔ 6 blocs .svc. Recompte à chaque ajout/suppression.
+   =================================================================== */
+.svc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.svc{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:28px 24px}
+.svc h3{margin-bottom:8px}
+.svc p{color:var(--muted);font-size:0.96rem}
+.svc .dot{width:12px;height:12px;border-radius:50%;margin-bottom:18px}
+.svc:nth-child(3n+1) .dot{background:var(--grape)}
+.svc:nth-child(3n+2) .dot{background:var(--hot)}
+.svc:nth-child(3n+3) .dot{background:var(--sun)}
+.price-note{margin-top:28px;color:var(--muted);font-size:0.95rem;max-width:54ch}
+
+/* ---------- GALERIE ---------- */
+.gallery{background:var(--ink);color:var(--paper)}
+.gallery h2{color:var(--paper)}
+.gallery .sub{color:#9C93A8}
+.g-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.g-grid img{width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;border-radius:14px}
+.g-note{margin-top:22px;font-size:0.84rem;color:#9C93A8}
+
+/* ===================================================================
+   ZONE E — AVIS
+   ⚠️ Les deux avis remplis sont RÉELS (publiés sur Google, relevés
+   publiquement). Le troisième est un emplacement en pointillés.
+   N'écris JAMAIS un avis toi-même : conduite trompeuse (ACCC), et c'est
+   la fiche Google du salon qui saute, pas la tienne.
+   =================================================================== */
+.rev-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+.rev{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:28px}
+.rev .stars{color:var(--sun);letter-spacing:0.14em;margin-bottom:12px}
+.rev q{display:block;font-size:1.2rem;font-weight:400;line-height:1.45;margin-bottom:16px}
+.rev cite{font-style:normal;font-size:0.8rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted)}
+.rev.empty{border:1.5px dashed var(--grape);background:transparent;display:flex;align-items:center;
+  justify-content:center;text-align:center;color:var(--muted);font-size:0.88rem;min-height:165px}
+
+/* ===================================================================
+   ZONE F — HORAIRES  /  ZONE G — LIEU
+   =================================================================== */
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:52px;align-items:start}
+.hours div{display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid var(--line)}
+.hours dt{font-weight:500}
+.hours dd{color:var(--muted)}
+.hours .shut{color:var(--hot);font-weight:500}
+address{font-style:normal;font-size:1.45rem;font-weight:500;line-height:1.4;margin:18px 0 22px}
+
+/* ===================================================================
+   ZONE H — FORMULAIRE
+   Web3Forms. Jamais mailto: (un navigateur ne peut pas envoyer de mail).
+   Les attributs name= deviennent les libellés du mail reçu.
+   =================================================================== */
+.form-card{background:var(--ink);color:var(--paper);border-radius:var(--radius);padding:52px 38px}
+.form-card h2{color:var(--paper)} .form-card .sub{color:#9C93A8}
+form{display:grid;gap:15px;max-width:520px}
+label{font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:#9C93A8}
+input,select,textarea{font-family:var(--body);font-weight:300;font-size:1rem;width:100%;padding:14px 17px;
+  border:1px solid #372C44;border-radius:13px;background:var(--ink-2);color:var(--paper)}
+textarea{min-height:100px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--grape);outline-offset:1px}
+.hp{position:absolute;left:-9999px}
+
+footer{padding:44px 0;text-align:center;color:var(--muted);font-size:0.9rem;border-top:1px solid var(--line)}
+footer a{color:var(--ink)}
+footer .brand{font-size:1.7rem;margin-bottom:8px}
+.mockup{margin-top:26px;padding-top:20px;border-top:1px dashed var(--line);font-size:0.8rem;max-width:66ch;margin-left:auto;margin-right:auto;line-height:1.6}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top"><img src="img/logo.png" alt="New in Town Salon logo" width="400" height="400">New in Town Salon</a>
+    <!-- ZONE C — affichage avec espaces -->
+    <a href="tel:+61416015242">0416 015 242</a>
+  </div>
+</header>
+
+<!-- =================== HERO =================== -->
+<div class="wrap hero" id="top">
+  <div class="eyebrow">429 King Street · Newtown</div>
+  <h1>Thirty-five years<br>of cutting hair.<br><em>Everyone's hair.</em></h1>
+  <p class="sub">A unisex salon on King Street. Cuts, colour and fades for men, women and kids — from someone who has been doing this since before Newtown was cool.</p>
+  <div class="hero-actions">
+    <!-- ZONE C — lien international, sans espaces -->
+    <a class="btn btn-call" href="tel:+61416015242">Call 0416 015 242</a>
+    <a class="btn btn-ghost" href="#work">See the work</a>
+  </div>
+
+  <!-- Photo réelle du salon (enseigne peinte + murales).
+       ⚠️ Vient de leur page Facebook publique. À remplacer par leur fichier
+       original à la livraison — meilleure qualité, et leur accord explicite. -->
+  <div class="shot">
+    <img src="img/salon-sign.jpg" alt="The hand-painted New in Town Salon sign above the mirrors, with the salon's mural walls either side" width="1080" height="430">
+  </div>
+  <p class="shot-cap">You'll know it by the sign. Nobody else on King Street has walls like these.</p>
+
+  <!-- ⚠️ CHIFFRES À REVÉRIFIER SUR GOOGLE AVANT D'ENVOYER LE LIEN.
+       5.0 / 438 relevés sur la fiche Google le 07/09/2026 (Birdeye agrège 616 avis toutes sources). Ils bougent chaque semaine. -->
+  <div class="stats">
+    <div class="stat"><b>5.0</b><span>Google rating</span></div>
+    <div class="stat"><b>438</b><span>Google reviews</span></div>
+    <div class="stat"><b>35+</b><span>Years cutting</span></div>
+  </div>
+</div>
+
+<!-- =================== ZONE D — SERVICES ===================
+     Titre "Six things" ↔ 6 blocs .svc. Recompte si tu modifies.
+     ⚠️ "Colour" est déduit des photos publiques du salon (cheveux violets,
+     roses, faits sur place devant leurs murales). À FAIRE CONFIRMER par
+     le patron avant de livrer.
+================================================================= -->
+<section id="services">
+  <div class="wrap">
+    <div class="eyebrow">Services</div>
+    <h2>Six things, all ages</h2>
+    <p class="sub">Men, women and kids in the same chairs. No separate menu, no separate pricing conversation.</p>
+
+    <div class="svc-grid">
+      <div class="svc"><div class="dot"></div><h3>Women's cuts</h3><p>Cut, wash and finish. You get told what will actually work with your hair, not what's on a poster.</p></div>
+      <div class="svc"><div class="dot"></div><h3>Men's cuts &amp; fades</h3><p>Scissor cut, clipper cut, or a skin fade taken as low as you want it and blended out properly.</p></div>
+      <div class="svc"><div class="dot"></div><h3>Colour</h3><p>Vivids included. If you want purple or pink, you're in the right chair — have a look at the wall of work.</p></div>
+      <div class="svc"><div class="dot"></div><h3>Beard trim</h3><p>Shaped to your jaw and lined with a razor, so the edges still hold in a fortnight.</p></div>
+      <div class="svc"><div class="dot"></div><h3>Hot towel shave</h3><p>Hot towel, lather, straight razor, cold towel to close. Twenty minutes you actually enjoy.</p></div>
+      <div class="svc"><div class="dot"></div><h3>Head shave</h3><p>Clean over the whole head, done with the grain so you're not scratching for two days.</p></div>
+    </div>
+
+    <!-- ⚠️ TARIFS : ne rien inventer. Demander la grille et remplacer ce paragraphe. -->
+    <p class="price-note">Prices are on the board in the shop, or just ask when you call. Nothing changes without us telling you first.</p>
+  </div>
+</section>
+
+<!-- =================== GALERIE ===================
+     Photos réelles issues de la page Facebook publique du salon.
+     ⚠️ Aucune photo avec un visage identifiable, et aucune photo d'enfant :
+     mettre le visage d'un client — a fortiori d'un mineur — sur un site
+     commercial demande son accord explicite. On garde les nuques et le chien.
+================================================================= -->
+<section class="gallery" id="work">
+  <div class="wrap">
+    <div class="eyebrow" style="color:var(--sun)">The work</div>
+    <h2>Fades, colour,<br>and the shop dog</h2>
+    <p class="sub">Straight off the shop floor. No filters, no stock photos.</p>
+    <div class="g-grid">
+      <img src="img/purple-fade.jpg" alt="A purple crop with a skin fade, finished in the salon" width="315" height="315" loading="lazy">
+      <img src="img/fade-back.jpg" alt="Back view of a clean skin fade" width="315" height="315" loading="lazy">
+      <img src="img/salon-dog.jpg" alt="A black poodle sitting in one of the salon chairs" width="315" height="315" loading="lazy">
+      <img src="img/mohawk.jpg" alt="A mohawk shaved in at the sides" width="315" height="315" loading="lazy">
+      <img src="img/fade-side.jpg" alt="Side view of a fade blended into the top" width="315" height="315" loading="lazy">
+      <img src="img/fade-interior.jpg" alt="A finished fade, with the salon's shelves and mural behind" width="315" height="315" loading="lazy">
+    </div>
+    <p class="g-note">More on the walls than we can fit here — come and have a look, or see the latest on <a href="https://www.instagram.com/newintown_salon/" target="_blank" rel="noopener" style="color:var(--paper)">Instagram @newintown_salon</a>.</p>
+  </div>
+</section>
+
+<!-- =================== ZONE E — AVIS ===================
+     ⚠️ Trois avis RÉELS (Google, relevés le 03/09 et le 07/09/2026), copiés tel quel.
+     Ne jamais en écrire un nous-mêmes.
+================================================================= -->
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Reviews</div>
+    <h2>438 reviews, 5.0 stars</h2>
+    <p class="sub">Three of them, copied exactly as they were written on Google.</p>
+    <div class="rev-grid">
+      <div class="rev">
+        <div class="stars">★★★★★</div>
+        <q>The best in newtown! Ali is always in a good mood</q>
+        <cite>José Carlos Reyes</cite>
+      </div>
+      <div class="rev">
+        <div class="stars">★★★★★</div>
+        <q>Great man , Great haircut</q>
+        <cite>H X</cite>
+      </div>
+      <div class="rev">
+        <div class="stars">★★★★★</div>
+        <q>Great haircut, great price, great service from Ali!</q>
+        <cite>Google review</cite>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== ZONE F + ZONE G ===================
+     ⚠️ HORAIRES CORRIGÉS le 03/09/2026 : Fresha et Birdeye concordent
+     (lundi FERMÉ). La version Bookwell était fausse.
+     ⚠️ ADRESSE : Google indique 429 King St, leur Facebook indique 431.
+     À TRANCHER AVEC LE PATRON avant de livrer.
+================================================================= -->
+<section>
+  <div class="wrap two">
+    <div class="hours">
+      <div class="eyebrow">Hours</div>
+      <h2 style="margin-bottom:20px">Six days</h2>
+      <dl>
+        <div><dt>Monday</dt><dd class="shut">Closed</dd></div>
+        <div><dt>Tuesday</dt><dd>9:00am – 6:30pm</dd></div>
+        <div><dt>Wednesday</dt><dd>9:00am – 6:30pm</dd></div>
+        <div><dt>Thursday</dt><dd>9:00am – 6:30pm</dd></div>
+        <div><dt>Friday</dt><dd>9:00am – 6:30pm</dd></div>
+        <div><dt>Saturday</dt><dd>8:30am – 6:30pm</dd></div>
+        <div><dt>Sunday</dt><dd>8:30am – 6:30pm</dd></div>
+      </dl>
+    </div>
+
+    <!-- ZONE G — adresse en texte + lien sortant. Pas d'iframe de carte. -->
+    <div>
+      <div class="eyebrow">Find us</div>
+      <h2>King Street</h2>
+      <address>429 King Street<br>Newtown NSW 2042</address>
+      <a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&query=429+King+Street+Newtown+NSW+2042" target="_blank" rel="noopener">Open in Google Maps</a>
+      <p style="color:var(--muted);margin-top:22px;font-size:0.95rem">Down the Enmore end of King Street. Newtown station is a seven minute walk up the hill, and the 352 and 428 both stop within a block.</p>
+    </div>
+  </div>
+</section>
+
+<!-- =================== ZONE H — FORMULAIRE ===================
+     Clé Web3Forms active. Les messages arrivent sur la boîte rattachée à cette clé.
+     Rétention 30 jours côté Web3Forms : le mail EST l'archive.
+================================================================= -->
+<section>
+  <div class="wrap">
+    <div class="form-card">
+      <div class="eyebrow" style="color:var(--sun)">Get in touch</div>
+      <h2>Send us a message</h2>
+      <p class="sub">For a chair, calling is faster and always will be. Use this for a question about colour, a group booking, or anything that can wait until we're between clients.</p>
+
+      <form action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="192e2413-8ded-4ad2-bbe5-e38ff736c986">
+        <input type="hidden" name="subject" value="New in Town Salon — message from the website">
+        <input type="hidden" name="redirect" value="https://nuimauri-ai.github.io/new-in-town-salon/merci.html">
+        <input type="text" name="botcheck" class="hp" tabindex="-1" autocomplete="off">
+
+        <div><label for="n">Name</label><input id="n" type="text" name="Name" required></div>
+        <div><label for="e">Email</label><input id="e" type="email" name="email" required></div>
+        <div><label for="s">What you're after</label>
+          <select id="s" name="Service">
+            <option>Women's cut</option><option>Men's cut or fade</option><option>Colour</option>
+            <option>Beard trim</option><option>Hot towel shave</option><option>Head shave</option>
+            <option>Something else</option>
+          </select>
+        </div>
+        <div><label for="a">When suits you</label><input id="a" type="text" name="Availability" placeholder="e.g. Saturday morning, or a weekday after 5"></div>
+        <div><label for="m">Message</label><textarea id="m" name="Message"></textarea></div>
+        <button class="btn btn-call" type="submit" style="cursor:pointer">Send message</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="brand" style="justify-content:center"><img src="img/logo.png" alt="New in Town Salon logo" width="400" height="400">New in Town Salon</div>
+    <p>429 King Street, Newtown NSW 2042 · <a href="tel:+61416015242">0416 015 242</a> · <a href="https://www.instagram.com/newintown_salon/" target="_blank" rel="noopener">Instagram</a></p>
+    <!-- ⚠️ MENTION MAQUETTE — à retirer le jour de la vente, avec le noindex. -->
+    <p class="mockup">Concept mockup prepared by Nui Mauri for New in Town Salon. This is not an official New in Town Salon website. The photographs remain the property of New in Town Salon and are shown here for this proposal only. <a href="mailto:nui.mauri@gmail.com">Ask and it comes down.</a></p>
+  </div>
+</footer>
+
+<a class="callbar" href="tel:+61416015242">Call the salon — 0416 015 242</a>
+
+</body>
+</html>
