@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Scrollytelling survey — prototype</title>
+<style>
+  :root{
+    --ink:#101418; --muted:#5b6670; --paper:#f6f4ef; --accent:#1f6f5f; --accent-2:#e0b34a;
+    --card:#ffffff; --radius:18px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Inter","Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+  body{overflow-x:hidden}
+
+  /* progress bar */
+  #progress{position:fixed;top:0;left:0;height:4px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:var(--accent);z-index:50}
+
+  /* generic scene layout */
+  .scene{position:relative;min-height:100svh}
+  .pin{position:relative;height:100svh;overflow:hidden}
+  .stage{position:absolute;inset:0}
+  .copy{position:absolute;left:0;right:0;bottom:0;padding:0 22px calc(env(safe-area-inset-bottom) + 34px);max-width:560px;margin:0 auto}
+  .line{opacity:0;transform:translateY(18px);font-size:clamp(26px,6.2vw,40px);line-height:1.12;font-weight:700;letter-spacing:-.02em;margin:0 0 10px;text-shadow:0 2px 24px rgba(0,0,0,.35);color:#fff}
+  .line.small{font-size:clamp(16px,4.2vw,20px);font-weight:500;line-height:1.4;text-shadow:0 1px 14px rgba(0,0,0,.4)}
+
+  /* intro */
+  .intro{height:100svh;display:grid;place-items:center;text-align:center;padding:24px}
+  .intro h1{font-size:clamp(28px,7vw,48px);line-height:1.05;letter-spacing:-.03em;margin:0 0 14px}
+  .intro p{color:var(--muted);margin:0 0 26px;font-size:17px}
+  .hint{display:inline-flex;align-items:center;gap:10px;color:var(--muted);font-size:14px}
+  .hint svg{animation:bob 1.6s ease-in-out infinite}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+  /* scene 1: video */
+  .video-wrap{position:absolute;inset:0}
+  .video-wrap video{width:100%;height:100%;object-fit:cover;display:block}
+  .shade{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.72) 0%,rgba(0,0,0,.15) 55%,rgba(0,0,0,0) 100%)}
+  /* the "background wipes away, subject stays" layer */
+  .wipe{position:absolute;inset:0;background:var(--paper);clip-path:circle(0% at 50% 42%);}
+  .keep{position:absolute;inset:0;pointer-events:none;
+        -webkit-mask:radial-gradient(circle at 50% 42%,#000 0,#000 var(--r,0px),transparent calc(var(--r,0px) + 2px));
+        mask:radial-gradient(circle at 50% 42%,#000 0,#000 var(--r,0px),transparent calc(var(--r,0px) + 2px));opacity:0}
+  .keep video{width:100%;height:100%;object-fit:cover}
+  .copy.dark .line{color:var(--ink);text-shadow:none}
+
+  /* question blocks */
+  .q{min-height:100svh;display:grid;place-items:center;padding:24px 20px}
+  .card{width:100%;max-width:520px;background:var(--card);border-radius:var(--radius);padding:26px 22px 22px;box-shadow:0 20px 60px rgba(16,20,24,.10);opacity:0;transform:translateY(30px) scale(.98)}
+  .card .k{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 10px}
+  .card h2{font-size:clamp(21px,5.4vw,28px);line-height:1.2;letter-spacing:-.02em;margin:0 0 18px}
+  .range{-webkit-appearance:none;appearance:none;width:100%;height:10px;border-radius:999px;background:linear-gradient(90deg,var(--accent) var(--pct,50%),#e6e3dc var(--pct,50%));outline:none;margin:14px 0 6px}
+  .range::-webkit-slider-thumb{-webkit-appearance:none;width:30px;height:30px;border-radius:50%;background:#fff;border:3px solid var(--accent);box-shadow:0 4px 14px rgba(0,0,0,.18);cursor:pointer}
+  .range::-moz-range-thumb{width:30px;height:30px;border-radius:50%;background:#fff;border:3px solid var(--accent);cursor:pointer}
+  .scale{display:flex;justify-content:space-between;color:var(--muted);font-size:13px}
+  .val{font-size:44px;font-weight:800;letter-spacing:-.04em;color:var(--accent);text-align:center;margin:6px 0 0;line-height:1}
+  .pills{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .pill{border:2px solid #e6e3dc;background:#fff;border-radius:14px;padding:14px 12px;font-size:15px;font-weight:600;text-align:left;cursor:pointer;transition:border-color .15s,background .15s,transform .1s}
+  .pill:active{transform:scale(.98)}
+  .pill.on{border-color:var(--accent);background:#e8f3ef}
+  .next{display:block;width:100%;margin-top:18px;border:0;border-radius:12px;background:var(--ink);color:#fff;font-weight:700;font-size:16px;padding:15px;cursor:pointer}
+  .next[disabled]{opacity:.35;cursor:default}
+
+  /* scene 2: image parallax */
+  .img-wrap{position:absolute;inset:-12% 0}
+  .img-wrap svg{width:100%;height:100%;display:block}
+  .scene2 .shade{background:linear-gradient(to top,rgba(0,0,0,.6) 0%,rgba(0,0,0,.05) 60%,rgba(0,0,0,0) 100%)}
+
+  /* outro */
+  .outro{min-height:100svh;display:grid;place-items:center;padding:24px 20px;text-align:center}
+  .outro .card{text-align:left}
+  .summary{list-style:none;padding:0;margin:0 0 6px}
+  .summary li{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-top:1px solid #eee;font-size:15px}
+  .summary li span:last-child{font-weight:700;color:var(--accent)}
+  .foot{margin-top:14px;color:var(--muted);font-size:13px;line-height:1.5}
+  .tag{position:fixed;left:12px;bottom:calc(env(safe-area-inset-bottom) + 10px);z-index:40;font-size:11px;letter-spacing:.1em;text-transform:uppercase;background:rgba(16,20,24,.75);color:#fff;padding:6px 10px;border-radius:999px;backdrop-filter:blur(6px)}
+
+  @media (prefers-reduced-motion:reduce){
+    .line,.card{opacity:1;transform:none}
+    .hint svg{animation:none}
+  }
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<div class="tag">Prototype · 2 scenes · 2 questions</div>
+
+<!-- INTRO -->
+<section class="intro">
+  <div>
+    <h1>Two minutes.<br>Six questions.<br>No forms.</h1>
+    <p>Scroll to move through the story. Answer when a card appears.</p>
+    <span class="hint">Scroll down
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16M5 13l7 7 7-7"/></svg>
+    </span>
+  </div>
+</section>
+
+<!-- SCENE 1: video that fades into the page, subject stays -->
+<section class="scene scene1">
+  <div class="pin" id="pin1">
+    <div class="stage">
+      <div class="video-wrap">
+        <video id="v1" playsinline muted loop autoplay preload="metadata" poster="poster1.jpg">
+          <source src="scene1.webm" type="video/webm">
+          <source src="scene1.mp4" type="video/mp4">
+        </video>
+        <div class="shade"></div>
+      </div>
+      <!-- page colour wipes over the video from the centre -->
+      <div class="wipe" id="wipe1"></div>
+      <!-- a masked copy of the video that stays visible while the rest disappears -->
+      <div class="keep" id="keep1">
+        <video playsinline muted loop autoplay preload="metadata" poster="poster1.jpg">
+          <source src="scene1.webm" type="video/webm">
+          <source src="scene1.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+    <div class="copy" id="copy1">
+      <p class="line l1">Most people say they feel fine.</p>
+      <p class="line small l2">Until someone asks the second question.</p>
+    </div>
+    <div class="copy dark" id="copy1b">
+      <p class="line l3">The background goes.<br>The subject stays.</p>
+      <p class="line small l4" style="color:var(--muted)">This is the video-to-page transition you described, done with a scroll-driven clip-path and mask. With a clip that has an alpha channel, the person stays cleanly cut out.</p>
+    </div>
+  </div>
+</section>
+
+<!-- QUESTION 1: slider -->
+<section class="q">
+  <div class="card" data-card>
+    <p class="k">Question 1 of 2</p>
+    <h2>On a normal week, how much energy do you have left by Friday evening?</h2>
+    <p class="val" id="q1val">5</p>
+    <input class="range" id="q1" type="range" min="0" max="10" step="1" value="5" aria-label="Energy left by Friday, 0 to 10">
+    <div class="scale"><span>Running on empty</span><span>Plenty</span></div>
+    <button class="next" id="next1">Continue</button>
+  </div>
+</section>
+
+<!-- SCENE 2: illustration with parallax and staggered copy -->
+<section class="scene scene2">
+  <div class="pin" id="pin2">
+    <div class="stage">
+      <div class="img-wrap" id="img2">
+        <svg viewBox="0 0 390 844" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1c2a3a"/><stop offset="1" stop-color="#3b6f8f"/></linearGradient>
+            <radialGradient id="sun" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#ffe6a3"/><stop offset="1" stop-color="#ffe6a3" stop-opacity="0"/></radialGradient>
+          </defs>
+          <rect width="390" height="844" fill="url(#sky)"/>
+          <circle cx="290" cy="260" r="150" fill="url(#sun)"/>
+          <circle cx="290" cy="260" r="46" fill="#ffd77a"/>
+          <g id="hills">
+            <path d="M0 620 C 90 560, 160 640, 250 590 S 360 600, 390 560 V844 H0Z" fill="#244a52"/>
+            <path d="M0 690 C 110 640, 200 720, 300 660 S 370 690, 390 660 V844 H0Z" fill="#1a373d"/>
+            <path d="M0 760 C 120 720, 220 790, 390 740 V844 H0Z" fill="#12272b"/>
+          </g>
+        </svg>
+      </div>
+      <div class="shade"></div>
+    </div>
+    <div class="copy" id="copy2">
+      <p class="line l5">Images move at a different speed than the text.</p>
+      <p class="line small l6">Each element is timed to the scroll position, so it feels the same on every phone regardless of how fast someone scrolls.</p>
+    </div>
+  </div>
+</section>
+
+<!-- QUESTION 2: multiple choice -->
+<section class="q">
+  <div class="card" data-card>
+    <p class="k">Question 2 of 2</p>
+    <h2>Which of these would you actually try next month?</h2>
+    <div class="pills" id="q2">
+      <button class="pill" data-v="Earlier nights">Earlier nights</button>
+      <button class="pill" data-v="A daily walk">A daily walk</button>
+      <button class="pill" data-v="Talking to a GP">Talking to a GP</button>
+      <button class="pill" data-v="None of these">None of these</button>
+    </div>
+    <button class="next" id="next2" disabled>See summary</button>
+  </div>
+</section>
+
+<!-- OUTRO -->
+<section class="outro">
+  <div class="card" data-card>
+    <p class="k">Done</p>
+    <h2>Thanks. Here's what you answered.</h2>
+    <ul class="summary">
+      <li><span>Energy by Friday</span><span id="s1">–</span></li>
+      <li><span>Would try next month</span><span id="s2">–</span></li>
+    </ul>
+    <p class="foot">In the full build, answers are posted to a Google Sheet or your endpoint the moment the last question is answered, with a timestamp and device type. Nothing is stored in this prototype.</p>
+  </div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+(function(){
+  gsap.registerPlugin(ScrollTrigger);
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // progress bar
+  gsap.to('#progress',{scaleX:1,ease:'none',scrollTrigger:{scrub:.3,start:0,end:'max'}});
+
+  // make sure muted autoplay actually starts on iOS
+  document.querySelectorAll('video').forEach(v=>{const p=v.play(); if(p&&p.catch) p.catch(()=>{});});
+
+  if(!reduce){
+    // SCENE 1 timeline: text in, wipe, subject stays, second text
+    const keep = document.getElementById('keep1');
+    const tl1 = gsap.timeline({
+      scrollTrigger:{trigger:'#pin1',start:'top top',end:'+=260%',pin:true,scrub:.6,anticipatePin:1}
+    });
+    tl1.to('.l1',{opacity:1,y:0,duration:.6})
+       .to('.l2',{opacity:1,y:0,duration:.6},'-=.2')
+       .to({}, {duration:.6})
+       .to('.l1,.l2',{opacity:0,y:-14,duration:.4})
+       .set(keep,{opacity:1})
+       .to('#wipe1',{clipPath:'circle(140% at 50% 42%)',duration:1.4,ease:'power2.inOut'},'<')
+       .to(keep,{'--r':'150px',duration:1.4,ease:'power2.inOut'},'<')
+       .to('.l3',{opacity:1,y:0,duration:.6},'-=.5')
+       .to('.l4',{opacity:1,y:0,duration:.6},'-=.2')
+       .to({}, {duration:.8});
+
+    // SCENE 2 timeline: parallax + staggered copy
+    const tl2 = gsap.timeline({
+      scrollTrigger:{trigger:'#pin2',start:'top top',end:'+=180%',pin:true,scrub:.6,anticipatePin:1}
+    });
+    tl2.fromTo('#img2',{yPercent:-6,scale:1.08},{yPercent:6,scale:1,duration:3,ease:'none'},0)
+       .fromTo('#hills',{y:30},{y:-30,duration:3,ease:'none'},0)
+       .to('.l5',{opacity:1,y:0,duration:.6},.3)
+       .to('.l6',{opacity:1,y:0,duration:.6},.8)
+       .to({}, {duration:1});
+
+    // cards rise in when they enter
+    document.querySelectorAll('[data-card]').forEach(c=>{
+      gsap.to(c,{opacity:1,y:0,scale:1,duration:.7,ease:'power3.out',
+        scrollTrigger:{trigger:c,start:'top 80%',toggleActions:'play none none reverse'}});
+    });
+  } else {
+    gsap.set('.line,[data-card]',{opacity:1,y:0,scale:1});
+  }
+
+  // QUESTION 1
+  const q1=document.getElementById('q1'), q1val=document.getElementById('q1val');
+  const paint=()=>{q1val.textContent=q1.value; q1.style.setProperty('--pct',(q1.value/10*100)+'%');};
+  q1.addEventListener('input',paint); paint();
+  document.getElementById('next1').addEventListener('click',()=>{
+    document.getElementById('s1').textContent=q1.value+' / 10';
+    document.getElementById('pin2').scrollIntoView({behavior:reduce?'auto':'smooth'});
+  });
+
+  // QUESTION 2
+  let q2v=null;
+  document.querySelectorAll('#q2 .pill').forEach(b=>b.addEventListener('click',()=>{
+    document.querySelectorAll('#q2 .pill').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on'); q2v=b.dataset.v;
+    document.getElementById('next2').disabled=false;
+    document.getElementById('s2').textContent=q2v;
+  }));
+  document.getElementById('next2').addEventListener('click',()=>{
+    document.querySelector('.outro').scrollIntoView({behavior:reduce?'auto':'smooth'});
+  });
+
+  // keep pins correct after orientation change / late layout
+  window.addEventListener('load',()=>ScrollTrigger.refresh());
+  window.addEventListener('orientationchange',()=>setTimeout(()=>ScrollTrigger.refresh(),300));
+})();
+</script>
+</body>
+</html>
