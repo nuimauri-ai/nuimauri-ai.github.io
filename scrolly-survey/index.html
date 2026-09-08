@@ -422,6 +422,7 @@
     </ul>
     <p class="foot">In the full build this payload is posted to a Google Sheet or your endpoint the moment the last question is answered. Nothing leaves this page in the prototype.</p>
     <div class="meta" id="payload">{ }</div>
+    <p class="foot" id="sendstate" style="margin-top:8px"></p>
   </div>
 </section>
 
@@ -567,13 +568,61 @@
   q6t.addEventListener('input',()=>{q6c.textContent=q6t.value.length; answers.q6note=q6t.value.trim(); paint6();});
   function paint6(){ $('#s6').textContent=(answers.q6||'–')+(answers.q6note?' · '+answers.q6note:''); }
 
+  /* ===================================================================
+     WHERE THE ANSWERS GO
+     Paste the /exec URL of your Google Apps Script web app here.
+     Leave it empty and nothing is sent, the page just shows the payload.
+     Setup instructions: apps-script/Code.gs
+     =================================================================== */
+  const ENDPOINT = '';
+
+  const startedAt = Date.now();
+  const sessionId = 'r-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2,8);
+
+  function payload(){
+    return Object.assign({}, answers, {
+      q3: Array.isArray(answers.q3) ? answers.q3.join(' | ') : (answers.q3 || ''),
+      session_id: sessionId,
+      submitted_at: new Date().toISOString(),
+      seconds_taken: Math.round((Date.now()-startedAt)/1000),
+      device: /Mobi|Android/i.test(navigator.userAgent) ? 'mobile' : 'desktop',
+      viewport: innerWidth+'x'+innerHeight,
+      referrer: document.referrer || '',
+      user_agent: navigator.userAgent
+    });
+  }
+
   // payload preview
   function render(){
-    const p=Object.assign({},answers,{submitted_at:new Date().toISOString(),device:/Mobi|Android/i.test(navigator.userAgent)?'mobile':'desktop',viewport:innerWidth+'x'+innerHeight});
-    $('#payload').textContent=JSON.stringify(p);
+    $('#payload').textContent = JSON.stringify(payload());
     dots.forEach((d,i)=>d.classList.toggle('done',!!answers['q'+(i+1)]));
   }
   render();
+
+  /* Send once, when the last question is answered.
+     sendBeacon is used first: it survives the tab being closed and needs no
+     CORS preflight. fetch with keepalive is the fallback for older Safari. */
+  let sent = false;
+  function submit(){
+    if (sent || !ENDPOINT) return;
+    sent = true;
+    const body = JSON.stringify(payload());
+    const status = $('#sendstate');
+    try{
+      const blob = new Blob([body], {type:'text/plain;charset=utf-8'});
+      if (navigator.sendBeacon && navigator.sendBeacon(ENDPOINT, blob)) {
+        if (status) status.textContent = 'Answers sent.';
+        return;
+      }
+    }catch(e){}
+    fetch(ENDPOINT, {method:'POST', mode:'no-cors', keepalive:true,
+      headers:{'Content-Type':'text/plain;charset=utf-8'}, body})
+      .then(()=>{ if(status) status.textContent='Answers sent.'; })
+      .catch(()=>{ sent=false; if(status) status.textContent='Could not send, will retry.'; });
+  }
+  document.querySelector('[data-next=".outro"]').addEventListener('click', submit);
+  // Safety net: if they leave without pressing the last button but answered everything.
+  addEventListener('pagehide', ()=>{ if(answers.q6) submit(); });
 
   window.addEventListener('load',()=>ScrollTrigger.refresh());
   window.addEventListener('orientationchange',()=>setTimeout(()=>ScrollTrigger.refresh(),300));
