@@ -627,12 +627,12 @@
   tl5.to('#l7',{opacity:1,y:0,duration:.6})
      .to('#lift',{opacity:1,duration:1.2,ease:'none'},0)
      .set('.scene5 #l7',{color:'#0F1C2E'},.6)
-     .to(chips,{opacity:1,duration:.3,stagger:.05},.5)
-     .to('#l7',{opacity:0,y:-10,duration:.4},1.6)
-     .to('#mcard',{opacity:1,duration:.5,ease:'power2.out'},1.8);
+     .to(chips,{opacity:1,duration:.3,stagger:.05},1.2)
+     .to('#l7',{opacity:0,y:-10,duration:.4},4.6)       // the sentence stays readable for ~4 s
+     .to('#mcard',{opacity:1,duration:.5,ease:'power2.out'},4.8);
   chips.forEach((c,i)=>{
     tl5.to(c,{x:0,y:0,rotation:0,scale:.6,opacity:0,duration:.55,ease:'power2.in',
-      onComplete:()=>slots[i].classList.add('on'),onReverseComplete:()=>slots[i].classList.remove('on')},2.1+i*.3);
+      onComplete:()=>slots[i].classList.add('on'),onReverseComplete:()=>slots[i].classList.remove('on')},5.1+i*.3);
   });
   tl5.to('#glow',{opacity:1,duration:.8},'-=.1')
      .to('#mcard',{scale:1.03,duration:.6,ease:'power1.inOut'},'<')
