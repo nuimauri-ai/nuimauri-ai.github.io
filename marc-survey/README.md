@@ -36,7 +36,11 @@ Each response is one JSON object with these fields:
 
 ## Testing a specific screen
 
-Add `?at=` to the URL to jump straight to a point, e.g. `index.html?at=q3` (a question) or `index.html?at=p5:0.5` (the MARC reveal scene at 50 %). Scene ids: `p0` opening, `p2` clock, `p3` record, `p4` noise, `p5` MARC reveal. Sections: `q1`–`q5`, `result`, `beta`, `closing`.
+Add `?at=` to the URL to jump straight to a screen, e.g. `index.html?at=q3` (a question) or `index.html?at=pin5:0.5` (the MARC reveal scene frozen at 50 % of its animation). Scene ids: `pin0` opening, `pin2` clock, `pin3` record, `pin4` noise, `pin5` MARC reveal. Screens: `q1`–`q5`, `result`, `beta`, `closing`.
+
+## How it moves
+
+One swipe (or one wheel notch / arrow key) = one screen. A scene plays its whole animation on arrival, then waits. Sliders move on by themselves once answered; tick-box screens have a Next button; long lists scroll inside their screen first and only change screen once you reach the end.
 
 ## Hosting
 

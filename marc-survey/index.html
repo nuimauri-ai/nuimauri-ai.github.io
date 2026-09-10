@@ -21,12 +21,15 @@
   }
   *{box-sizing:border-box}
   html,body{margin:0;background:var(--surface);color:var(--body);font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
-  body{overflow-x:hidden}
+  html,body{height:100%;overflow:hidden;overscroll-behavior:none}
+  #deck{position:fixed;inset:0;overflow:hidden;background:var(--surface)}
+  .slide{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;visibility:hidden;will-change:transform;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;background:var(--surface)}
+  .slide.on{visibility:visible}
   button,input,select,textarea{font:inherit}
   svg{display:block}
 
   /* progress + chapter */
-  #progress{position:fixed;top:0;left:0;height:3px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:var(--accent);z-index:50}
+  #progress{z-index:70;position:fixed;top:0;left:0;height:3px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:var(--accent);z-index:50}
   #chapter{position:fixed;top:calc(env(safe-area-inset-top) + 12px);right:14px;z-index:50;display:flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;background:rgba(15,28,46,.78);color:#fff;font-size:12px;font-weight:600;letter-spacing:.04em;opacity:0;transition:opacity .3s}
   #chapter.show{opacity:1}
   #chapter i{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.3);transition:background .3s,transform .3s}
@@ -45,8 +48,8 @@
   .light-cue #cue svg{stroke:var(--heading)}
 
   /* pinned scenes */
-  .scene{position:relative}
-  .pin{position:relative;height:100svh;overflow:hidden}
+  .scene{position:absolute}
+  .pin{position:relative;height:100%;min-height:100%;overflow:hidden}
   .stage{position:absolute;inset:0}
   .copy{position:absolute;left:0;right:0;bottom:0;padding:0 22px calc(env(safe-area-inset-bottom) + 36px);max-width:600px;margin:0 auto;z-index:5}
   .copy.top{bottom:auto;top:calc(env(safe-area-inset-top) + 70px)}
@@ -58,6 +61,7 @@
 
   /* ---------- opening ---------- */
   .opening .stage{background:var(--surface)}
+  .brandslide .stage{background:var(--surface)}
   .brand{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);width:min(56vw,240px);text-align:center;will-change:transform,opacity}
   .brand svg{width:100%;height:auto;overflow:visible}
   .brand .kicker{margin:22px 0 0;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600;opacity:0}
@@ -127,7 +131,7 @@
   .glow{position:absolute;left:50%;top:46%;width:min(86vw,380px);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(18,133,234,.28),rgba(18,133,234,0) 60%);opacity:0;pointer-events:none}
 
   /* ---------- question cards ---------- */
-  .q{min-height:100svh;display:grid;place-items:center;padding:24px 18px}
+  .q{min-height:100%;display:grid;place-items:center;padding:24px 18px}
   .card{width:100%;max-width:540px;background:var(--card);border-radius:var(--radius);padding:24px 22px 22px;box-shadow:0 20px 60px rgba(15,28,46,.10);border:1px solid var(--border);opacity:0;transform:translateY(30px) scale(.98);will-change:transform,opacity}
   .card .k{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 10px}
   .card h2{font-size:clamp(20px,5.2vw,26px);line-height:1.22;letter-spacing:-.02em;margin:0 0 8px;color:var(--heading)}
@@ -218,7 +222,7 @@
   .privacy{font-size:12px;color:var(--muted);margin-top:10px;text-align:center}
 
   /* closing */
-  .closing{min-height:100svh;display:grid;place-items:center;text-align:center;padding:24px;background:var(--surface)}
+  .closing{min-height:100%;display:grid;place-items:center;text-align:center;padding:24px;background:var(--surface)}
   .closing .brand2{width:min(60vw,260px);margin:0 auto 26px}
   .closing .brand2 svg{width:100%;height:auto;overflow:visible}
   .closing .brand2 path{opacity:0}
@@ -241,9 +245,24 @@
 <div id="progress"></div>
 <div id="cue" aria-hidden="true"><svg class="up" viewBox="0 0 24 24"><path d="M12 20V5M5 12l7-7 7 7"/></svg><span></span></div>
 <div id="chapter" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><span id="chlabel"></span></div>
+<div id="deck">
 
 <!-- ============ OPENING : logo → the day rushes past → it slows → the inbox ============ -->
-<section class="scene opening">
+<section class="slide brandslide" data-cue="never">
+  <div class="pin">
+    <div class="stage">
+      <div class="brand" id="brand">
+        <div id="logo1"><svg viewBox='0 0 181 56' xmlns='http://www.w3.org/2000/svg' aria-label='MARC'><path d='M59.7114 24.0333C58.3865 21.7002 55.0026 21.7141 53.6972 24.058L44.7372 40.1451C44.4512 40.6585 44.4498 41.2817 44.7328 41.7967L52.3752 55.7031L63.4459 35.9468C64.3809 34.2782 64.3749 32.2461 63.4304 30.5828L59.7114 24.0333Z' fill='#2680D4'/><path d='M47.2957 1.74163C45.9733 -0.587082 42.5976 -0.578883 41.2869 1.75635L19.9341 39.8008C19.6455 40.315 19.6427 40.9407 19.9267 41.4574L27.5674 55.3605L51.0333 13.6789C51.9735 12.0088 51.9696 9.97187 51.0232 8.30521L47.2957 1.74163Z' fill='#0868E5'/><path d='M22.495 1.75367C21.1711 -0.577533 17.7904 -0.565663 16.4829 1.77475L0.219297 30.8866C-0.418621 32.0285 0.411497 33.4319 1.72503 33.4319H15.1636L26.2343 13.6756C27.1693 12.007 27.1633 9.97485 26.2188 8.31157L22.495 1.75367Z' fill='#3B45F8'/><path d='M88.5502 12.9103H92.7397L99.0902 33.4404L105.422 12.9103H109.308L100.815 40.5113H97.3461L88.5502 12.9103ZM86.9768 12.9103H90.844L91.4696 30.4832V40.5113H86.9768V12.9103ZM107.298 12.9103H111.185V40.5113H106.692V30.4832L107.298 12.9103Z' fill='#2D2B3A'/><path d='M126.994 16.7016L120.321 40.5113H115.506L124.264 12.9103H127.259L126.994 16.7016ZM132.321 40.5113L125.629 16.7016L125.307 12.9103H128.359L137.155 40.5113H132.321ZM132.434 30.2557V34.1229H119.582V30.2557H132.434Z' fill='#2D2B3A'/><path d='M141.097 12.9103H149.438C151.258 12.9103 152.799 13.2262 154.063 13.8581C155.327 14.49 156.287 15.4252 156.945 16.6637C157.614 17.8896 157.949 19.4124 157.949 21.2323C157.949 22.6098 157.741 23.823 157.324 24.872C156.919 25.9209 156.332 26.8056 155.561 27.5259C154.79 28.2336 153.861 28.7834 152.774 29.1751L151.428 29.9145H144.376L144.357 26.0473H149.324C150.221 26.0473 150.967 25.8514 151.561 25.4596C152.155 25.0679 152.597 24.5244 152.888 23.8293C153.191 23.1343 153.343 22.3444 153.343 21.4598C153.343 20.5119 153.21 19.6905 152.945 18.9954C152.679 18.2877 152.262 17.7442 151.694 17.3651C151.125 16.9733 150.373 16.7774 149.438 16.7774H145.703V40.5113H141.097V12.9103ZM153.949 40.5113L148.698 28.1136L153.494 28.0946L158.878 40.2648V40.5113H153.949Z' fill='#2D2B3A'/><path d='M176.393 31.5068H180.981C180.893 33.5036 180.488 35.2034 179.768 36.6062C179.047 37.9963 178.011 39.0579 176.659 39.7909C175.319 40.5239 173.683 40.8904 171.749 40.8904C170.283 40.8904 168.969 40.625 167.806 40.0942C166.656 39.5634 165.677 38.7989 164.868 37.8005C164.059 36.7894 163.44 35.5572 163.01 34.1039C162.593 32.6505 162.384 31.0013 162.384 29.1562V24.2654C162.384 22.4202 162.599 20.771 163.029 19.3176C163.471 17.8643 164.103 16.6321 164.925 15.6211C165.746 14.6101 166.744 13.8455 167.92 13.3273C169.108 12.7965 170.447 12.5311 171.939 12.5311C173.847 12.5311 175.452 12.8976 176.754 13.6306C178.055 14.3636 179.06 15.4378 179.768 16.8533C180.476 18.2687 180.886 19.9938 181 22.0285H176.412C176.349 20.6509 176.16 19.5514 175.844 18.73C175.54 17.8959 175.073 17.2956 174.441 16.9291C173.822 16.5626 172.988 16.3793 171.939 16.3793C171.067 16.3793 170.315 16.5436 169.683 16.8722C169.064 17.2008 168.552 17.6937 168.147 18.3508C167.756 18.9954 167.459 19.8105 167.256 20.7963C167.067 21.7694 166.972 22.9131 166.972 24.2274V29.1562C166.972 30.42 167.054 31.5384 167.218 32.5115C167.383 33.4846 167.648 34.3124 168.015 34.9949C168.381 35.6647 168.868 36.1765 169.474 36.5304C170.081 36.8716 170.839 37.0422 171.749 37.0422C172.836 37.0422 173.702 36.8716 174.346 36.5304C175.003 36.1891 175.49 35.6141 175.806 34.8053C176.122 33.9965 176.318 32.897 176.393 31.5068Z' fill='#2D2B3A'/></svg></div>
+        <p class="kicker" id="kicker"></p>
+      </div>
+      <div class="hint" id="hint"><span></span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16M5 13l7 7 7-7"/></svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide scene opening">
   <div class="pin" id="pin0">
     <div class="stage">
       <div class="icons" id="icons"></div>
@@ -257,20 +276,13 @@
           <path d="M60 100v16h140v-16" fill="none" stroke="#0F1C2E" stroke-width="2.4"/>
         </svg>
       </div>
-      <div class="brand" id="brand">
-        <div id="logo1"><svg viewBox='0 0 181 56' xmlns='http://www.w3.org/2000/svg' aria-label='MARC'><path d='M59.7114 24.0333C58.3865 21.7002 55.0026 21.7141 53.6972 24.058L44.7372 40.1451C44.4512 40.6585 44.4498 41.2817 44.7328 41.7967L52.3752 55.7031L63.4459 35.9468C64.3809 34.2782 64.3749 32.2461 63.4304 30.5828L59.7114 24.0333Z' fill='#2680D4'/><path d='M47.2957 1.74163C45.9733 -0.587082 42.5976 -0.578883 41.2869 1.75635L19.9341 39.8008C19.6455 40.315 19.6427 40.9407 19.9267 41.4574L27.5674 55.3605L51.0333 13.6789C51.9735 12.0088 51.9696 9.97187 51.0232 8.30521L47.2957 1.74163Z' fill='#0868E5'/><path d='M22.495 1.75367C21.1711 -0.577533 17.7904 -0.565663 16.4829 1.77475L0.219297 30.8866C-0.418621 32.0285 0.411497 33.4319 1.72503 33.4319H15.1636L26.2343 13.6756C27.1693 12.007 27.1633 9.97485 26.2188 8.31157L22.495 1.75367Z' fill='#3B45F8'/><path d='M88.5502 12.9103H92.7397L99.0902 33.4404L105.422 12.9103H109.308L100.815 40.5113H97.3461L88.5502 12.9103ZM86.9768 12.9103H90.844L91.4696 30.4832V40.5113H86.9768V12.9103ZM107.298 12.9103H111.185V40.5113H106.692V30.4832L107.298 12.9103Z' fill='#2D2B3A'/><path d='M126.994 16.7016L120.321 40.5113H115.506L124.264 12.9103H127.259L126.994 16.7016ZM132.321 40.5113L125.629 16.7016L125.307 12.9103H128.359L137.155 40.5113H132.321ZM132.434 30.2557V34.1229H119.582V30.2557H132.434Z' fill='#2D2B3A'/><path d='M141.097 12.9103H149.438C151.258 12.9103 152.799 13.2262 154.063 13.8581C155.327 14.49 156.287 15.4252 156.945 16.6637C157.614 17.8896 157.949 19.4124 157.949 21.2323C157.949 22.6098 157.741 23.823 157.324 24.872C156.919 25.9209 156.332 26.8056 155.561 27.5259C154.79 28.2336 153.861 28.7834 152.774 29.1751L151.428 29.9145H144.376L144.357 26.0473H149.324C150.221 26.0473 150.967 25.8514 151.561 25.4596C152.155 25.0679 152.597 24.5244 152.888 23.8293C153.191 23.1343 153.343 22.3444 153.343 21.4598C153.343 20.5119 153.21 19.6905 152.945 18.9954C152.679 18.2877 152.262 17.7442 151.694 17.3651C151.125 16.9733 150.373 16.7774 149.438 16.7774H145.703V40.5113H141.097V12.9103ZM153.949 40.5113L148.698 28.1136L153.494 28.0946L158.878 40.2648V40.5113H153.949Z' fill='#2D2B3A'/><path d='M176.393 31.5068H180.981C180.893 33.5036 180.488 35.2034 179.768 36.6062C179.047 37.9963 178.011 39.0579 176.659 39.7909C175.319 40.5239 173.683 40.8904 171.749 40.8904C170.283 40.8904 168.969 40.625 167.806 40.0942C166.656 39.5634 165.677 38.7989 164.868 37.8005C164.059 36.7894 163.44 35.5572 163.01 34.1039C162.593 32.6505 162.384 31.0013 162.384 29.1562V24.2654C162.384 22.4202 162.599 20.771 163.029 19.3176C163.471 17.8643 164.103 16.6321 164.925 15.6211C165.746 14.6101 166.744 13.8455 167.92 13.3273C169.108 12.7965 170.447 12.5311 171.939 12.5311C173.847 12.5311 175.452 12.8976 176.754 13.6306C178.055 14.3636 179.06 15.4378 179.768 16.8533C180.476 18.2687 180.886 19.9938 181 22.0285H176.412C176.349 20.6509 176.16 19.5514 175.844 18.73C175.54 17.8959 175.073 17.2956 174.441 16.9291C173.822 16.5626 172.988 16.3793 171.939 16.3793C171.067 16.3793 170.315 16.5436 169.683 16.8722C169.064 17.2008 168.552 17.6937 168.147 18.3508C167.756 18.9954 167.459 19.8105 167.256 20.7963C167.067 21.7694 166.972 22.9131 166.972 24.2274V29.1562C166.972 30.42 167.054 31.5384 167.218 32.5115C167.383 33.4846 167.648 34.3124 168.015 34.9949C168.381 35.6647 168.868 36.1765 169.474 36.5304C170.081 36.8716 170.839 37.0422 171.749 37.0422C172.836 37.0422 173.702 36.8716 174.346 36.5304C175.003 36.1891 175.49 35.6141 175.806 34.8053C176.122 33.9965 176.318 32.897 176.393 31.5068Z' fill='#2D2B3A'/></svg></div>
-        <p class="kicker" id="kicker"></p>
-      </div>
-      <div class="hint" id="hint"><span></span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16M5 13l7 7 7-7"/></svg>
-      </div>
       <div class="copy"><p class="line" id="l1"></p><p class="line small" id="l2"></p></div>
     </div>
   </div>
 </section>
 
 <!-- Q1 workload -->
-<section class="q" id="q1" data-step="1">
+<section class="slide" data-step="1" data-cue="slider"><div class="q" id="q1">
   <div class="card" data-card>
     <p class="k"></p><h2></h2><p class="help"></p>
     <div class="viz stackviz" id="stack1"></div>
@@ -282,10 +294,10 @@
       <div class="cmp"><div class="you"><span></span><b></b><span></span></div><div class="oth"><span></span><b></b><span></span></div></div>
     </div>
   </div>
-</section>
+</div></section>
 
 <!-- ============ SCENE 2 : the items become a clock, the light goes ============ -->
-<section class="scene scene2 dark">
+<section class="slide scene scene2 dark">
   <div class="pin" id="pin2">
     <div class="stage">
       <div class="dusk" id="dusk"></div>
@@ -305,7 +317,7 @@
 </section>
 
 <!-- Q2 time -->
-<section class="q" id="q2" data-step="2">
+<section class="slide" data-step="2" data-cue="slider"><div class="q" id="q2">
   <div class="card" data-card>
     <p class="k"></p><h2></h2><p class="help"></p>
     <div class="viz miniclock"><svg viewBox="0 0 100 100"><circle class="f" cx="50" cy="50" r="46"/><line class="hand h" id="mch" x1="50" y1="50" x2="50" y2="28"/><line class="hand m" id="mcm" x1="50" y1="50" x2="50" y2="16"/><circle cx="50" cy="50" r="3" fill="#1285EA"/></svg></div>
@@ -314,10 +326,10 @@
     <div class="scale"><span id="r2min"></span><span id="r2max"></span></div>
     <div class="lock"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg><span></span></div>
   </div>
-</section>
+</div></section>
 
 <!-- ============ SCENE 3 : a result, then the record opens ============ -->
-<section class="scene scene3 dark">
+<section class="slide scene scene3 dark">
   <div class="pin" id="pin3">
     <div class="stage">
       <div class="rowcard" id="rowcard">
@@ -343,7 +355,7 @@
 </section>
 
 <!-- Q3 record reconstruction -->
-<section class="q" id="q3" data-step="3">
+<section class="slide" data-step="3" data-cue="slider"><div class="q" id="q3">
   <div class="card" data-card>
     <p class="k"></p><h2></h2><p class="help"></p>
     <div class="viz rows" id="rows3"></div>
@@ -353,10 +365,10 @@
     <div class="scale"><span>0 %</span><span>100 %</span></div>
     <div class="lock"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg><span></span></div>
   </div>
-</section>
+</div></section>
 
 <!-- ============ SCENE 4 : the noise ============ -->
-<section class="scene scene4 dark">
+<section class="slide scene scene4 dark">
   <div class="pin" id="pin4">
     <div class="stage">
       <div class="papers" id="papers"></div>
@@ -367,17 +379,17 @@
 </section>
 
 <!-- Q4 frustrations -->
-<section class="q" id="q4" data-step="4">
+<section class="slide" data-step="4" data-cue="never"><div class="q" id="q4">
   <div class="card" data-card>
     <p class="k"></p><h2 id="q4h"></h2><p class="help"></p>
     <div class="pills" id="p4" role="group" aria-labelledby="q4h"></div>
     <div class="other" id="o4"><input class="text" type="text" maxlength="140"></div>
     <button class="next" id="n4"></button>
   </div>
-</section>
+</div></section>
 
 <!-- ============ SCENE 5 : MARC brings it together ============ -->
-<section class="scene scene5 dark">
+<section class="slide scene scene5 dark">
   <div class="pin" id="pin5">
     <div class="stage">
       <div class="lift" id="lift"></div>
@@ -394,17 +406,17 @@
 </section>
 
 <!-- Q5 adoption -->
-<section class="q" id="q5" data-step="5">
+<section class="slide" data-step="5" data-cue="never"><div class="q" id="q5">
   <div class="card" data-card>
     <p class="k"></p><h2 id="q5h"></h2><p class="help"></p>
     <div class="pills" id="p5" role="group" aria-labelledby="q5h"></div>
     <div class="other" id="o5"><input class="text" type="text" maxlength="140"></div>
     <button class="next primary" id="n5"></button>
   </div>
-</section>
+</div></section>
 
 <!-- ============ PERSONALISED RESULT ============ -->
-<section class="q" id="result">
+<section class="slide"><div class="q" id="result">
   <div class="rcard" data-card>
     <div class="mh"><div id="mark2"><svg viewBox='0 0 64 56' xmlns='http://www.w3.org/2000/svg' aria-hidden='true'><path d='M59.7114 24.0333C58.3865 21.7002 55.0026 21.7141 53.6972 24.058L44.7372 40.1451C44.4512 40.6585 44.4498 41.2817 44.7328 41.7967L52.3752 55.7031L63.4459 35.9468C64.3809 34.2782 64.3749 32.2461 63.4304 30.5828L59.7114 24.0333Z' fill='#2680D4'/><path d='M47.2957 1.74163C45.9733 -0.587082 42.5976 -0.578883 41.2869 1.75635L19.9341 39.8008C19.6455 40.315 19.6427 40.9407 19.9267 41.4574L27.5674 55.3605L51.0333 13.6789C51.9735 12.0088 51.9696 9.97187 51.0232 8.30521L47.2957 1.74163Z' fill='#0868E5'/><path d='M22.495 1.75367C21.1711 -0.577533 17.7904 -0.565663 16.4829 1.77475L0.219297 30.8866C-0.418621 32.0285 0.411497 33.4319 1.72503 33.4319H15.1636L26.2343 13.6756C27.1693 12.007 27.1633 9.97485 26.2188 8.31157L22.495 1.75367Z' fill='#3B45F8'/></svg></div><b></b><span>MARC</span></div>
     <div class="body">
@@ -417,10 +429,10 @@
       <div class="compare" id="compare"></div>
     </div>
   </div>
-</section>
+</div></section>
 
 <!-- ============ BETA ============ -->
-<section class="q" id="beta">
+<section class="slide" data-cue="never"><div class="q" id="beta">
   <div class="card" data-card>
     <p class="k"></p><h2></h2><p class="help" style="font-size:16px;color:var(--body)"></p>
     <form id="betaform" novalidate>
@@ -432,28 +444,25 @@
       <p class="privacy"></p>
     </form>
   </div>
-</section>
+</div></section>
 
 <!-- ============ CLOSING : the logo comes back together ============ -->
-<section class="closing" id="closing">
+<section class="slide" data-cue="never"><div class="closing" id="closing">
   <div>
     <div class="brand2" id="logo2"><svg viewBox='0 0 181 56' xmlns='http://www.w3.org/2000/svg' aria-label='MARC'><path d='M59.7114 24.0333C58.3865 21.7002 55.0026 21.7141 53.6972 24.058L44.7372 40.1451C44.4512 40.6585 44.4498 41.2817 44.7328 41.7967L52.3752 55.7031L63.4459 35.9468C64.3809 34.2782 64.3749 32.2461 63.4304 30.5828L59.7114 24.0333Z' fill='#2680D4'/><path d='M47.2957 1.74163C45.9733 -0.587082 42.5976 -0.578883 41.2869 1.75635L19.9341 39.8008C19.6455 40.315 19.6427 40.9407 19.9267 41.4574L27.5674 55.3605L51.0333 13.6789C51.9735 12.0088 51.9696 9.97187 51.0232 8.30521L47.2957 1.74163Z' fill='#0868E5'/><path d='M22.495 1.75367C21.1711 -0.577533 17.7904 -0.565663 16.4829 1.77475L0.219297 30.8866C-0.418621 32.0285 0.411497 33.4319 1.72503 33.4319H15.1636L26.2343 13.6756C27.1693 12.007 27.1633 9.97485 26.2188 8.31157L22.495 1.75367Z' fill='#3B45F8'/><path d='M88.5502 12.9103H92.7397L99.0902 33.4404L105.422 12.9103H109.308L100.815 40.5113H97.3461L88.5502 12.9103ZM86.9768 12.9103H90.844L91.4696 30.4832V40.5113H86.9768V12.9103ZM107.298 12.9103H111.185V40.5113H106.692V30.4832L107.298 12.9103Z' fill='#2D2B3A'/><path d='M126.994 16.7016L120.321 40.5113H115.506L124.264 12.9103H127.259L126.994 16.7016ZM132.321 40.5113L125.629 16.7016L125.307 12.9103H128.359L137.155 40.5113H132.321ZM132.434 30.2557V34.1229H119.582V30.2557H132.434Z' fill='#2D2B3A'/><path d='M141.097 12.9103H149.438C151.258 12.9103 152.799 13.2262 154.063 13.8581C155.327 14.49 156.287 15.4252 156.945 16.6637C157.614 17.8896 157.949 19.4124 157.949 21.2323C157.949 22.6098 157.741 23.823 157.324 24.872C156.919 25.9209 156.332 26.8056 155.561 27.5259C154.79 28.2336 153.861 28.7834 152.774 29.1751L151.428 29.9145H144.376L144.357 26.0473H149.324C150.221 26.0473 150.967 25.8514 151.561 25.4596C152.155 25.0679 152.597 24.5244 152.888 23.8293C153.191 23.1343 153.343 22.3444 153.343 21.4598C153.343 20.5119 153.21 19.6905 152.945 18.9954C152.679 18.2877 152.262 17.7442 151.694 17.3651C151.125 16.9733 150.373 16.7774 149.438 16.7774H145.703V40.5113H141.097V12.9103ZM153.949 40.5113L148.698 28.1136L153.494 28.0946L158.878 40.2648V40.5113H153.949Z' fill='#2D2B3A'/><path d='M176.393 31.5068H180.981C180.893 33.5036 180.488 35.2034 179.768 36.6062C179.047 37.9963 178.011 39.0579 176.659 39.7909C175.319 40.5239 173.683 40.8904 171.749 40.8904C170.283 40.8904 168.969 40.625 167.806 40.0942C166.656 39.5634 165.677 38.7989 164.868 37.8005C164.059 36.7894 163.44 35.5572 163.01 34.1039C162.593 32.6505 162.384 31.0013 162.384 29.1562V24.2654C162.384 22.4202 162.599 20.771 163.029 19.3176C163.471 17.8643 164.103 16.6321 164.925 15.6211C165.746 14.6101 166.744 13.8455 167.92 13.3273C169.108 12.7965 170.447 12.5311 171.939 12.5311C173.847 12.5311 175.452 12.8976 176.754 13.6306C178.055 14.3636 179.06 15.4378 179.768 16.8533C180.476 18.2687 180.886 19.9938 181 22.0285H176.412C176.349 20.6509 176.16 19.5514 175.844 18.73C175.54 17.8959 175.073 17.2956 174.441 16.9291C173.822 16.5626 172.988 16.3793 171.939 16.3793C171.067 16.3793 170.315 16.5436 169.683 16.8722C169.064 17.2008 168.552 17.6937 168.147 18.3508C167.756 18.9954 167.459 19.8105 167.256 20.7963C167.067 21.7694 166.972 22.9131 166.972 24.2274V29.1562C166.972 30.42 167.054 31.5384 167.218 32.5115C167.383 33.4846 167.648 34.3124 168.015 34.9949C168.381 35.6647 168.868 36.1765 169.474 36.5304C170.081 36.8716 170.839 37.0422 171.749 37.0422C172.836 37.0422 173.702 36.8716 174.346 36.5304C175.003 36.1891 175.49 35.6141 175.806 34.8053C176.122 33.9965 176.318 32.897 176.393 31.5068Z' fill='#2D2B3A'/></svg></div>
     <h2></h2><p></p><a href="https://marc.health" target="_blank" rel="noopener"></a>
     <p class="privacy" id="sendstate"></p>
   </div>
-</section>
+</div></section>
+
+</div><!-- /deck -->
 
 <script src="content.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
 <script>
 (function(){
   const C = window.CONTENT;
-  gsap.registerPlugin(ScrollTrigger,ScrollToPlugin);
-  ScrollTrigger.config({ignoreMobileResize:true});
   const touch = matchMedia('(hover: none) and (pointer: coarse)').matches;
-  if(touch) ScrollTrigger.normalizeScroll({allowNestedScroll:true});
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const $ = s=>document.querySelector(s), $$ = s=>[...document.querySelectorAll(s)];
   const answers = {};
@@ -478,24 +487,21 @@
   $('#s-items').nextElementSibling.textContent=C.q1.unit; $('#s-min').nextElementSibling.textContent=C.q2.unit;
   $('#beta .k').textContent=C.beta.kicker; $('#beta h2').textContent=C.beta.title; $('#beta .help').textContent=C.beta.text;
   $('label[for=bname]').textContent=C.beta.name; $('label[for=bemail]').textContent=C.beta.email; $('label[for=brole]').textContent=C.beta.role;
-  $('#brole').innerHTML='<option value="" disabled selected>—</option>'+C.beta.roles.map(r=>`<option>${r}</option>`).join('');
+  $('#brole').innerHTML='<option value="" disabled selected>—</option>'+C.beta.roles.map(r=>`<option>${esc(r)}</option>`).join('');
   $('#join').textContent=C.beta.button; $('#skipbeta').textContent=C.beta.skip; $('#beta .privacy').textContent=C.beta.privacy;
   $('#closing h2').textContent=C.closing.thanks; $('#closing > div > p').textContent=C.closing.sub; $('#closing a').textContent=C.closing.link; $('#closing a').href=C.closing.url;
   $$('.lock span').forEach(s=>s.textContent=C.ui.lock); $('#q1 .you span').textContent=C.ui.you; $('#q1 .oth span').textContent=C.ui.others; $('#bemailerr').textContent=C.beta.emailError;
 
   // multi-select pills
-  const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  function esc(s){ return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
   const check='<span class="box"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg></span>';
   function pills(id,q){ $(id).innerHTML=q.options.concat([q.otherLabel]).map((o,i)=>`<button type="button" class="pill" aria-pressed="false" data-v="${esc(o)}" ${i===q.options.length?'data-other="1"':''}>${check}<span>${esc(o)}</span></button>`).join(''); }
   pills('#p4',C.q4); pills('#p5',C.q5);
   $('#o4 input').placeholder=C.q4.otherPlaceholder; $('#o5 input').placeholder=C.q5.otherPlaceholder;
   $('#o4 input').setAttribute('aria-label',C.q4.otherLabel+' — '+C.q4.otherPlaceholder); $('#o5 input').setAttribute('aria-label',C.q5.otherLabel+' — '+C.q5.otherPlaceholder);
 
-  // stack viz (Q1) 10x4 grid = 40 cells, one cell per 5 items
   $('#stack1').innerHTML='<i></i>'.repeat(40);
-  // rows viz (Q3)
   $('#rows3').innerHTML='<div></div>'.repeat(10);
-  // MARC card slots
   $('#slots').innerHTML=C.reveal.sources.map((s,i)=>`<div class="slot" style="--w:${(.45+((i*37)%50)/100).toFixed(2)}"><span class="dot"></span><span class="lab">${esc(s)}</span><span class="bar"></span></div>`).join('');
   $('#chips').innerHTML=C.reveal.sources.map(s=>`<span class="chip">${esc(s)}</span>`).join('');
 
@@ -516,254 +522,267 @@
   $('#icons').innerHTML=keys.concat(keys).map(k=>iconEl(k)).join('');
 
   const envSVG=(x,y,i)=>`<g transform="translate(${x},${y})"><g class="env" id="e${i}"><rect x="-26" y="-16" width="52" height="32" rx="4" fill="#fff" stroke="#0F1C2E" stroke-width="2"/><path d="M-26 -12l26 16 26-16" fill="none" stroke="#0F1C2E" stroke-width="2"/></g></g>`;
-  // opening tray: 6 envelopes stacked
   $('#envs').innerHTML=[0,1,2,3,4,5].map(i=>envSVG(130+(i%2?8:-8),92-i*13,i)).join('');
-  // scene 2: 12 envelopes start as a stack in the centre, end as clock ticks
   $('#envs2').innerHTML=[...Array(12)].map((_,i)=>envSVG(100+(i%2?6:-6),112-i*4,'b'+i)).join('');
-  $('#ticks').innerHTML=[...Array(12)].map((_,i)=>`<rect class="tick" x="98" y="18" width="4" height="10" rx="2"/>`).join('');
-  // scene 3: 5 pages in the folder
+  $('#ticks').innerHTML=[...Array(12)].map(()=>`<rect class="tick" x="98" y="18" width="4" height="10" rx="2"/>`).join('');
   $('#pages').innerHTML=[...Array(5)].map((_,i)=>`<g class="page" id="pg${i}"><rect x="60" y="30" width="80" height="96" rx="5" fill="#fff"/><rect x="70" y="42" width="40" height="6" rx="3" fill="#E6ECF3"/><rect x="70" y="54" width="60" height="4" rx="2" fill="#EEF2F7"/><rect x="70" y="62" width="52" height="4" rx="2" fill="#EEF2F7"/><rect x="70" y="70" width="58" height="4" rx="2" fill="#EEF2F7"/><rect x="70" y="78" width="36" height="4" rx="2" fill="#EEF2F7"/></g>`).join('');
-  // scene 4: papers + badges
   const paperSVG=()=>`<svg viewBox="0 0 100 120"><rect x="1" y="1" width="98" height="118" rx="6" fill="#fff"/><rect x="12" y="14" width="46" height="7" rx="3" fill="#E6ECF3"/><rect x="12" y="28" width="74" height="4" rx="2" fill="#EEF2F7"/><rect x="12" y="37" width="66" height="4" rx="2" fill="#EEF2F7"/><rect x="12" y="46" width="70" height="4" rx="2" fill="#EEF2F7"/><rect x="12" y="55" width="40" height="4" rx="2" fill="#EEF2F7"/><rect x="12" y="72" width="74" height="4" rx="2" fill="#EEF2F7"/><rect x="12" y="81" width="58" height="4" rx="2" fill="#EEF2F7"/></svg>`;
   const badges=C.scene4.badges;
   $('#papers').innerHTML=[...Array(14)].map(()=>`<div class="paper">${paperSVG()}</div>`).join('')+badges.map(b=>`<span class="badge ${esc(b[1]||'')}">${esc(b[0])}</span>`).join('');
 
-  /* ---------------- OPENING ---------------- */
+  /* =====================================================================
+     THE DECK
+     One swipe = one screen. Scenes play their whole animation on arrival.
+     ===================================================================== */
+  const slides=$$('.slide');
+  const idx=sel=>slides.indexOf($(sel).closest('.slide'));
+  const D = reduce ? 0 : .8;                   // slide transition
+  let cur=0, busy=false, playing=null;
+  const scenes={};                            // slide index -> {tl, light}
+
+  /* ---- brand: the logo draws itself on load ---- */
   const logo1=$('#logo1 svg'), chev1=[...logo1.querySelectorAll('path')].slice(0,3), word1=[...logo1.querySelectorAll('path')].slice(3);
   chev1.forEach(p=>{ const L=p.getTotalLength(); gsap.set(p,{strokeDasharray:L,strokeDashoffset:L,stroke:p.getAttribute('fill'),strokeWidth:1.5,fillOpacity:0}); });
   gsap.set(word1,{opacity:0,y:6});
-  const intro=gsap.timeline({defaults:{ease:'power2.out'}})
+  gsap.timeline({defaults:{ease:'power2.out'}})
     .to(chev1,{strokeDashoffset:0,duration:reduce?0:1.1,stagger:.15})
     .to(chev1,{fillOpacity:1,duration:.5,stagger:.1},'-=.4')
     .to(word1,{opacity:1,y:0,duration:.5,stagger:.06},'-=.3')
     .to('#kicker',{opacity:1,duration:.5},'-=.1')
     .to('#hint',{opacity:1,duration:.5},'-=.2');
 
-  // time-based stream of medical objects rushing past; scroll controls its speed
-  const icos=$$('.ico');
-  const lanes=icos.length;
+  /* ---- opening day: objects rush past, slow down, the inbox appears ---- */
+  const icos=$$('.ico'), lanes=icos.length;
   const burst=gsap.timeline({repeat:-1,paused:true});
   icos.forEach((el,i)=>{
     const top=8+((i*53)%78), dur=1.6+((i*29)%10)/10, delay=(i/lanes)*2.4, dir=i%2?1:-1;
     gsap.set(el,{top:top+'%',left:0,opacity:0});
-    burst.fromTo(el,{x:dir>0?'-25vw':'115vw',rotation:dir*-40,opacity:0},{x:dir>0?'115vw':'-25vw',rotation:dir*40,opacity:.9,duration:dur,ease:'none',repeat:-1,repeatDelay:.6,
-      onRepeat(){}, },delay);
+    burst.fromTo(el,{x:dir>0?'-25vw':'115vw',rotation:dir*-40,opacity:0},{x:dir>0?'115vw':'-25vw',rotation:dir*40,opacity:.9,duration:dur,ease:'none',repeat:-1,repeatDelay:.6},delay);
   });
-  // opacity ramps at both ends of each crossing
-  icos.forEach(el=>{ el.style.maskImage=''; });
   gsap.set('#bigclock',{opacity:0});
   const spin=gsap.timeline({repeat:-1,paused:true}).to('#bigclock .hand.m',{rotation:360,duration:1.2,ease:'none',svgOrigin:'50 50'},0).to('#bigclock .hand.h',{rotation:30,duration:1.2,ease:'none',svgOrigin:'50 50'},0);
+  const envs0=$$('#envs .env'); gsap.set(envs0,{y:-40});
+  const tl0=gsap.timeline({paused:true, onStart(){ burst.timeScale(2.2).play(); spin.timeScale(2.2).play(); }})
+    .fromTo('#icons',{opacity:1,y:0},{opacity:1,duration:.01},0)
+    .to('#bigclock',{opacity:1,duration:.4},0)
+    .to([burst,spin],{timeScale:.12,duration:2.6,ease:'power2.out'},.3)
+    .to('#bigclock',{opacity:0,scale:.8,duration:.5},2.5)
+    .to('#icons',{opacity:0,y:120,duration:.7,ease:'power2.in'},2.5)
+    .to('#l1',{opacity:1,y:0,duration:.5},2.9)
+    .to('#tray',{opacity:1,duration:.5},2.9)
+    .to(envs0,{opacity:1,y:0,duration:.35,stagger:.12,ease:'back.out(1.6)'},3.2)
+    .to('#l2',{opacity:1,y:0,duration:.5},3.9);
+  scenes[idx('#pin0')]={tl:tl0,light:true,after(){ burst.pause(); spin.pause(); }};
 
-  const envs0=$$('#envs .env');
-  if(!reduce){
-    gsap.timeline({scrollTrigger:{id:'p0',trigger:'#pin0',start:'top top',end:'+=320%',pin:true,scrub:.35,anticipatePin:1,
-      onUpdate(st){ const p=st.progress; if(p>.02&&intro.progress()<1) intro.progress(1); const run=p>.03&&p<.52; if(run){burst.play();spin.play();} else {burst.pause();spin.pause();}
-        const ts=gsap.utils.clamp(.08,2.2,2.2-(p/.6)*2.1); burst.timeScale(ts); spin.timeScale(ts); }}})
-      .fromTo('#brand',{opacity:1,y:0},{opacity:0,y:-40,duration:.5,immediateRender:false},0)
-      .fromTo('#hint',{opacity:1},{opacity:0,duration:.2,immediateRender:false},0)
-      .to('#bigclock',{opacity:1,duration:.4},.1)
-      .to({},{duration:1.6})                                          // the day rushes past, then slows
-      .to('#bigclock',{opacity:0,scale:.8,duration:.5})
-      .to('#icons',{opacity:0,y:120,duration:.7,ease:'power2.in'},'<')
-      .to('#l1',{opacity:1,y:0,duration:.5},'-=.3')
-      .to('#tray',{opacity:1,duration:.5},'<')
-      .to(envs0,{opacity:1,y:0,duration:.35,stagger:.12,ease:'back.out(1.6)'},'-=.1')
-      .to('#l2',{opacity:1,y:0,duration:.5},'-=.2')
-      .to({},{duration:.7});
-    gsap.set(envs0,{y:-40});
-  } else {
-    gsap.set('#icons,#bigclock',{display:'none'}); gsap.set('#l1,#l2,#tray',{opacity:1,y:0}); gsap.set(envs0,{opacity:1,y:0});
-  }
-
-  /* ---------------- SCENE 2 : stack → clock ---------------- */
+  /* ---- scene 2: the stack becomes a clock, the light goes ---- */
   const envs2=$$('#envs2 .env'), ticks=$$('#ticks .tick');
-  if(!reduce){
-    const face=$('#face'), FL=face.getTotalLength(); gsap.set(face,{strokeDasharray:FL,strokeDashoffset:FL});
-    gsap.set(envs2,{opacity:1}); gsap.set(ticks,{rotation:i=>i*30,svgOrigin:'100 100'}); gsap.set('#hh,#mh',{svgOrigin:'100 100'});
-    const tl2=gsap.timeline({scrollTrigger:{id:'p2',trigger:'#pin2',start:'top top',end:'+=220%',pin:true,scrub:.35,anticipatePin:1}});
-    tl2.to('#dusk',{opacity:1,duration:1.4,ease:'none'},0);
-    envs2.forEach((e,i)=>{ const a=(i*30-90)*Math.PI/180; const tx=100+Math.cos(a)*86-(100+(i%2?6:-6)), ty=100+Math.sin(a)*86-(112-i*4);
-      tl2.to(e,{x:tx,y:ty,scale:.22,rotation:i*30,transformOrigin:'0 0',duration:.9,ease:'power2.inOut'},.2+i*.05); });
-    tl2.to(envs2,{opacity:0,duration:.2},1.1).to(ticks,{opacity:1,duration:.2,stagger:.03},1.1)
-       .to(face,{strokeDashoffset:0,duration:.9,ease:'none'},1.0)
-       .to('#hh,#mh',{opacity:1,duration:.2},1.5)
-       .to('#mh',{rotation:720,duration:1.6,ease:'power1.inOut'},1.6)
-       .to('#hh',{rotation:60,duration:1.6,ease:'power1.inOut'},1.6)
-       .to('#l3',{opacity:1,y:0,duration:.5},2.2)
-       .to({},{duration:.6});
-  } else { gsap.set('#dusk,#l3,#hh,#mh,.tick',{opacity:1}); gsap.set(ticks,{rotation:i=>i*30,svgOrigin:'100 100'}); gsap.set(envs2,{opacity:0}); }
+  const face=$('#face'), FL=face.getTotalLength(); gsap.set(face,{strokeDasharray:FL,strokeDashoffset:FL});
+  gsap.set(envs2,{opacity:1}); gsap.set(ticks,{rotation:i=>i*30,svgOrigin:'100 100'}); gsap.set('#hh,#mh',{svgOrigin:'100 100'});
+  const tl2=gsap.timeline({paused:true});
+  tl2.to('#dusk',{opacity:1,duration:1.4,ease:'none'},0);
+  envs2.forEach((e,i)=>{ const a=(i*30-90)*Math.PI/180; const tx=100+Math.cos(a)*86-(100+(i%2?6:-6)), ty=100+Math.sin(a)*86-(112-i*4);
+    tl2.to(e,{x:tx,y:ty,scale:.22,rotation:i*30,transformOrigin:'0 0',duration:.9,ease:'power2.inOut'},.2+i*.05); });
+  tl2.to(envs2,{opacity:0,duration:.2},1.1).to(ticks,{opacity:1,duration:.2,stagger:.03},1.1)
+     .to(face,{strokeDashoffset:0,duration:.9,ease:'none'},1.0)
+     .to('#hh,#mh',{opacity:1,duration:.2},1.5)
+     .to('#mh',{rotation:720,duration:1.6,ease:'power1.inOut'},1.6)
+     .to('#hh',{rotation:60,duration:1.6,ease:'power1.inOut'},1.6)
+     .to('#l3',{opacity:1,y:0,duration:.5},2.2);
+  scenes[idx('#pin2')]={tl:tl2,light:false};
 
-  /* ---------------- SCENE 3 : result → record ---------------- */
+  /* ---- scene 3: a result, then the record opens ---- */
   const pages=$$('#pages .page');
-  if(!reduce){
-    gsap.timeline({scrollTrigger:{id:'p3',trigger:'#pin3',start:'top top',end:'+=230%',pin:true,scrub:.35,anticipatePin:1}})
-      .fromTo('#rowcard',{opacity:0,y:40,scale:.9},{opacity:1,y:0,scale:1,duration:.7,ease:'power2.out'})
-      .fromTo('#qmark',{scale:0,svgOrigin:'300 46'},{scale:1,duration:.4,ease:'back.out(2)'})
-      .to('#l4',{opacity:1,y:0,duration:.5},'-=.1')
-      .to({},{duration:.4})
-      .to('#rowcard',{y:-70,scale:.82,duration:.7,ease:'power2.inOut'})
-      .to('#folder',{opacity:1,duration:.4},'<')
-      .to('#flap',{y:40,skewX:-8,svgOrigin:'100 134',duration:.6,ease:'power2.inOut'},'-=.1')
-      .to(pages,{opacity:1,duration:.05,stagger:.12},'-=.2')
-      .to(pages,{rotation:i=>(i-2)*17,y:i=>-Math.abs(i-2)*10-30,svgOrigin:'100 126',duration:.9,stagger:.06,ease:'power2.out'},'<')
-      .to('#l4',{opacity:0,y:-10,duration:.3},'<')
-      .to('#l5',{opacity:1,y:0,duration:.5},'-=.3')
-      .to({},{duration:.7});
-  } else { gsap.set('#rowcard,#folder,#l5,.page',{opacity:1}); }
+  const tl3=gsap.timeline({paused:true})
+    .fromTo('#rowcard',{opacity:0,y:40,scale:.9},{opacity:1,y:0,scale:1,duration:.7,ease:'power2.out'})
+    .fromTo('#qmark',{scale:0,svgOrigin:'300 46'},{scale:1,duration:.4,ease:'back.out(2)'})
+    .to('#l4',{opacity:1,y:0,duration:.5},'-=.1')
+    .to({},{duration:.9})
+    .to('#rowcard',{y:-70,scale:.82,duration:.7,ease:'power2.inOut'})
+    .to('#folder',{opacity:1,duration:.4},'<')
+    .to('#flap',{y:40,skewX:-8,svgOrigin:'100 134',duration:.6,ease:'power2.inOut'},'-=.1')
+    .to(pages,{opacity:1,duration:.05,stagger:.12},'-=.2')
+    .to(pages,{rotation:i=>(i-2)*17,y:i=>-Math.abs(i-2)*10-30,svgOrigin:'100 126',duration:.9,stagger:.06,ease:'power2.out'},'<')
+    .to('#l4',{opacity:0,y:-10,duration:.3},'<')
+    .to('#l5',{opacity:1,y:0,duration:.5},'-=.3');
+  scenes[idx('#pin3')]={tl:tl3,light:false};
 
-  /* ---------------- SCENE 4 : noise ---------------- */
+  /* ---- scene 4: the noise ---- */
   const papers=$$('.paper'), bdg=$$('.badge');
   papers.forEach((p,i)=>gsap.set(p,{left:(4+((i*41)%80))+'%',top:(6+((i*57)%70))+'%',rotation:((i*47)%50)-25}));
   bdg.forEach((b,i)=>gsap.set(b,{left:(8+((i*53)%70))+'%',top:(14+((i*61)%66))+'%',rotation:((i*23)%20)-10}));
-  if(!reduce){
-    gsap.timeline({scrollTrigger:{id:'p4',trigger:'#pin4',start:'top top',end:'+=190%',pin:true,scrub:.35,anticipatePin:1}})
-      .fromTo(papers,{opacity:0,y:180,scale:.7},{opacity:1,y:0,scale:1,duration:.6,stagger:.06,ease:'power2.out'})
-      .fromTo(bdg,{opacity:0,scale:.4},{opacity:1,scale:1,duration:.35,stagger:.1,ease:'back.out(2)'},'-=.5')
-      .to('#l6',{opacity:1,y:0,duration:.5},'-=.2')
-      .to({},{duration:.6});
-    // a restless little drift while the scene is on screen
-    const jitter=gsap.timeline({repeat:-1,yoyo:true,paused:true});
-    papers.forEach((p,i)=>jitter.to(p,{x:'+='+(((i*7)%9)-4),y:'+='+(((i*11)%7)-3),rotation:'+='+(((i*5)%5)-2),duration:1.4+(i%4)*.3,ease:'sine.inOut'},0));
-    ScrollTrigger.create({trigger:'#pin4',start:'top bottom',end:'bottom top',onToggle:s=>s.isActive?jitter.play():jitter.pause()});
-  } else { gsap.set(papers,{opacity:1,y:0,scale:1}); gsap.set(bdg,{opacity:1,scale:1}); gsap.set('#l6',{opacity:1}); }
+  const jitter=gsap.timeline({repeat:-1,yoyo:true,paused:true});
+  papers.forEach((p,i)=>jitter.to(p,{x:'+='+(((i*7)%9)-4),y:'+='+(((i*11)%7)-3),rotation:'+='+(((i*5)%5)-2),duration:1.4+(i%4)*.3,ease:'sine.inOut'},0));
+  const tl4=gsap.timeline({paused:true,onStart(){ if(!reduce) jitter.play(); }})
+    .fromTo(papers,{opacity:0,y:180,scale:.7},{opacity:1,y:0,scale:1,duration:.6,stagger:.06,ease:'power2.out'})
+    .fromTo(bdg,{opacity:0,scale:.4},{opacity:1,scale:1,duration:.35,stagger:.1,ease:'back.out(2)'},'-=.5')
+    .to('#l6',{opacity:1,y:0,duration:.5},'-=.2');
+  scenes[idx('#pin4')]={tl:tl4,light:false,onLeave(){ jitter.pause(); }};
 
-  /* ---------------- SCENE 5 : MARC reveal ---------------- */
+  /* ---- scene 5: MARC brings it together ---- */
   const chips=$$('.chip'), slots=$$('.slot');
   const placeChips=()=>chips.forEach((c,i)=>{ const maxX=Math.max(0,innerWidth/2-c.offsetWidth/2-14); const want=(i%2?1:-1)*(70+((i*53)%120));
     gsap.set(c,{xPercent:-50,yPercent:-50,x:gsap.utils.clamp(-maxX,maxX,want),y:40+((i*71)%330),rotation:((i*37)%30)-15,scale:.9}); });
   placeChips(); addEventListener('resize',placeChips);
-  if(!reduce){
-    const tl5=gsap.timeline({scrollTrigger:{id:'p5',trigger:'#pin5',start:'top top',end:'+=360%',pin:true,scrub:.35,anticipatePin:1}});
-    tl5.to('#l7',{opacity:1,y:0,duration:.6})
-       .to('#lift',{opacity:1,duration:1.2,ease:'none'},0)
-       .set('.scene5 #l7',{color:'#0F1C2E'},.6)
-       .to(chips,{opacity:1,duration:.3,stagger:.05},.5)
-       .to('#l7',{opacity:0,y:-10,duration:.4},1.3)
-       .to('#mcard',{opacity:1,duration:.5,ease:'power2.out'},1.5);
-    chips.forEach((c,i)=>{
-      tl5.to(c,{x:0,y:0,rotation:0,scale:.6,opacity:0,duration:.55,ease:'power2.in',
-        onComplete:()=>slots[i].classList.add('on'),onReverseComplete:()=>slots[i].classList.remove('on')},1.8+i*.35);
-    });
-    tl5.to('#glow',{opacity:1,duration:.8},'-=.1')
-       .to('#mcard',{scale:1.03,duration:.6,ease:'power1.inOut'},'<')
-       .to('#l8',{opacity:1,y:0,duration:.6},'<')
-       .to({},{duration:.8});
-  } else { gsap.set('#lift,#mcard,#l8,#l7',{opacity:1}); gsap.set('#l7',{color:'#0F1C2E'}); gsap.set(chips,{opacity:0}); slots.forEach(s=>s.classList.add('on')); }
+  const tl5=gsap.timeline({paused:true});
+  tl5.to('#l7',{opacity:1,y:0,duration:.6})
+     .to('#lift',{opacity:1,duration:1.2,ease:'none'},0)
+     .set('.scene5 #l7',{color:'#0F1C2E'},.6)
+     .to(chips,{opacity:1,duration:.3,stagger:.05},.5)
+     .to('#l7',{opacity:0,y:-10,duration:.4},1.6)
+     .to('#mcard',{opacity:1,duration:.5,ease:'power2.out'},1.8);
+  chips.forEach((c,i)=>{
+    tl5.to(c,{x:0,y:0,rotation:0,scale:.6,opacity:0,duration:.55,ease:'power2.in',
+      onComplete:()=>slots[i].classList.add('on'),onReverseComplete:()=>slots[i].classList.remove('on')},2.1+i*.3);
+  });
+  tl5.to('#glow',{opacity:1,duration:.8},'-=.1')
+     .to('#mcard',{scale:1.03,duration:.6,ease:'power1.inOut'},'<')
+     .to('#l8',{opacity:1,y:0,duration:.6},'<');
+  scenes[idx('#pin5')]={tl:tl5,light:true};
 
-  /* ---------------- progress + chapter pill ---------------- */
-  gsap.to('#progress',{scaleX:1,ease:'none',scrollTrigger:{scrub:.3,start:0,end:'max'}});
+  /* ---- closing: the logo comes back together ---- */
+  const logo2=$('#logo2 svg'), chev2=[...logo2.querySelectorAll('path')].slice(0,3), word2=[...logo2.querySelectorAll('path')].slice(3);
+  gsap.set(chev2,{opacity:0,x:i=>[-160,0,160][i],y:i=>[40,-90,40][i],rotation:i=>[-30,15,30][i],transformOrigin:'50% 50%'});
+  gsap.set(word2,{opacity:0,y:8});
+  const tlClose=gsap.timeline({paused:true,defaults:{ease:'power3.out'}})
+    .to(chev2,{opacity:1,x:0,y:0,rotation:0,duration:1,stagger:.12})
+    .to(word2,{opacity:1,y:0,duration:.5,stagger:.05},'-=.4')
+    .to('#closing h2',{opacity:1,duration:.5},'-=.2')
+    .to('#closing > div > p',{opacity:1,duration:.5},'-=.3')
+    .to('#closing a',{opacity:1,duration:.5},'-=.3');
+  scenes[idx('#closing')]={tl:tlClose,light:true,once:true};
+
+  /* ---- chrome: progress bar, chapter pill, cue ---- */
   const dots=$$('#chapter i'), pill=$('#chapter');
-  $$('[data-step]').forEach(c=>{ const n=+c.dataset.step;
-    ScrollTrigger.create({trigger:c,start:'top 70%',end:'bottom 30%',onEnter:()=>mark(n),onEnterBack:()=>mark(n)}); });
-  ScrollTrigger.create({trigger:'#q1',start:'top 90%',onEnter:()=>pill.classList.add('show'),onLeaveBack:()=>pill.classList.remove('show')});
-  ScrollTrigger.create({trigger:'#result',start:'top 60%',onEnter:()=>pill.classList.remove('show'),onLeaveBack:()=>pill.classList.add('show')});
   const hasAns=k=>Array.isArray(answers[k])?answers[k].length>0:answers[k]!=null;
   function mark(n){ $('#chlabel').textContent=n+C.ui.counter; dots.forEach((d,i)=>{d.classList.toggle('now',i===n-1);d.classList.toggle('done',i<n-1||hasAns('q'+(i+1)));}); }
-
-
-  /* ---------------- cards rise in ---------------- */
-  if(!reduce){
-    $$('[data-card]').forEach(c=>gsap.to(c,{opacity:1,y:0,scale:1,duration:.6,ease:'power2.out',scrollTrigger:{trigger:c,start:'top 85%',toggleActions:'play none none none'}}));
-  } else { gsap.set('[data-card]',{opacity:1,y:0,scale:1}); }
-
-
-  /* ---------------- scroll cue ---------------- */
   const cue=$('#cue'); let cueTimer;
   cue.querySelector('span').textContent=touch?C.ui.cueTouch:C.ui.cueMouse;
   if(!touch){ cue.querySelector('svg').setAttribute('class','down'); cue.querySelector('path').setAttribute('d','M12 4v15M5 12l7 7 7-7'); }
-  ScrollTrigger.create({id:'pr',trigger:'#result',start:'top 60%',end:'bottom 40%'});
-  const activePin=()=>['p0','p2','p3','p4','p5','pr'].map(id=>ScrollTrigger.getById(id)).find(st=>st&&st.isActive);
-  // a slider card whose slider was never touched and no auto-advance is pending also needs the nudge
-  const idleSliderCard=()=>['q1','q2','q3'].find(id=>{ const r=$('#'+id).getBoundingClientRect(); return r.top<innerHeight*.5&&r.bottom>innerHeight*.5&&!pending[id]&&!advanced[id]; });
-  function cueShow(){ if(reduce) return; const st=activePin(); const light=st?(st.vars.id==='p0'||st.vars.id==='pr'||(st.vars.id==='p5'&&st.progress>.5)):true;
-    if(st){ if(st.vars.id==='p0'&&st.progress<.08) return; } else if(!idleSliderCard()) return;
-    document.body.classList.toggle('light-cue',light); cue.classList.add('show'); }
+  const cueWanted=()=>{ if(reduce||busy||playing) return false; const s=slides[cur], id=s.dataset.cue;
+    if(id==='never') return false; if(id==='slider'){ const q=s.querySelector('.q'); return !pending[q.id]&&!advanced[q.id]; } return true; };
+  const isLight=()=>{ const sc=scenes[cur]; return sc?sc.light:true; };
+  function cueShow(){ if(!cueWanted()) return; document.body.classList.toggle('light-cue',isLight()); cue.classList.add('show'); }
   function cueReset(){ cue.classList.remove('show'); clearTimeout(cueTimer); cueTimer=setTimeout(cueShow,1500); }
-  addEventListener('scroll',cueReset,{passive:true}); addEventListener('touchstart',cueReset,{passive:true});
-  cueReset();
 
-  /* ---------------- auto-advance ---------------- */
-  let gotoTween=null;
-  const goto=sel=>{ gotoTween&&gotoTween.kill(); gotoTween=gsap.to(window,{scrollTo:{y:$(sel),autoKill:true},duration:reduce?0:1.1,ease:'power2.inOut',onComplete(){gotoTween=null;}}); };
-  const advanced={}, timers={}, pending={}, armedAt={};
-  // one automatic advance per question; coming back and changing the answer never re-scrolls
-  function armAdvance(id,target,delay){
+  /* ---- navigation ---- */
+  const cards=new Set();
+  function onEnter(i,dir){
+    const s=slides[i], sc=scenes[i];
+    if(sc){
+      if(dir>0&&!(sc.once&&sc.played)){ sc.played=true; playing=sc.tl; sc.tl.timeScale(1).eventCallback('onComplete',()=>{ playing=null; sc.after&&sc.after(); cueReset(); });
+        if(reduce){ sc.tl.progress(1); playing=null; } else sc.tl.restart(); }
+      else { sc.tl.progress(1); playing=null; }
+    }
+    const card=s.querySelector('[data-card]');
+    if(card&&!cards.has(card)){ cards.add(card); gsap.to(card,{opacity:1,y:0,scale:1,duration:reduce?0:.6,ease:'power2.out',delay:.1}); }
+    if(s.dataset.step){ mark(+s.dataset.step); pill.classList.add('show'); } else pill.classList.remove('show');
+    if(s.id==='result') buildResult();
+    gsap.to('#progress',{scaleX:i/(slides.length-1),duration:.6,ease:'power2.out'});
+    cueReset();
+  }
+  function onLeave(i){ const sc=scenes[i]; if(sc){ if(playing===sc.tl){ sc.tl.progress(1); playing=null; } sc.after&&sc.after(); sc.onLeave&&sc.onLeave(); } }
+  function go(i){
+    if(busy||i<0||i>=slides.length||i===cur) return false;
+    busy=true; cue.classList.remove('show'); clearTimeout(cueTimer);
+    const from=slides[cur], to=slides[i], dir=i>cur?1:-1;
+    onLeave(cur);
+    to.classList.add('on'); to.scrollTop=0;
+    gsap.set(to,{yPercent:100*dir});
+    gsap.to(from,{yPercent:-100*dir,duration:D,ease:'power3.inOut'});
+    gsap.to(to,{yPercent:0,duration:D,ease:'power3.inOut',onComplete(){ from.classList.remove('on'); gsap.set(from,{yPercent:0}); cur=i; busy=false; onEnter(i,dir); }});
+    return true;
+  }
+  const next=()=>go(cur+1), prev=()=>go(cur-1);
+  const goto=sel=>go(idx(sel));
+  slides[0].classList.add('on');
+
+  // gestures: a tall card scrolls inside itself first; the swipe only changes screen at its end
+  const atBottom=s=>s.scrollTop+s.clientHeight>=s.scrollHeight-2, atTop=s=>s.scrollTop<=0;
+  let wheelLock=0, lastWheel=-1e9;
+  addEventListener('wheel',e=>{
+    const s=slides[cur]; const now=performance.now(); const gap=now-lastWheel; lastWheel=now;
+    if((e.deltaY>0&&!atBottom(s))||(e.deltaY<0&&!atTop(s))) return;   // native inner scroll
+    e.preventDefault();
+    if(busy||now<wheelLock||Math.abs(e.deltaY)<4) return;
+    if(gap<400) return;                                              // tail of the previous gesture (trackpad inertia), not a new one
+    const moved = e.deltaY>0 ? next() : prev();
+    if(moved) wheelLock=now+D*1000+400;
+  },{passive:false});
+  let t0=null;
+  const onRange=e=>!!(e.target&&e.target.nodeType===1&&e.target.closest('.range'));
+  addEventListener('touchstart',e=>{ if(onRange(e)) { t0=null; return; } const s=slides[cur]; t0={y:e.touches[0].clientY,x:e.touches[0].clientX,top:atTop(s),bottom:atBottom(s),time:performance.now()}; },{passive:true});
+  addEventListener('touchend',e=>{ if(!t0) return; const dy=e.changedTouches[0].clientY-t0.y, dx=e.changedTouches[0].clientX-t0.x; const t=t0; t0=null;
+    if(Math.abs(dy)<50||Math.abs(dx)>Math.abs(dy)) return;
+    if(dy<0&&t.bottom) next(); else if(dy>0&&t.top) prev(); },{passive:true});
+  addEventListener('keydown',e=>{ if(e.target.matches('input,select,textarea')) return;
+    if(['ArrowDown','PageDown',' '].includes(e.key)){ e.preventDefault(); next(); } else if(['ArrowUp','PageUp'].includes(e.key)){ e.preventDefault(); prev(); } });
+  ['wheel','touchstart','keydown'].forEach(ev=>addEventListener(ev,e=>{ if(onRange(e)) return; Object.keys(timers).forEach(disarm); cueReset(); },{passive:true,capture:true}));
+
+  /* ---------------- auto-advance after a slider answer ---------------- */
+  const advanced={}, timers={}, pending={};
+  function armAdvance(id,delay){
     if(advanced[id]) return;
-    clearTimeout(timers[id]); pending[id]=true; armedAt[id]=scrollY;
-    timers[id]=setTimeout(()=>{ delete pending[id]; if(advanced[id]) return;
-      // the reader already moved on by themselves: leave them alone
-      if(Math.abs(scrollY-armedAt[id])>innerHeight*.25||ScrollTrigger.isScrolling()) return;
-      advanced[id]=true; goto(target); },delay);
+    clearTimeout(timers[id]); pending[id]=true;
+    timers[id]=setTimeout(()=>{ delete pending[id]; if(advanced[id]) return; advanced[id]=true; next(); },delay);
   }
   function disarm(id){ clearTimeout(timers[id]); delete pending[id]; }
-  // any deliberate gesture cancels a pending or running auto-advance (slider drags excluded)
-  const cancelAuto=e=>{ if(e.target&&e.target.closest&&e.target.closest('.range')) return; Object.keys(timers).forEach(disarm); if(gotoTween){gotoTween.kill();gotoTween=null;} };
-  ['wheel','touchstart','keydown'].forEach(ev=>addEventListener(ev,cancelAuto,{passive:true,capture:true}));
 
   function slider(r,opts){
     const card=r.closest('.card');
     const paint=()=>{ const v=+r.value; r.style.setProperty('--pct',((v-r.min)/(r.max-r.min)*100)+'%'); opts.paint(v); };
     r.addEventListener('input',()=>{ paint(); card.classList.remove('locked'); disarm(opts.id); });
-    r.addEventListener('change',()=>{ const v=+r.value; answers[opts.id]=v; opts.commit&&opts.commit(v); card.classList.add('locked'); mark(opts.step); armAdvance(opts.id,opts.target,opts.delay); });
+    r.addEventListener('change',()=>{ const v=+r.value; answers[opts.id]=v; opts.commit&&opts.commit(v); card.classList.add('locked'); mark(opts.step); armAdvance(opts.id,opts.delay); });
     paint();
   }
-
-  // Q1 workload
   const r1=$('#r1'); r1.min=C.q1.min; r1.max=C.q1.max; r1.step=C.q1.step; r1.value=C.q1.start;
   const cells=$$('#stack1 i');
-  slider(r1,{id:'q1',step:1,target:'#pin2',delay:2600,
+  slider(r1,{id:'q1',step:1,delay:2600,
     paint:v=>{ $('#v1').textContent=v+(v>=C.q1.max?'+':''); const n=Math.round(v/C.q1.max*40); cells.forEach((c,i)=>c.classList.toggle('on',i<n)); },
     commit:v=>{ const o=C.benchmarks.items; const rev=$('#rev1'); rev.querySelector('p').textContent=fmt(C.q1.reveal,{items:o});
       const mx=Math.max(v,o,1); rev.querySelector('.you b').style.setProperty('--w',(v/mx).toFixed(2)); rev.querySelector('.you span:last-child').textContent=v;
       rev.querySelector('.oth b').style.setProperty('--w',(o/mx).toFixed(2)); rev.querySelector('.oth span:last-child').textContent=o;
-      rev.classList.add('show'); requestAnimationFrame(()=>rev.classList.add('show')); ScrollTrigger.refresh(); }});
-
-  // Q2 minutes
+      rev.classList.add('show'); requestAnimationFrame(()=>{ rev.classList.add('show'); rev.scrollIntoView({block:'nearest',behavior:reduce?'auto':'smooth'}); }); }});
   const r2=$('#r2'); r2.min=C.q2.min; r2.max=C.q2.max; r2.step=C.q2.step; r2.value=C.q2.start;
-  slider(r2,{id:'q2',step:2,target:'#pin3',delay:1400,
+  slider(r2,{id:'q2',step:2,delay:1400,
     paint:v=>{ $('#v2').textContent=v; $('#mcm').style.transform=`rotate(${v*6}deg)`; $('#mch').style.transform=`rotate(${v/2}deg)`; }});
-
-  // Q3 percentage with plain words
   const r3=$('#r3'); r3.value=C.q3.start;
   const bandsSorted=[...C.q3.bands].sort((a,b)=>a[0]-b[0]);
   const band=v=>{ const hit=bandsSorted.find(b=>v<=b[0]); return (hit||bandsSorted[bandsSorted.length-1]||[0,''])[1]; };
   const rows=$$('#rows3 div');
-  slider(r3,{id:'q3',step:3,target:'#pin4',delay:1400,
+  slider(r3,{id:'q3',step:3,delay:1400,
     paint:v=>{ $('#v3').textContent=v; $('#v3w').textContent=band(v); const n=Math.round(v/10); rows.forEach((r,i)=>r.classList.toggle('on',i<n)); },
     commit:v=>{ answers.q3_label=band(v); }});
 
-  // multi-select with "Other"
-  function multi(id,other,next,key,target,step){
-    const btns=$$(id+' .pill'), o=$(other), inp=o.querySelector('input'), n=$(next);
+  /* ---------------- multi-select with "Other" ---------------- */
+  function multi(id,other,nextBtn,key,step){
+    const btns=$$(id+' .pill'), o=$(other), inp=o.querySelector('input'), n=$(nextBtn);
     const sync=()=>{ const on=btns.filter(b=>b.classList.contains('on'));
       answers[key]=on.filter(b=>!b.dataset.other).map(b=>b.dataset.v);
-      const hasOther=on.some(b=>b.dataset.other), wasOther=o.classList.contains('show'); o.classList.toggle('show',hasOther); if(!hasOther) inp.value='';
-      if(wasOther!==hasOther) ScrollTrigger.refresh();   // layout below the card changed
+      const hasOther=on.some(b=>b.dataset.other); o.classList.toggle('show',hasOther); if(!hasOther) inp.value='';
       answers[key+'_other']=hasOther?inp.value.trim():'';
       n.classList.toggle('show',on.length>0); if(on.length) mark(step); };
     btns.forEach(b=>b.addEventListener('click',()=>{ b.classList.toggle('on'); b.setAttribute('aria-pressed',b.classList.contains('on')); sync(); if(b.dataset.other&&b.classList.contains('on')) inp.focus(); }));
     inp.addEventListener('input',sync);
-    n.addEventListener('click',()=>{ sync(); goto(target); });
+    n.addEventListener('click',()=>{ sync(); next(); });
   }
-  multi('#p4','#o4','#n4','q4','#pin5',4);
-  multi('#p5','#o5','#n5','q5','#result',5);
+  multi('#p4','#o4','#n4','q4',4);
+  multi('#p5','#o5','#n5','q5',5);
 
   /* ---------------- personalised result ---------------- */
   function count(el,to,suffix){ const o={v:0}; gsap.to(o,{v:to,duration:reduce?0:1.1,ease:'power2.out',onUpdate(){el.textContent=Math.round(o.v)+(suffix||'');}}); }
   let built=false;
-  ScrollTrigger.create({trigger:'#result',start:'top 75%',onEnter(){ buildResult(); }});
   function buildResult(){
-    if(built) return; const q1=answers.q1??C.q1.start, q2=answers.q2??C.q2.start, q3=answers.q3??C.q3.start;
+    if(built) return; built=true;
+    const q1=answers.q1??C.q1.start, q2=answers.q2??C.q2.start, q3=answers.q3??C.q3.start;
     count($('#s-items'),q1,q1>=C.q1.max?'+':''); count($('#s-min'),q2); count($('#s-pct'),q3);
     const tag=(sel,arr,other)=>{ const el=$(sel); el.replaceChildren(); const list=(arr||[]).slice(0,4); if(other) list.push(other);
       if(!list.length){ const s=document.createElement('span'); s.style.cssText='background:var(--surface);color:var(--muted)'; s.textContent='—'; el.append(s); return; }
       for(const t of list){ const s=document.createElement('span'); s.textContent=t; el.append(s); } };
     tag('#t-con',answers.q4,answers.q4_other); tag('#t-mat',answers.q5,answers.q5_other);
     $('#compare').textContent=fmt(C.result.compare,C.benchmarks);
-    built=true; ScrollTrigger.refresh();
   }
 
-  /* ---------------- beta form + closing ---------------- */
+  /* ---------------- beta form ---------------- */
   $('#betaform').addEventListener('submit',e=>{ e.preventDefault();
     const name=$('#bname').value.trim(), email=$('#bemail').value.trim(), role=$('#brole').value;
     const em=$('#bemail'); if(!email||!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){ em.setAttribute('aria-invalid','true'); $('#bemailerr').classList.add('show'); em.focus(); return; }
@@ -771,18 +790,6 @@
     Object.assign(answers,{beta:true,beta_name:name,beta_email:email,beta_role:role}); finish(); });
   $('#skipbeta').addEventListener('click',()=>{ answers.beta=false; finish(); });
   function finish(){ submit(); goto('#closing'); }
-
-  const logo2=$('#logo2 svg'), chev2=[...logo2.querySelectorAll('path')].slice(0,3), word2=[...logo2.querySelectorAll('path')].slice(3);
-  gsap.set(chev2,{opacity:0,x:i=>[-160,0,160][i],y:i=>[40,-90,40][i],rotation:i=>[-30,15,30][i],transformOrigin:'50% 50%'});
-  gsap.set(word2,{opacity:0,y:8});
-  ScrollTrigger.create({trigger:'#closing',start:'top 60%',once:true,onEnter(){
-    gsap.timeline({defaults:{ease:'power3.out'}})
-      .to(chev2,{opacity:1,x:0,y:0,rotation:0,duration:reduce?0:1,stagger:.12})
-      .to(word2,{opacity:1,y:0,duration:.5,stagger:.05},'-=.4')
-      .to('#closing h2',{opacity:1,duration:.5},'-=.2')
-      .to('#closing > div > p',{opacity:1,duration:.5},'-=.3')
-      .to('#closing a',{opacity:1,duration:.5},'-=.3');
-  }});
 
   /* =====================================================================
      WHERE THE ANSWERS GO
@@ -814,18 +821,14 @@
   const answered=()=>['q1','q2','q3','q4','q5'].some(hasAns);
   addEventListener('pagehide',()=>{ if(!sent&&answered()) submit(); });
 
-
-  // debug hook: ?at=p5:0.6 jumps to a scene at a given progress, ?at=q3 jumps to a card (screenshot testing)
+  // debug hook: ?at=p5:0.6 shows a scene at a given progress, ?at=q3 jumps to a screen
   const at=new URLSearchParams(location.search).get('at');
-  if(at){ window.addEventListener('load',()=>setTimeout(()=>{ ScrollTrigger.refresh();
-    const [id,f]=at.split(':'); const st=ScrollTrigger.getById(id);
-    if(st){ window.scrollTo(0,st.start+(st.end-st.start)*(+f||0)); ScrollTrigger.update(); st.animation.progress(+f||0); }
-    else { const el=document.getElementById(id); if(el){ window.scrollTo(0,el.offsetTop); ScrollTrigger.update(); gsap.set(el.querySelector('[data-card]')||el,{opacity:1,y:0,scale:1}); } }
-    gsap.globalTimeline.getChildren(false,false,true).forEach(t=>{ if(!t.scrollTrigger&&!t.repeat()) t.progress(1); });
-  },300)); }
-
-  window.addEventListener('load',()=>ScrollTrigger.refresh());
-  window.addEventListener('orientationchange',()=>setTimeout(()=>ScrollTrigger.refresh(),300));
+  if(at){ const [id,f]=at.split(':'); const el=document.getElementById(id); const i=el?slides.indexOf(el.closest('.slide')):-1;
+    if(i>=0){ slides[cur].classList.remove('on'); cur=i; slides[i].classList.add('on'); const sc=scenes[i];
+      if(sc){ sc.played=true; sc.tl.progress(f!=null?+f:1); } const card=slides[i].querySelector('[data-card]'); if(card){ cards.add(card); gsap.set(card,{opacity:1,y:0,scale:1}); }
+      if(slides[i].dataset.step){ mark(+slides[i].dataset.step); pill.classList.add('show'); } if(id==='result') buildResult(); gsap.set('#progress',{scaleX:i/(slides.length-1)}); } }
+  window.__deck={go,next,prev,get cur(){return cur;},scenes,slides};
+  cueReset();
 })();
 </script>
 </body>
