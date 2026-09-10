@@ -676,7 +676,7 @@
     const card=s.querySelector('[data-card]');
     if(card&&!cards.has(card)){ cards.add(card); gsap.to(card,{opacity:1,y:0,scale:1,duration:reduce?0:.6,ease:'power2.out',delay:.1}); }
     if(s.dataset.step){ mark(+s.dataset.step); pill.classList.add('show'); } else pill.classList.remove('show');
-    if(s.id==='result') buildResult();
+    if(s.querySelector('#result')) buildResult();
     gsap.to('#progress',{scaleX:i/(slides.length-1),duration:.6,ease:'power2.out'});
     cueReset();
   }
