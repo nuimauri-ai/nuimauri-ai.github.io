@@ -66,7 +66,7 @@
   .item{position:absolute;left:0;top:0;opacity:0;will-change:transform,opacity}
   .item img{display:block;height:auto}
   .docwrap{position:absolute;inset:0;background:#F2F2F2;opacity:0;will-change:opacity}   /* the video's own background, so its edges disappear */
-  .docwrap video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 46%}
+  .docwrap video{position:absolute;top:0;left:0;width:100%;height:calc(100% - var(--copy-h,0px));object-fit:cover;object-position:50% 46%}   /* framed above the text, never behind it */
   @media (orientation:landscape){ .docwrap video{object-fit:contain} }
   .incoming{position:absolute;left:0;top:0;width:0;height:0;pointer-events:none}
   .ping{position:absolute;left:0;top:0;transform:translate(-50%,-50%);padding:5px 9px;border-radius:999px;background:#fff;color:var(--heading);border:1.5px solid var(--border);font-size:11px;font-weight:700;letter-spacing:.02em;white-space:nowrap;box-shadow:0 6px 16px rgba(15,28,46,.14);opacity:0;will-change:transform,opacity}
@@ -114,8 +114,11 @@
   .badge.blue{background:var(--accent)}
 
   /* ---------- scene 5 : MARC reveal ---------- */
-  .brandslide .stage,.scene5 .stage{background:var(--surface)}
-  .brand{position:absolute;left:50%;top:46%;width:min(56vw,240px);will-change:transform,opacity;z-index:2;opacity:0}   /* centred by GSAP (xPercent/yPercent) */
+  .scene5 .stage{background:var(--surface)}
+  .intro{position:absolute;left:0;right:0;top:50%;padding:0 22px;max-width:600px;margin:0 auto;text-align:center;z-index:5;will-change:transform,opacity}
+  .intro .brand{position:static;width:min(56vw,240px);margin:0 auto 28px}
+  .intro .line{text-align:center}
+  .brand{opacity:0;will-change:transform,opacity}
   .brand svg{width:100%;height:auto;overflow:visible}
   .chips{position:absolute;inset:0;pointer-events:none}
   .chip{position:absolute;left:50%;top:50%;padding:9px 13px;border-radius:999px;background:#fff;color:var(--heading);border:1.5px solid var(--border);font-size:12.5px;font-weight:600;white-space:nowrap;box-shadow:0 8px 24px rgba(15,28,46,.12);opacity:0;will-change:transform,opacity}
@@ -245,7 +248,6 @@
   @media (prefers-reduced-motion:reduce){
     .line,.line.key .w,.card,.rcard,.page,.paper,.closing h2,.closing p,.closing a,.closing .brand2 path{opacity:1!important;transform:none!important}
     .scene2 .copy{display:none!important}     /* the phrase has already given way to the question */
-    .scene5 #l7{opacity:0!important}          /* …and the intro line to the summary card */
   }
   @media (max-height:700px){ #q3 .rows{gap:4px} #q3 .rows div{height:11px} #q3 .val.word{font-size:28px} }   /* keep the Q3 slider above the fold on short phones */
 </style>
@@ -377,26 +379,20 @@
   </div>
 </div></section>
 
-<!-- ============ BRAND : the MARC logo draws itself ============ -->
-<section class="slide scene brandslide" data-cue="never">
-  <div class="pin" id="pin5a">
-    <div class="stage">
-      <div class="brand" id="brand"><svg id="logo1" viewBox='0 0 181 56' xmlns='http://www.w3.org/2000/svg' aria-label='MARC'><path d='M59.7114 24.0333C58.3865 21.7002 55.0026 21.7141 53.6972 24.058L44.7372 40.1451C44.4512 40.6585 44.4498 41.2817 44.7328 41.7967L52.3752 55.7031L63.4459 35.9468C64.3809 34.2782 64.3749 32.2461 63.4304 30.5828L59.7114 24.0333Z' fill='#2680D4'/><path d='M47.2957 1.74163C45.9733 -0.587082 42.5976 -0.578883 41.2869 1.75635L19.9341 39.8008C19.6455 40.315 19.6427 40.9407 19.9267 41.4574L27.5674 55.3605L51.0333 13.6789C51.9735 12.0088 51.9696 9.97187 51.0232 8.30521L47.2957 1.74163Z' fill='#0868E5'/><path d='M22.495 1.75367C21.1711 -0.577533 17.7904 -0.565663 16.4829 1.77475L0.219297 30.8866C-0.418621 32.0285 0.411497 33.4319 1.72503 33.4319H15.1636L26.2343 13.6756C27.1693 12.007 27.1633 9.97485 26.2188 8.31157L22.495 1.75367Z' fill='#3B45F8'/><path d='M88.5502 12.9103H92.7397L99.0902 33.4404L105.422 12.9103H109.308L100.815 40.5113H97.3461L88.5502 12.9103ZM86.9768 12.9103H90.844L91.4696 30.4832V40.5113H86.9768V12.9103ZM107.298 12.9103H111.185V40.5113H106.692V30.4832L107.298 12.9103Z' fill='#2D2B3A'/><path d='M126.994 16.7016L120.321 40.5113H115.506L124.264 12.9103H127.259L126.994 16.7016ZM132.321 40.5113L125.629 16.7016L125.307 12.9103H128.359L137.155 40.5113H132.321ZM132.434 30.2557V34.1229H119.582V30.2557H132.434Z' fill='#2D2B3A'/><path d='M141.097 12.9103H149.438C151.258 12.9103 152.799 13.2262 154.063 13.8581C155.327 14.49 156.287 15.4252 156.945 16.6637C157.614 17.8896 157.949 19.4124 157.949 21.2323C157.949 22.6098 157.741 23.823 157.324 24.872C156.919 25.9209 156.332 26.8056 155.561 27.5259C154.79 28.2336 153.861 28.7834 152.774 29.1751L151.428 29.9145H144.376L144.357 26.0473H149.324C150.221 26.0473 150.967 25.8514 151.561 25.4596C152.155 25.0679 152.597 24.5244 152.888 23.8293C153.191 23.1343 153.343 22.3444 153.343 21.4598C153.343 20.5119 153.21 19.6905 152.945 18.9954C152.679 18.2877 152.262 17.7442 151.694 17.3651C151.125 16.9733 150.373 16.7774 149.438 16.7774H145.703V40.5113H141.097V12.9103ZM153.949 40.5113L148.698 28.1136L153.494 28.0946L158.878 40.2648V40.5113H153.949Z' fill='#2D2B3A'/><path d='M176.393 31.5068H180.981C180.893 33.5036 180.488 35.2034 179.768 36.6062C179.047 37.9963 178.011 39.0579 176.659 39.7909C175.319 40.5239 173.683 40.8904 171.749 40.8904C170.283 40.8904 168.969 40.625 167.806 40.0942C166.656 39.5634 165.677 38.7989 164.868 37.8005C164.059 36.7894 163.44 35.5572 163.01 34.1039C162.593 32.6505 162.384 31.0013 162.384 29.1562V24.2654C162.384 22.4202 162.599 20.771 163.029 19.3176C163.471 17.8643 164.103 16.6321 164.925 15.6211C165.746 14.6101 166.744 13.8455 167.92 13.3273C169.108 12.7965 170.447 12.5311 171.939 12.5311C173.847 12.5311 175.452 12.8976 176.754 13.6306C178.055 14.3636 179.06 15.4378 179.768 16.8533C180.476 18.2687 180.886 19.9938 181 22.0285H176.412C176.349 20.6509 176.16 19.5514 175.844 18.73C175.54 17.8959 175.073 17.2956 174.441 16.9291C173.822 16.5626 172.988 16.3793 171.939 16.3793C171.067 16.3793 170.315 16.5436 169.683 16.8722C169.064 17.2008 168.552 17.6937 168.147 18.3508C167.756 18.9954 167.459 19.8105 167.256 20.7963C167.067 21.7694 166.972 22.9131 166.972 24.2274V29.1562C166.972 30.42 167.054 31.5384 167.218 32.5115C167.383 33.4846 167.648 34.3124 168.015 34.9949C168.381 35.6647 168.868 36.1765 169.474 36.5304C170.081 36.8716 170.839 37.0422 171.749 37.0422C172.836 37.0422 173.702 36.8716 174.346 36.5304C175.003 36.1891 175.49 35.6141 175.806 34.8053C176.122 33.9965 176.318 32.897 176.393 31.5068Z' fill='#2D2B3A'/></svg></div>
-    </div>
-  </div>
-</section>
-
 <!-- ============ SCENE 5 : MARC brings it together ============ -->
 <section class="slide scene scene5" data-cue="never">
   <div class="pin" id="pin5">
     <div class="stage">
       <div class="glow" id="glow"></div>
+      <div class="intro" id="intro">
+        <div class="brand" id="brand"><svg id="logo1" viewBox='0 0 181 56' xmlns='http://www.w3.org/2000/svg' aria-label='MARC'><path d='M59.7114 24.0333C58.3865 21.7002 55.0026 21.7141 53.6972 24.058L44.7372 40.1451C44.4512 40.6585 44.4498 41.2817 44.7328 41.7967L52.3752 55.7031L63.4459 35.9468C64.3809 34.2782 64.3749 32.2461 63.4304 30.5828L59.7114 24.0333Z' fill='#2680D4'/><path d='M47.2957 1.74163C45.9733 -0.587082 42.5976 -0.578883 41.2869 1.75635L19.9341 39.8008C19.6455 40.315 19.6427 40.9407 19.9267 41.4574L27.5674 55.3605L51.0333 13.6789C51.9735 12.0088 51.9696 9.97187 51.0232 8.30521L47.2957 1.74163Z' fill='#0868E5'/><path d='M22.495 1.75367C21.1711 -0.577533 17.7904 -0.565663 16.4829 1.77475L0.219297 30.8866C-0.418621 32.0285 0.411497 33.4319 1.72503 33.4319H15.1636L26.2343 13.6756C27.1693 12.007 27.1633 9.97485 26.2188 8.31157L22.495 1.75367Z' fill='#3B45F8'/><path d='M88.5502 12.9103H92.7397L99.0902 33.4404L105.422 12.9103H109.308L100.815 40.5113H97.3461L88.5502 12.9103ZM86.9768 12.9103H90.844L91.4696 30.4832V40.5113H86.9768V12.9103ZM107.298 12.9103H111.185V40.5113H106.692V30.4832L107.298 12.9103Z' fill='#2D2B3A'/><path d='M126.994 16.7016L120.321 40.5113H115.506L124.264 12.9103H127.259L126.994 16.7016ZM132.321 40.5113L125.629 16.7016L125.307 12.9103H128.359L137.155 40.5113H132.321ZM132.434 30.2557V34.1229H119.582V30.2557H132.434Z' fill='#2D2B3A'/><path d='M141.097 12.9103H149.438C151.258 12.9103 152.799 13.2262 154.063 13.8581C155.327 14.49 156.287 15.4252 156.945 16.6637C157.614 17.8896 157.949 19.4124 157.949 21.2323C157.949 22.6098 157.741 23.823 157.324 24.872C156.919 25.9209 156.332 26.8056 155.561 27.5259C154.79 28.2336 153.861 28.7834 152.774 29.1751L151.428 29.9145H144.376L144.357 26.0473H149.324C150.221 26.0473 150.967 25.8514 151.561 25.4596C152.155 25.0679 152.597 24.5244 152.888 23.8293C153.191 23.1343 153.343 22.3444 153.343 21.4598C153.343 20.5119 153.21 19.6905 152.945 18.9954C152.679 18.2877 152.262 17.7442 151.694 17.3651C151.125 16.9733 150.373 16.7774 149.438 16.7774H145.703V40.5113H141.097V12.9103ZM153.949 40.5113L148.698 28.1136L153.494 28.0946L158.878 40.2648V40.5113H153.949Z' fill='#2D2B3A'/><path d='M176.393 31.5068H180.981C180.893 33.5036 180.488 35.2034 179.768 36.6062C179.047 37.9963 178.011 39.0579 176.659 39.7909C175.319 40.5239 173.683 40.8904 171.749 40.8904C170.283 40.8904 168.969 40.625 167.806 40.0942C166.656 39.5634 165.677 38.7989 164.868 37.8005C164.059 36.7894 163.44 35.5572 163.01 34.1039C162.593 32.6505 162.384 31.0013 162.384 29.1562V24.2654C162.384 22.4202 162.599 20.771 163.029 19.3176C163.471 17.8643 164.103 16.6321 164.925 15.6211C165.746 14.6101 166.744 13.8455 167.92 13.3273C169.108 12.7965 170.447 12.5311 171.939 12.5311C173.847 12.5311 175.452 12.8976 176.754 13.6306C178.055 14.3636 179.06 15.4378 179.768 16.8533C180.476 18.2687 180.886 19.9938 181 22.0285H176.412C176.349 20.6509 176.16 19.5514 175.844 18.73C175.54 17.8959 175.073 17.2956 174.441 16.9291C173.822 16.5626 172.988 16.3793 171.939 16.3793C171.067 16.3793 170.315 16.5436 169.683 16.8722C169.064 17.2008 168.552 17.6937 168.147 18.3508C167.756 18.9954 167.459 19.8105 167.256 20.7963C167.067 21.7694 166.972 22.9131 166.972 24.2274V29.1562C166.972 30.42 167.054 31.5384 167.218 32.5115C167.383 33.4846 167.648 34.3124 168.015 34.9949C168.381 35.6647 168.868 36.1765 169.474 36.5304C170.081 36.8716 170.839 37.0422 171.749 37.0422C172.836 37.0422 173.702 36.8716 174.346 36.5304C175.003 36.1891 175.49 35.6141 175.806 34.8053C176.122 33.9965 176.318 32.897 176.393 31.5068Z' fill='#2D2B3A'/></svg></div>
+        <p class="line" id="l7"></p>
+      </div>
       <div class="mcard" id="mcard">
         <div class="mh"><div id="mark1"><svg viewBox='0 0 64 56' xmlns='http://www.w3.org/2000/svg' aria-hidden='true'><path d='M59.7114 24.0333C58.3865 21.7002 55.0026 21.7141 53.6972 24.058L44.7372 40.1451C44.4512 40.6585 44.4498 41.2817 44.7328 41.7967L52.3752 55.7031L63.4459 35.9468C64.3809 34.2782 64.3749 32.2461 63.4304 30.5828L59.7114 24.0333Z' fill='#2680D4'/><path d='M47.2957 1.74163C45.9733 -0.587082 42.5976 -0.578883 41.2869 1.75635L19.9341 39.8008C19.6455 40.315 19.6427 40.9407 19.9267 41.4574L27.5674 55.3605L51.0333 13.6789C51.9735 12.0088 51.9696 9.97187 51.0232 8.30521L47.2957 1.74163Z' fill='#0868E5'/><path d='M22.495 1.75367C21.1711 -0.577533 17.7904 -0.565663 16.4829 1.77475L0.219297 30.8866C-0.418621 32.0285 0.411497 33.4319 1.72503 33.4319H15.1636L26.2343 13.6756C27.1693 12.007 27.1633 9.97485 26.2188 8.31157L22.495 1.75367Z' fill='#3B45F8'/></svg></div><b></b><span>MARC</span></div>
         <div id="slots"></div>
       </div>
       <div class="chips" id="chips"></div>
-      <div class="copy top"><p class="line" id="l7"></p></div>
       <div class="copy"><p class="line" id="l8"></p></div>
     </div>
   </div>
@@ -454,7 +450,7 @@
 
 </div><!-- /deck -->
 
-<script src="content.js?v=2"></script>
+<script src="content.js?v=3"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script>
 (function(){
@@ -546,12 +542,15 @@
   const docEnd=()=>{ doc.pause(); if(doc.duration) doc.currentTime=Math.max(0,doc.duration-.05); };
   if(reduce) doc.addEventListener('loadedmetadata',docEnd,{once:true});   // no motion: show the end of the clip
   // where the monitor sits in the 720x1280 clip, mapped through object-fit onto the screen
-  const docPoint=(vx,vy)=>{ const W=innerWidth,Hh=innerHeight, vw=720,vh=1280, cover=getComputedStyle(doc).objectFit==='cover';
+  const docPoint=(vx,vy)=>{ const W=doc.clientWidth,Hh=doc.clientHeight, vw=720,vh=1280, cover=getComputedStyle(doc).objectFit==='cover';
     const s=cover?Math.max(W/vw,Hh/vh):Math.min(W/vw,Hh/vh); const dw=vw*s,dh=vh*s; return {x:(W-dw)/2+vx*s, y:(Hh-dh)*.46+vy*s}; };
+  // reserve the bottom band for the five lines so the clip can never sit behind them
+  const fitCopy=()=>$('#pin0').style.setProperty('--copy-h',$('#ocopy').offsetHeight+'px');
   const placeIncoming=()=>{ const p=docPoint(535,600); gsap.set('#incoming',{x:p.x,y:p.y}); };   // the middle of the monitor
   const placeItems=()=>items.forEach((el,i)=>{ const w=el.firstElementChild.width; const sc=gsap.utils.clamp(.48,.8,innerWidth/720*.9)*(.85+((i*7)%4)*.08);
     gsap.set(el,{scale:sc,transformOrigin:'50% 50%',width:w}); });
-  placeItems(); placeIncoming(); addEventListener('resize',()=>{ placeItems(); placeIncoming(); });
+  const layoutOpening=()=>{ fitCopy(); placeItems(); placeIncoming(); };
+  layoutOpening(); addEventListener('resize',layoutOpening); if(document.fonts&&document.fonts.ready) document.fonts.ready.then(layoutOpening);
   const tl0=gsap.timeline({paused:true});
   // a small avalanche: each item slides in from the top-left, across and down, more and more of them
   const BUILD=3.2;
@@ -637,30 +636,27 @@
   const placeChips=()=>chips.forEach((c,i)=>{ const maxX=Math.max(0,innerWidth/2-c.offsetWidth/2-14); const want=(i%2?1:-1)*(70+((i*53)%120));
     gsap.set(c,{xPercent:-50,yPercent:-50,x:gsap.utils.clamp(-maxX,maxX,want),y:40+((i*71)%330),rotation:((i*37)%30)-15,scale:.9}); });
   placeChips(); addEventListener('resize',placeChips);
-  // the MARC logo draws itself on its own screen, right before "We've developed a tool…" (James: this is where the brand should appear)
   const logo1=$('#logo1'), chev1=[...logo1.querySelectorAll('path')].slice(0,3), word1=[...logo1.querySelectorAll('path')].slice(3);
   chev1.forEach(p=>{ const L=p.getTotalLength(); gsap.set(p,{strokeDasharray:L,strokeDashoffset:L,stroke:p.getAttribute('fill'),strokeWidth:1.5,fillOpacity:0}); });
-  gsap.set(word1,{opacity:0,y:6}); gsap.set('#brand',{xPercent:-50,yPercent:-50,opacity:0});
-  const tl5a=gsap.timeline({paused:true})
+  gsap.set(word1,{opacity:0,y:6}); gsap.set('#intro',{yPercent:-50});
+  // the logo draws itself, the sentence lands under it, then the eight sources gather into the summary card
+  const tl5=gsap.timeline({paused:true})
     .set('#brand',{opacity:1},.2)
     .to(chev1,{strokeDashoffset:0,duration:1.1,stagger:.15,ease:'power2.out'},.2)
     .to(chev1,{fillOpacity:1,duration:.5,stagger:.1,ease:'power2.out'},1.0)
-    .to(word1,{opacity:1,y:0,duration:.5,stagger:.06,ease:'power2.out'},1.4);
-  scenes[idx('#pin5a')]={tl:tl5a,light:true,autoNext:700};      // no swipe needed: the logo, then the tool, then the question
-
-  const tl5=gsap.timeline({paused:true});
-  tl5.to('#l7',{opacity:1,y:0,duration:.6})
-     .to(chips,{opacity:1,duration:.3,stagger:.05},1.0)
-     .to('#l7',{opacity:0,y:-10,duration:.4},4.4)       // the sentence stays readable for ~4 s
-     .to('#mcard',{opacity:1,duration:.5,ease:'power2.out'},4.6);
+    .to(word1,{opacity:1,y:0,duration:.5,stagger:.06,ease:'power2.out'},1.4)
+    .to('#l7',{opacity:1,y:0,duration:.6},2.1)
+    .to('#intro',{opacity:0,y:-24,duration:.5,ease:'power2.in'},5.6)     // read for ~3.5 s, then make room
+    .to(chips,{opacity:1,duration:.3,stagger:.05},5.9)
+    .to('#mcard',{opacity:1,duration:.5,ease:'power2.out'},7.0);
   chips.forEach((c,i)=>{
     tl5.to(c,{x:0,y:0,rotation:0,scale:.6,opacity:0,duration:.55,ease:'power2.in',
-      onComplete:()=>slots[i].classList.add('on'),onReverseComplete:()=>slots[i].classList.remove('on')},4.9+i*.3);
+      onComplete:()=>slots[i].classList.add('on'),onReverseComplete:()=>slots[i].classList.remove('on')},7.3+i*.22);
   });
   tl5.to('#glow',{opacity:1,duration:.8},'-=.1')
      .to('#mcard',{scale:1.03,duration:.6,ease:'power1.inOut'},'<')
      .to('#l8',{opacity:1,y:0,duration:.6},'<');
-  scenes[idx('#pin5')]={tl:tl5,light:true,autoNext:2800};
+  scenes[idx('#pin5')]={tl:tl5,light:true,autoNext:2800};   // then straight on to the question, no swipe needed
 
   /* ---- closing: the logo comes back together ---- */
   const logo2=$('#logo2 svg'), chev2=[...logo2.querySelectorAll('path')].slice(0,3), word2=[...logo2.querySelectorAll('path')].slice(3);

@@ -110,7 +110,7 @@ window.CONTENT = {
   },
 
   reveal: {
-    line1: "We’ve developed a tool designed to bring the information needed for that decision together in one place.",
+    line1: "Developed to bring the information needed for that decision together in one place.",   // reads on from the logo above it
     sources: [
       "The current result",
       "Previous results and trends",

@@ -41,7 +41,7 @@ Each response is one JSON object with these fields:
 
 ## Testing a specific screen
 
-Add `?at=` to the URL to jump straight to a screen, e.g. `index.html?at=q3` (a question) or `index.html?at=pin5:0.5` (the MARC reveal scene frozen at 50 % of its animation). Scene ids: `pin0` opening (items + tired-doctor clip), `pin2` clock (the Q2 question fades in on this same screen), `pin3` record, `pin4` noise, `pin5a` the MARC logo, `pin5` the tool (these two chain into Q5 by themselves). Screens: `q1`–`q5`, `result`, `beta`, `closing`.
+Add `?at=` to the URL to jump straight to a screen, e.g. `index.html?at=q3` (a question) or `index.html?at=pin5:0.5` (the MARC reveal scene frozen at 50 % of its animation). Scene ids: `pin0` opening (items + tired-doctor clip), `pin2` clock (the Q2 question fades in on this same screen), `pin3` record, `pin4` noise, `pin5` MARC (logo + sentence, then the summary card; it moves on to Q5 by itself). Screens: `q1`–`q5`, `result`, `beta`, `closing`.
 
 ## Assets
 
