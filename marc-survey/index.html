@@ -127,13 +127,13 @@
   .mcard .mh svg{width:26px;height:auto}
   .mcard .mh b{font-size:14px;color:var(--heading)}
   .mcard .mh span{margin-left:auto;font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.08em;text-transform:uppercase}
-  .slot{display:flex;align-items:center;gap:10px;padding:7px 0;opacity:.28;transition:opacity .3s}
+  .slot{display:flex;align-items:center;gap:10px;padding:7px 0;opacity:.28;transition:opacity .6s ease}
   .slot.on{opacity:1}
-  .slot .dot{width:8px;height:8px;border-radius:50%;background:var(--border);flex:none}
-  .slot.on .dot{background:var(--accent)}
+  .slot .dot{width:8px;height:8px;border-radius:50%;background:var(--border);flex:none;transition:background .4s,transform .5s cubic-bezier(.34,1.56,.64,1)}
+  .slot.on .dot{background:var(--accent);transform:scale(1.35)}
   .slot .lab{font-size:12.5px;font-weight:600;color:var(--heading);width:44%;flex:none;line-height:1.2}
   .slot .bar{height:8px;border-radius:4px;background:var(--border);flex:1;position:relative;overflow:hidden}
-  .slot .bar::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--accent),var(--b3));transform:scaleX(0);transform-origin:0 50%;transition:transform .5s ease}
+  .slot .bar::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--accent),var(--b3));transform:scaleX(0);transform-origin:0 50%;transition:transform 1s cubic-bezier(.22,1,.36,1)}
   .slot.on .bar::after{transform:scaleX(var(--w,.7))}
   .scene5 #l8{color:var(--heading)}
   .glow{position:absolute;left:50%;top:46%;width:min(86vw,380px);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(18,133,234,.28),rgba(18,133,234,0) 60%);opacity:0;pointer-events:none}
@@ -380,7 +380,7 @@
 </div></section>
 
 <!-- ============ SCENE 5 : MARC brings it together ============ -->
-<section class="slide scene scene5" data-cue="never">
+<section class="slide scene scene5">
   <div class="pin" id="pin5">
     <div class="stage">
       <div class="glow" id="glow"></div>
@@ -647,16 +647,19 @@
     .to(word1,{opacity:1,y:0,duration:.5,stagger:.06,ease:'power2.out'},1.4)
     .to('#l7',{opacity:1,y:0,duration:.6},2.1)
     .to('#intro',{opacity:0,y:-24,duration:.5,ease:'power2.in'},5.6)     // read for ~3.5 s, then make room
-    .to(chips,{opacity:1,duration:.3,stagger:.05},5.9)
-    .to('#mcard',{opacity:1,duration:.5,ease:'power2.out'},7.0);
+    .fromTo(chips,{opacity:0,y:'+=18'},{opacity:1,y:'-=18',duration:.6,stagger:.07,ease:'power2.out'},5.9)
+    .fromTo('#mcard',{opacity:0,y:28},{opacity:1,y:0,duration:.9,ease:'power3.out'},6.9);
+  // each source glides into its own row of the card (row positions are read when the flight starts)
+  const stage5=$('#pin5 .stage');
+  const slotTarget=i=>{ const r=slots[i].getBoundingClientRect(), st=stage5.getBoundingClientRect(); return {x:r.left+r.width/2-(st.left+st.width/2), y:r.top+r.height/2-(st.top+st.height/2)}; };
   chips.forEach((c,i)=>{
-    tl5.to(c,{x:0,y:0,rotation:0,scale:.6,opacity:0,duration:.55,ease:'power2.in',
-      onComplete:()=>slots[i].classList.add('on'),onReverseComplete:()=>slots[i].classList.remove('on')},7.3+i*.22);
+    tl5.to(c,{x:()=>slotTarget(i).x,y:()=>slotTarget(i).y,rotation:0,scale:.55,duration:.85,ease:'power3.inOut'},7.2+i*.18)
+       .to(c,{opacity:0,duration:.3,ease:'power1.in',onComplete:()=>slots[i].classList.add('on'),onReverseComplete:()=>slots[i].classList.remove('on')},7.2+i*.18+.6);
   });
-  tl5.to('#glow',{opacity:1,duration:.8},'-=.1')
-     .to('#mcard',{scale:1.03,duration:.6,ease:'power1.inOut'},'<')
-     .to('#l8',{opacity:1,y:0,duration:.6},'<');
-  scenes[idx('#pin5')]={tl:tl5,light:true,autoNext:2800};   // then straight on to the question, no swipe needed
+  tl5.to('#glow',{opacity:1,duration:1.2,ease:'power1.inOut'},'-=.2')
+     .to('#mcard',{scale:1.02,duration:.9,ease:'power2.inOut'},'<')
+     .to('#l8',{opacity:1,y:0,duration:.7,ease:'power2.out'},'<+=.2');
+  scenes[idx('#pin5')]={tl:tl5,light:true};                     // no auto-advance here: the reader takes their time, then swipes
 
   /* ---- closing: the logo comes back together ---- */
   const logo2=$('#logo2 svg'), chev2=[...logo2.querySelectorAll('path')].slice(0,3), word2=[...logo2.querySelectorAll('path')].slice(3);
