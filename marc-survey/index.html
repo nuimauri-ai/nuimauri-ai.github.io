@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#F7F9FC">
 <link rel="icon" href="data:,">
 <title>MARC — After the last patient</title>
-<meta property="og:title" content="MARC — a two-minute survey for clinicians">
+<meta property="og:title" content="MARC — After the last patient">
 <meta property="og:description" content="After the last patient, there is still the inbox. Tell us what it costs you.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,10 +29,10 @@
   svg{display:block}
 
   /* progress + chapter */
-  #progress{z-index:70;position:fixed;top:0;left:0;height:3px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:var(--accent);z-index:50}
-  #chapter{position:fixed;top:calc(env(safe-area-inset-top) + 12px);right:14px;z-index:50;display:flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;background:rgba(15,28,46,.78);color:#fff;font-size:12px;font-weight:600;letter-spacing:.04em;opacity:0;transition:opacity .3s}
+  #progress{position:fixed;top:0;left:0;height:3px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:var(--accent);z-index:50}
+  #chapter{position:fixed;top:calc(env(safe-area-inset-top) + 12px);right:14px;z-index:50;display:flex;align-items:center;gap:8px;padding:8px 13px;border-radius:999px;background:rgba(15,28,46,.82);color:#fff;font-size:13px;font-weight:700;letter-spacing:.03em;opacity:0;transition:opacity .3s;box-shadow:0 6px 18px rgba(15,28,46,.18)}
   #chapter.show{opacity:1}
-  #chapter i{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.3);transition:background .3s,transform .3s}
+  #chapter i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.3);transition:background .3s,transform .3s}
   #chapter i.done{background:var(--accent)}
   #chapter i.now{background:#fff;transform:scale(1.4)}
 
@@ -50,36 +50,40 @@
   /* pinned scenes */
   .scene{position:absolute}
   .pin{position:relative;height:100%;min-height:100%;overflow:hidden}
+  .pin.under{position:absolute;inset:0;height:auto}          /* a scene that sits behind a question card on the same screen */
+  .pin.under .copy{pointer-events:none}                        /* its faded-out line must never catch a tap meant for the card */
   .stage{position:absolute;inset:0}
   .copy{position:absolute;left:0;right:0;bottom:0;padding:0 22px calc(env(safe-area-inset-bottom) + 36px);max-width:600px;margin:0 auto;z-index:5}
   .copy.top{bottom:auto;top:calc(env(safe-area-inset-top) + 70px)}
-  .copy.mid{bottom:auto;top:50%;transform:translateY(-50%);text-align:center}
   .line{opacity:0;transform:translateY(18px);will-change:transform,opacity;font-size:clamp(24px,5.8vw,38px);line-height:1.15;font-weight:700;letter-spacing:-.02em;margin:0 0 12px;color:var(--heading)}
-  .line.small{font-size:clamp(16px,4.2vw,20px);font-weight:500;line-height:1.45;color:var(--muted)}
+  .line.key{font-size:clamp(26px,6.6vw,42px);line-height:1.12;font-weight:800;letter-spacing:-.025em}
+  .line.key .w{display:inline-block;opacity:0;transform:translateY(10px);will-change:transform,opacity;margin-right:.26em}
   .dark .line{color:#fff}
-  .dark .line.small{color:rgba(255,255,255,.72)}
 
-  /* ---------- opening ---------- */
+  /* ---------- opening : the avalanche, then the tired doctor ---------- */
   .opening .stage{background:var(--surface)}
-  .brandslide .stage{background:var(--surface)}
-  .brand{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);width:min(56vw,240px);text-align:center;will-change:transform,opacity}
-  .brand svg{width:100%;height:auto;overflow:visible}
-  .brand .kicker{margin:22px 0 0;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600;opacity:0}
-  .hint{position:absolute;left:0;right:0;bottom:calc(env(safe-area-inset-bottom) + 34px);display:flex;justify-content:center;align-items:center;gap:10px;color:var(--muted);font-size:14px;opacity:0}
-  .hint svg{width:18px;height:18px;animation:bob 1.6s ease-in-out infinite}
+  .fall{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+  .item{position:absolute;left:0;top:0;opacity:0;will-change:transform,opacity}
+  .item img{display:block;height:auto}
+  .docwrap{position:absolute;inset:0;background:#F2F2F2;opacity:0;will-change:opacity}   /* the video's own background, so its edges disappear */
+  .docwrap video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 46%}
+  @media (orientation:landscape){ .docwrap video{object-fit:contain} }
+  .incoming{position:absolute;left:0;top:0;width:0;height:0;pointer-events:none}
+  .ping{position:absolute;left:0;top:0;transform:translate(-50%,-50%);padding:5px 9px;border-radius:999px;background:#fff;color:var(--heading);border:1.5px solid var(--border);font-size:11px;font-weight:700;letter-spacing:.02em;white-space:nowrap;box-shadow:0 6px 16px rgba(15,28,46,.14);opacity:0;will-change:transform,opacity}
+  .ping i{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--warn);margin-right:6px;vertical-align:1px}
+  .ping.amber i{background:var(--amber)} .ping.blue i{background:var(--accent)}
+  .opening .copy{padding-bottom:calc(env(safe-area-inset-bottom) + 58px)}   /* clears the swipe cue */
+  .opening .line{font-size:clamp(21px,5.4vw,36px);margin:0 0 6px;transform:translateY(12px)}
+  @media (max-height:640px){ .opening .line{font-size:clamp(18px,4.6vw,30px);margin-bottom:4px} }
+  @media (orientation:landscape) and (max-height:500px){          /* landscape phone: the clip is a narrow centred column, the copy goes beside it */
+    .opening .copy{right:auto;margin:0;max-width:calc(50vw - 125px);padding-bottom:calc(env(safe-area-inset-bottom) + 18px)}
+    .opening .line{font-size:clamp(15px,2.6vw,20px);margin-bottom:3px}
+  }
   @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
-  .icons{position:absolute;inset:0;pointer-events:none;will-change:transform,opacity}
-  .ico{position:absolute;width:min(13vw,64px);color:var(--heading);opacity:0}
-  .ico svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
-  .bigclock{position:absolute;left:50%;top:40%;width:min(44vw,220px);aspect-ratio:1;transform:translate(-50%,-50%);opacity:0;will-change:transform,opacity}
-  .bigclock svg{width:100%;height:100%;fill:none;stroke:var(--heading);stroke-width:2.4;stroke-linecap:round}
-  .bigclock .hand{transform-origin:50px 50px}
-  .tray{position:absolute;left:50%;top:38%;width:min(60vw,260px);transform:translate(-50%,-50%);opacity:0;will-change:transform,opacity}
-  .tray svg{width:100%;height:auto;overflow:visible}
-  .env{opacity:0;transform-origin:center;will-change:transform,opacity}
 
-  /* ---------- scene 2 : clock ---------- */
+  /* ---------- scene 2 : clock, then the question on the same screen ---------- */
   .scene2 .stage{background:var(--surface)}
+  .q.veil{position:relative;z-index:6;opacity:0;visibility:hidden;pointer-events:none}   /* out of the tab order until the timeline shows it */
   .dusk{position:absolute;inset:0;background:linear-gradient(180deg,#0D1B2A 0%,#172844 60%,#24406B 100%);opacity:0;will-change:opacity}
   .orbit{position:absolute;left:50%;top:42%;width:min(70vw,300px);aspect-ratio:1;transform:translate(-50%,-50%)}
   .orbit svg{width:100%;height:100%;overflow:visible}
@@ -92,9 +96,10 @@
 
   /* ---------- scene 3 : record ---------- */
   .scene3 .stage{background:var(--navy)}
-  .rowcard{position:absolute;left:50%;top:34%;width:min(78vw,340px);transform:translate(-50%,-50%);opacity:0;will-change:transform,opacity}
+  .scene3 .shade{position:absolute;inset:0;background:linear-gradient(to top,rgba(13,27,42,.96) 0%,rgba(13,27,42,.7) 34%,rgba(13,27,42,0) 60%);pointer-events:none}
+  .rowcard{position:absolute;left:50%;top:30%;width:min(78vw,340px);transform:translate(-50%,-50%);opacity:0;will-change:transform,opacity}
   .rowcard svg{width:100%;height:auto}
-  .folder{position:absolute;left:50%;top:62%;width:min(64vw,280px);transform:translate(-50%,-50%);will-change:transform,opacity;opacity:0}
+  .folder{position:absolute;left:50%;top:50%;width:min(58vw,260px);transform:translate(-50%,-50%);will-change:transform,opacity;opacity:0}
   .folder svg{width:100%;height:auto;overflow:visible}
   .page{transform-origin:100px 120px;opacity:0}
 
@@ -111,6 +116,8 @@
   /* ---------- scene 5 : MARC reveal ---------- */
   .scene5 .stage{background:#0A1420}
   .lift{position:absolute;inset:0;background:var(--surface);opacity:0;will-change:opacity}
+  .brand{position:absolute;left:50%;top:46%;width:min(56vw,240px);will-change:transform,opacity;z-index:2;opacity:0}   /* centred by GSAP (xPercent/yPercent) */
+  .brand svg{width:100%;height:auto;overflow:visible}
   .chips{position:absolute;inset:0;pointer-events:none}
   .chip{position:absolute;left:50%;top:50%;padding:9px 13px;border-radius:999px;background:#fff;color:var(--heading);border:1.5px solid var(--border);font-size:12.5px;font-weight:600;white-space:nowrap;box-shadow:0 8px 24px rgba(15,28,46,.12);opacity:0;will-change:transform,opacity}
   .mcard{position:absolute;left:50%;top:46%;width:min(86vw,380px);transform:translate(-50%,-50%);background:#fff;border-radius:18px;border:1px solid var(--border);box-shadow:0 30px 80px rgba(15,28,46,.18);padding:16px 16px 12px;opacity:0;will-change:transform,opacity}
@@ -131,8 +138,10 @@
   .glow{position:absolute;left:50%;top:46%;width:min(86vw,380px);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(18,133,234,.28),rgba(18,133,234,0) 60%);opacity:0;pointer-events:none}
 
   /* ---------- question cards ---------- */
-  .q{min-height:100%;display:grid;place-items:center;padding:24px 18px}
-  .card{width:100%;max-width:540px;background:var(--card);border-radius:var(--radius);padding:24px 22px 22px;box-shadow:0 20px 60px rgba(15,28,46,.10);border:1px solid var(--border);opacity:0;transform:translateY(30px) scale(.98);will-change:transform,opacity}
+  /* flex + margin:auto (not grid place-items) so a card taller than the screen grows the page instead of
+     overflowing above the top edge where it cannot be scrolled to. Top padding clears the chapter pill. */
+  .q{min-height:100%;display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top) + 64px) 18px calc(env(safe-area-inset-bottom) + 24px)}
+  .card{width:100%;max-width:540px;margin:auto;background:var(--card);border-radius:var(--radius);padding:24px 22px 22px;box-shadow:0 20px 60px rgba(15,28,46,.10);border:1px solid var(--border);opacity:0;transform:translateY(30px) scale(.98);will-change:transform,opacity}
   .card .k{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 10px}
   .card h2{font-size:clamp(20px,5.2vw,26px);line-height:1.22;letter-spacing:-.02em;margin:0 0 8px;color:var(--heading)}
   .card .help{color:var(--muted);font-size:14px;margin:0 0 16px}
@@ -201,7 +210,7 @@
   .rows div.on::before{border-radius:50%}
 
   /* result card */
-  .rcard{width:100%;max-width:540px;background:#fff;border-radius:var(--radius);border:1px solid var(--border);box-shadow:0 20px 60px rgba(15,28,46,.10);padding:0;opacity:0;transform:translateY(30px) scale(.98);overflow:hidden}
+  .rcard{width:100%;max-width:540px;margin:auto;background:#fff;border-radius:var(--radius);border:1px solid var(--border);box-shadow:0 20px 60px rgba(15,28,46,.10);padding:0;opacity:0;transform:translateY(30px) scale(.98);overflow:hidden}
   .rcard .mh{display:flex;align-items:center;gap:10px;padding:16px 20px;border-bottom:1px solid var(--border);background:var(--surface)}
   .rcard .mh svg{width:28px;height:auto}
   .rcard .mh b{font-size:14px;color:var(--heading)}
@@ -222,7 +231,8 @@
   .privacy{font-size:12px;color:var(--muted);margin-top:10px;text-align:center}
 
   /* closing */
-  .closing{min-height:100%;display:grid;place-items:center;text-align:center;padding:24px;background:var(--surface)}
+  .closing{min-height:100%;display:flex;flex-direction:column;text-align:center;padding:24px;background:var(--surface)}
+  .closing > div{margin:auto}
   .closing .brand2{width:min(60vw,260px);margin:0 auto 26px}
   .closing .brand2 svg{width:100%;height:auto;overflow:visible}
   .closing .brand2 path{opacity:0}
@@ -233,12 +243,13 @@
   @media (min-width:900px){
     .copy{max-width:680px}
     .line{font-size:clamp(32px,3.2vw,46px)}
-    .line.small{font-size:20px}
   }
   @media (prefers-reduced-motion:reduce){
-    .line,.card,.rcard,.brand .kicker,.hint,.page,.paper,.closing h2,.closing p,.closing a,.closing .brand2 path{opacity:1!important;transform:none!important}
-    .hint svg{animation:none}
+    .line,.line.key .w,.card,.rcard,.page,.paper,.closing h2,.closing p,.closing a,.closing .brand2 path{opacity:1!important;transform:none!important}
+    .scene2 .copy{display:none!important}     /* the phrase has already given way to the question */
+    .scene5 #l7{opacity:0!important}          /* …and the intro line to the summary card */
   }
+  @media (max-height:700px){ #q3 .rows{gap:4px} #q3 .rows div{height:11px} #q3 .val.word{font-size:28px} }   /* keep the Q3 slider above the fold on short phones */
 </style>
 </head>
 <body>
@@ -247,36 +258,18 @@
 <div id="chapter" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><span id="chlabel"></span></div>
 <div id="deck">
 
-<!-- ============ OPENING : logo → the day rushes past → it slows → the inbox ============ -->
-<section class="slide brandslide" data-cue="never">
-  <div class="pin">
-    <div class="stage">
-      <div class="brand" id="brand">
-        <div id="logo1"><svg viewBox='0 0 181 56' xmlns='http://www.w3.org/2000/svg' aria-label='MARC'><path d='M59.7114 24.0333C58.3865 21.7002 55.0026 21.7141 53.6972 24.058L44.7372 40.1451C44.4512 40.6585 44.4498 41.2817 44.7328 41.7967L52.3752 55.7031L63.4459 35.9468C64.3809 34.2782 64.3749 32.2461 63.4304 30.5828L59.7114 24.0333Z' fill='#2680D4'/><path d='M47.2957 1.74163C45.9733 -0.587082 42.5976 -0.578883 41.2869 1.75635L19.9341 39.8008C19.6455 40.315 19.6427 40.9407 19.9267 41.4574L27.5674 55.3605L51.0333 13.6789C51.9735 12.0088 51.9696 9.97187 51.0232 8.30521L47.2957 1.74163Z' fill='#0868E5'/><path d='M22.495 1.75367C21.1711 -0.577533 17.7904 -0.565663 16.4829 1.77475L0.219297 30.8866C-0.418621 32.0285 0.411497 33.4319 1.72503 33.4319H15.1636L26.2343 13.6756C27.1693 12.007 27.1633 9.97485 26.2188 8.31157L22.495 1.75367Z' fill='#3B45F8'/><path d='M88.5502 12.9103H92.7397L99.0902 33.4404L105.422 12.9103H109.308L100.815 40.5113H97.3461L88.5502 12.9103ZM86.9768 12.9103H90.844L91.4696 30.4832V40.5113H86.9768V12.9103ZM107.298 12.9103H111.185V40.5113H106.692V30.4832L107.298 12.9103Z' fill='#2D2B3A'/><path d='M126.994 16.7016L120.321 40.5113H115.506L124.264 12.9103H127.259L126.994 16.7016ZM132.321 40.5113L125.629 16.7016L125.307 12.9103H128.359L137.155 40.5113H132.321ZM132.434 30.2557V34.1229H119.582V30.2557H132.434Z' fill='#2D2B3A'/><path d='M141.097 12.9103H149.438C151.258 12.9103 152.799 13.2262 154.063 13.8581C155.327 14.49 156.287 15.4252 156.945 16.6637C157.614 17.8896 157.949 19.4124 157.949 21.2323C157.949 22.6098 157.741 23.823 157.324 24.872C156.919 25.9209 156.332 26.8056 155.561 27.5259C154.79 28.2336 153.861 28.7834 152.774 29.1751L151.428 29.9145H144.376L144.357 26.0473H149.324C150.221 26.0473 150.967 25.8514 151.561 25.4596C152.155 25.0679 152.597 24.5244 152.888 23.8293C153.191 23.1343 153.343 22.3444 153.343 21.4598C153.343 20.5119 153.21 19.6905 152.945 18.9954C152.679 18.2877 152.262 17.7442 151.694 17.3651C151.125 16.9733 150.373 16.7774 149.438 16.7774H145.703V40.5113H141.097V12.9103ZM153.949 40.5113L148.698 28.1136L153.494 28.0946L158.878 40.2648V40.5113H153.949Z' fill='#2D2B3A'/><path d='M176.393 31.5068H180.981C180.893 33.5036 180.488 35.2034 179.768 36.6062C179.047 37.9963 178.011 39.0579 176.659 39.7909C175.319 40.5239 173.683 40.8904 171.749 40.8904C170.283 40.8904 168.969 40.625 167.806 40.0942C166.656 39.5634 165.677 38.7989 164.868 37.8005C164.059 36.7894 163.44 35.5572 163.01 34.1039C162.593 32.6505 162.384 31.0013 162.384 29.1562V24.2654C162.384 22.4202 162.599 20.771 163.029 19.3176C163.471 17.8643 164.103 16.6321 164.925 15.6211C165.746 14.6101 166.744 13.8455 167.92 13.3273C169.108 12.7965 170.447 12.5311 171.939 12.5311C173.847 12.5311 175.452 12.8976 176.754 13.6306C178.055 14.3636 179.06 15.4378 179.768 16.8533C180.476 18.2687 180.886 19.9938 181 22.0285H176.412C176.349 20.6509 176.16 19.5514 175.844 18.73C175.54 17.8959 175.073 17.2956 174.441 16.9291C173.822 16.5626 172.988 16.3793 171.939 16.3793C171.067 16.3793 170.315 16.5436 169.683 16.8722C169.064 17.2008 168.552 17.6937 168.147 18.3508C167.756 18.9954 167.459 19.8105 167.256 20.7963C167.067 21.7694 166.972 22.9131 166.972 24.2274V29.1562C166.972 30.42 167.054 31.5384 167.218 32.5115C167.383 33.4846 167.648 34.3124 168.015 34.9949C168.381 35.6647 168.868 36.1765 169.474 36.5304C170.081 36.8716 170.839 37.0422 171.749 37.0422C172.836 37.0422 173.702 36.8716 174.346 36.5304C175.003 36.1891 175.49 35.6141 175.806 34.8053C176.122 33.9965 176.318 32.897 176.393 31.5068Z' fill='#2D2B3A'/></svg></div>
-        <p class="kicker" id="kicker"></p>
-      </div>
-      <div class="hint" id="hint"><span></span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16M5 13l7 7 7-7"/></svg>
-      </div>
-    </div>
-  </div>
-</section>
-
+<!-- ============ OPENING : the avalanche of the day, then the doctor at the end of it ============ -->
 <section class="slide scene opening">
   <div class="pin" id="pin0">
     <div class="stage">
-      <div class="icons" id="icons"></div>
-      <div class="bigclock" id="bigclock">
-        <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44"/><line class="hand h" x1="50" y1="50" x2="50" y2="26"/><line class="hand m" x1="50" y1="50" x2="50" y2="16"/><circle cx="50" cy="50" r="2.5" fill="#0F1C2E"/></svg>
+      <div class="fall" id="fall"></div>
+      <div class="docwrap" id="docwrap">
+        <video id="doc" muted playsinline preload="auto" disablepictureinpicture aria-hidden="true">
+          <source src="assets/tired-doctor.mp4" type="video/mp4">
+        </video>
+        <div class="incoming" id="incoming"></div>
       </div>
-      <div class="tray" id="tray">
-        <svg viewBox="0 0 260 150">
-          <g id="envs"></g>
-          <path d="M18 100h224l-16 40H34z" fill="#fff" stroke="#0F1C2E" stroke-width="2.4" stroke-linejoin="round"/>
-          <path d="M60 100v16h140v-16" fill="none" stroke="#0F1C2E" stroke-width="2.4"/>
-        </svg>
-      </div>
-      <div class="copy"><p class="line" id="l1"></p><p class="line small" id="l2"></p></div>
+      <div class="copy" id="ocopy"></div>
     </div>
   </div>
 </section>
@@ -296,12 +289,12 @@
   </div>
 </div></section>
 
-<!-- ============ SCENE 2 : the items become a clock, the light goes ============ -->
-<section class="slide scene scene2 dark">
-  <div class="pin" id="pin2">
+<!-- ============ SCENE 2 + Q2 : the items become a clock, the light goes, then the question fades in on the same screen ============ -->
+<section class="slide scene scene2 dark" data-step="2" data-cue="slider">
+  <div class="pin under" id="pin2">
     <div class="stage">
       <div class="dusk" id="dusk"></div>
-      <div class="orbit">
+      <div class="orbit" id="orbit">
         <svg viewBox="0 0 200 200" id="orb">
           <circle class="face" id="face" cx="100" cy="100" r="86"/>
           <g class="envs" id="envs2"></g>
@@ -314,11 +307,8 @@
       <div class="copy"><p class="line" id="l3"></p></div>
     </div>
   </div>
-</section>
-
-<!-- Q2 time -->
-<section class="slide" data-step="2" data-cue="slider"><div class="q" id="q2">
-  <div class="card" data-card>
+  <div class="q veil" id="q2">
+  <div class="card" data-card="scene">
     <p class="k"></p><h2></h2><p class="help"></p>
     <div class="viz miniclock"><svg viewBox="0 0 100 100"><circle class="f" cx="50" cy="50" r="46"/><line class="hand h" id="mch" x1="50" y1="50" x2="50" y2="28"/><line class="hand m" id="mcm" x1="50" y1="50" x2="50" y2="16"/><circle cx="50" cy="50" r="3" fill="#1285EA"/></svg></div>
     <p class="val"><span id="v2">30</span><small></small></p>
@@ -349,7 +339,8 @@
           <path id="flap" d="M14 66h172v68H14z" fill="#2E5087"/>
         </svg>
       </div>
-      <div class="copy"><p class="line" id="l4"></p><p class="line small" id="l5"></p></div>
+      <div class="shade"></div>
+      <div class="copy"><p class="line" id="l4"></p><p class="line key" id="l5"></p></div>
     </div>
   </div>
 </section>
@@ -394,6 +385,7 @@
     <div class="stage">
       <div class="lift" id="lift"></div>
       <div class="glow" id="glow"></div>
+      <div class="brand" id="brand"><svg id="logo1" viewBox='0 0 181 56' xmlns='http://www.w3.org/2000/svg' aria-label='MARC'><path d='M59.7114 24.0333C58.3865 21.7002 55.0026 21.7141 53.6972 24.058L44.7372 40.1451C44.4512 40.6585 44.4498 41.2817 44.7328 41.7967L52.3752 55.7031L63.4459 35.9468C64.3809 34.2782 64.3749 32.2461 63.4304 30.5828L59.7114 24.0333Z' fill='#2680D4'/><path d='M47.2957 1.74163C45.9733 -0.587082 42.5976 -0.578883 41.2869 1.75635L19.9341 39.8008C19.6455 40.315 19.6427 40.9407 19.9267 41.4574L27.5674 55.3605L51.0333 13.6789C51.9735 12.0088 51.9696 9.97187 51.0232 8.30521L47.2957 1.74163Z' fill='#0868E5'/><path d='M22.495 1.75367C21.1711 -0.577533 17.7904 -0.565663 16.4829 1.77475L0.219297 30.8866C-0.418621 32.0285 0.411497 33.4319 1.72503 33.4319H15.1636L26.2343 13.6756C27.1693 12.007 27.1633 9.97485 26.2188 8.31157L22.495 1.75367Z' fill='#3B45F8'/><path d='M88.5502 12.9103H92.7397L99.0902 33.4404L105.422 12.9103H109.308L100.815 40.5113H97.3461L88.5502 12.9103ZM86.9768 12.9103H90.844L91.4696 30.4832V40.5113H86.9768V12.9103ZM107.298 12.9103H111.185V40.5113H106.692V30.4832L107.298 12.9103Z' fill='#2D2B3A'/><path d='M126.994 16.7016L120.321 40.5113H115.506L124.264 12.9103H127.259L126.994 16.7016ZM132.321 40.5113L125.629 16.7016L125.307 12.9103H128.359L137.155 40.5113H132.321ZM132.434 30.2557V34.1229H119.582V30.2557H132.434Z' fill='#2D2B3A'/><path d='M141.097 12.9103H149.438C151.258 12.9103 152.799 13.2262 154.063 13.8581C155.327 14.49 156.287 15.4252 156.945 16.6637C157.614 17.8896 157.949 19.4124 157.949 21.2323C157.949 22.6098 157.741 23.823 157.324 24.872C156.919 25.9209 156.332 26.8056 155.561 27.5259C154.79 28.2336 153.861 28.7834 152.774 29.1751L151.428 29.9145H144.376L144.357 26.0473H149.324C150.221 26.0473 150.967 25.8514 151.561 25.4596C152.155 25.0679 152.597 24.5244 152.888 23.8293C153.191 23.1343 153.343 22.3444 153.343 21.4598C153.343 20.5119 153.21 19.6905 152.945 18.9954C152.679 18.2877 152.262 17.7442 151.694 17.3651C151.125 16.9733 150.373 16.7774 149.438 16.7774H145.703V40.5113H141.097V12.9103ZM153.949 40.5113L148.698 28.1136L153.494 28.0946L158.878 40.2648V40.5113H153.949Z' fill='#2D2B3A'/><path d='M176.393 31.5068H180.981C180.893 33.5036 180.488 35.2034 179.768 36.6062C179.047 37.9963 178.011 39.0579 176.659 39.7909C175.319 40.5239 173.683 40.8904 171.749 40.8904C170.283 40.8904 168.969 40.625 167.806 40.0942C166.656 39.5634 165.677 38.7989 164.868 37.8005C164.059 36.7894 163.44 35.5572 163.01 34.1039C162.593 32.6505 162.384 31.0013 162.384 29.1562V24.2654C162.384 22.4202 162.599 20.771 163.029 19.3176C163.471 17.8643 164.103 16.6321 164.925 15.6211C165.746 14.6101 166.744 13.8455 167.92 13.3273C169.108 12.7965 170.447 12.5311 171.939 12.5311C173.847 12.5311 175.452 12.8976 176.754 13.6306C178.055 14.3636 179.06 15.4378 179.768 16.8533C180.476 18.2687 180.886 19.9938 181 22.0285H176.412C176.349 20.6509 176.16 19.5514 175.844 18.73C175.54 17.8959 175.073 17.2956 174.441 16.9291C173.822 16.5626 172.988 16.3793 171.939 16.3793C171.067 16.3793 170.315 16.5436 169.683 16.8722C169.064 17.2008 168.552 17.6937 168.147 18.3508C167.756 18.9954 167.459 19.8105 167.256 20.7963C167.067 21.7694 166.972 22.9131 166.972 24.2274V29.1562C166.972 30.42 167.054 31.5384 167.218 32.5115C167.383 33.4846 167.648 34.3124 168.015 34.9949C168.381 35.6647 168.868 36.1765 169.474 36.5304C170.081 36.8716 170.839 37.0422 171.749 37.0422C172.836 37.0422 173.702 36.8716 174.346 36.5304C175.003 36.1891 175.49 35.6141 175.806 34.8053C176.122 33.9965 176.318 32.897 176.393 31.5068Z' fill='#2D2B3A'/></svg></div>
       <div class="mcard" id="mcard">
         <div class="mh"><div id="mark1"><svg viewBox='0 0 64 56' xmlns='http://www.w3.org/2000/svg' aria-hidden='true'><path d='M59.7114 24.0333C58.3865 21.7002 55.0026 21.7141 53.6972 24.058L44.7372 40.1451C44.4512 40.6585 44.4498 41.2817 44.7328 41.7967L52.3752 55.7031L63.4459 35.9468C64.3809 34.2782 64.3749 32.2461 63.4304 30.5828L59.7114 24.0333Z' fill='#2680D4'/><path d='M47.2957 1.74163C45.9733 -0.587082 42.5976 -0.578883 41.2869 1.75635L19.9341 39.8008C19.6455 40.315 19.6427 40.9407 19.9267 41.4574L27.5674 55.3605L51.0333 13.6789C51.9735 12.0088 51.9696 9.97187 51.0232 8.30521L47.2957 1.74163Z' fill='#0868E5'/><path d='M22.495 1.75367C21.1711 -0.577533 17.7904 -0.565663 16.4829 1.77475L0.219297 30.8866C-0.418621 32.0285 0.411497 33.4319 1.72503 33.4319H15.1636L26.2343 13.6756C27.1693 12.007 27.1633 9.97485 26.2188 8.31157L22.495 1.75367Z' fill='#3B45F8'/></svg></div><b></b><span>MARC</span></div>
         <div id="slots"></div>
@@ -470,12 +462,16 @@
 
   /* ---------------- fill the page from content.js ---------------- */
   function fillCard(id,q){ const c=$(id); c.querySelector('.k').textContent=q.chapter; c.querySelector('h2').textContent=q.question; c.querySelector('.help').textContent=q.help; }
-  $('#kicker').textContent=C.opening.kicker; $('#hint span').textContent=C.opening.scrollHint;
-  $('#l1').textContent=C.opening.line1; $('#l2').textContent=C.opening.line2;
+  function esc(s){ return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+  // minutes -> "45" / "1 h 30" / "3 h"; the unit label is handled separately
+  const fmtMin=v=>v<60?String(v):(v%60?`${Math.floor(v/60)} h ${String(v%60).padStart(2,'0')}`:`${v/60} h`);
+  $('#ocopy').innerHTML=C.opening.lines.map((t,i)=>`<p class="line" id="ol${i}">${esc(t)}</p>`).join('');
+  $('#incoming').innerHTML=C.opening.incoming.map(([t,c])=>`<span class="ping ${esc(c||'')}"><i></i>${esc(t)}</span>`).join('');
   fillCard('#q1',C.q1); $('#q1 .val small').textContent=C.q1.unit; $('#r1min').textContent=C.q1.min; $('#r1max').textContent=C.q1.max+'+';
   $('#l3').textContent=C.scene2.line1;
-  fillCard('#q2',C.q2); $('#q2 .val small').textContent=C.q2.unit; $('#r2min').textContent=C.q2.min+' min'; $('#r2max').textContent=C.q2.max+' min';
-  $('#l4').textContent=C.scene3.line1; $('#l5').textContent=C.scene3.line2;
+  fillCard('#q2',C.q2); $('#q2 .val small').textContent=C.q2.unit; $('#r2min').textContent=C.q2.min+' min'; $('#r2max').textContent=fmtMin(C.q2.max);
+  $('#l4').textContent=C.scene3.line1;
+  $('#l5').innerHTML=C.scene3.line2.split(/\s+/).map(w=>`<span class="w">${esc(w)}</span>`).join('');
   fillCard('#q3',C.q3);
   $('#l6').textContent=C.scene4.line1;
   fillCard('#q4',C.q4); $('#n4').textContent=C.q4.next;
@@ -493,7 +489,6 @@
   $$('.lock span').forEach(s=>s.textContent=C.ui.lock); $('#q1 .you span').textContent=C.ui.you; $('#q1 .oth span').textContent=C.ui.others; $('#bemailerr').textContent=C.beta.emailError;
 
   // multi-select pills
-  function esc(s){ return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
   const check='<span class="box"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg></span>';
   function pills(id,q){ $(id).innerHTML=q.options.concat([q.otherLabel]).map((o,i)=>`<button type="button" class="pill" aria-pressed="false" data-v="${esc(o)}" ${i===q.options.length?'data-other="1"':''}>${check}<span>${esc(o)}</span></button>`).join(''); }
   pills('#p4',C.q4); pills('#p5',C.q5);
@@ -506,23 +501,13 @@
   $('#chips').innerHTML=C.reveal.sources.map(s=>`<span class="chip">${esc(s)}</span>`).join('');
 
   /* ---------------- SVG helpers ---------------- */
-  const ICONS = {
-    steth:'<path d="M12 8v12a10 10 0 0 0 20 0V8"/><path d="M22 30v4a8 8 0 0 0 16 0v-6"/><circle cx="38" cy="24" r="4"/><path d="M12 6h4M28 6h4"/>',
-    syringe:'<path d="M8 40l6-6M14 34l18-18 6 6-18 18zM30 12l6 6M34 8l6 6M20 28l4 4M25 23l4 4"/>',
-    thermo:'<path d="M24 6a4 4 0 0 1 4 4v20a7 7 0 1 1-8 0V10a4 4 0 0 1 4-4z"/><path d="M24 20v14"/><circle cx="24" cy="35" r="2" fill="currentColor"/>',
-    bp:'<circle cx="20" cy="24" r="11"/><path d="M20 24l5-6"/><path d="M31 24h6l4 7"/><path d="M14 40h12"/>',
-    phone:'<rect x="14" y="4" width="20" height="40" rx="4"/><path d="M22 38h4"/>',
-    clock:'<circle cx="24" cy="24" r="16"/><path d="M24 14v10l6 4"/>',
-    capsule:'<rect x="8" y="18" width="32" height="12" rx="6" transform="rotate(-35 24 24)"/><path d="M19 15l10 18"/>',
-    clip:'<rect x="12" y="8" width="24" height="34" rx="3"/><path d="M18 8h12v4H18zM18 20h12M18 27h12M18 34h8"/>',
-    mail:'<rect x="6" y="12" width="36" height="24" rx="3"/><path d="M6 14l18 12 18-12"/>'
-  };
-  const iconEl=(k)=>`<div class="ico ${k}"><svg viewBox="0 0 48 48">${ICONS[k]}</svg></div>`;
-  const keys=Object.keys(ICONS);
-  $('#icons').innerHTML=keys.concat(keys).map(k=>iconEl(k)).join('');
+  // the medical items James supplied (assets/item-*.png, transparent, natural sizes at 1x)
+  const ITEMS=[['stethoscope',104,122],['ecg',94,110],['pills',85,98],['tape',84,50],['scissors',70,88],['plaster',66,80],['sanitiser',55,102],['bpcuff',118,102],['otoscope',77,109],['thermometer',55,98],['oximeter',68,70],['syringe',81,112],['gloves',88,106]];
+  const FALL_N=36;                                   // how many items take part in the avalanche
+  $('#fall').innerHTML=[...Array(FALL_N)].map((_,i)=>{ const [n,w,h]=ITEMS[i%ITEMS.length]; const k=String(i%ITEMS.length).padStart(2,'0');
+    return `<div class="item"><img src="assets/item-${k}-${n}.png" width="${w}" height="${h}" alt="" decoding="async"></div>`; }).join('');
 
   const envSVG=(x,y,i)=>`<g transform="translate(${x},${y})"><g class="env" id="e${i}"><rect x="-26" y="-16" width="52" height="32" rx="4" fill="#fff" stroke="#0F1C2E" stroke-width="2"/><path d="M-26 -12l26 16 26-16" fill="none" stroke="#0F1C2E" stroke-width="2"/></g></g>`;
-  $('#envs').innerHTML=[0,1,2,3,4,5].map(i=>envSVG(130+(i%2?8:-8),92-i*13,i)).join('');
   $('#envs2').innerHTML=[...Array(12)].map((_,i)=>envSVG(100+(i%2?6:-6),112-i*4,'b'+i)).join('');
   $('#ticks').innerHTML=[...Array(12)].map(()=>`<rect class="tick" x="98" y="18" width="4" height="10" rx="2"/>`).join('');
   $('#pages').innerHTML=[...Array(5)].map((_,i)=>`<g class="page" id="pg${i}"><rect x="60" y="30" width="80" height="96" rx="5" fill="#fff"/><rect x="70" y="42" width="40" height="6" rx="3" fill="#E6ECF3"/><rect x="70" y="54" width="60" height="4" rx="2" fill="#EEF2F7"/><rect x="70" y="62" width="52" height="4" rx="2" fill="#EEF2F7"/><rect x="70" y="70" width="58" height="4" rx="2" fill="#EEF2F7"/><rect x="70" y="78" width="36" height="4" rx="2" fill="#EEF2F7"/></g>`).join('');
@@ -536,45 +521,61 @@
      ===================================================================== */
   const slides=$$('.slide');
   const idx=sel=>slides.indexOf($(sel).closest('.slide'));
-  const D = reduce ? 0 : .8;                   // slide transition
+  const D = reduce ? 0 : .6;                   // programmatic slide transition (keys, auto-advance)
   let cur=0, busy=false, playing=null;
   const scenes={};                            // slide index -> {tl, light}
 
-  /* ---- brand: the logo draws itself on load ---- */
-  const logo1=$('#logo1 svg'), chev1=[...logo1.querySelectorAll('path')].slice(0,3), word1=[...logo1.querySelectorAll('path')].slice(3);
-  chev1.forEach(p=>{ const L=p.getTotalLength(); gsap.set(p,{strokeDasharray:L,strokeDashoffset:L,stroke:p.getAttribute('fill'),strokeWidth:1.5,fillOpacity:0}); });
-  gsap.set(word1,{opacity:0,y:6});
-  gsap.timeline({defaults:{ease:'power2.out'}})
-    .to(chev1,{strokeDashoffset:0,duration:reduce?0:1.1,stagger:.15})
-    .to(chev1,{fillOpacity:1,duration:.5,stagger:.1},'-=.4')
-    .to(word1,{opacity:1,y:0,duration:.5,stagger:.06},'-=.3')
-    .to('#kicker',{opacity:1,duration:.5},'-=.1')
-    .to('#hint',{opacity:1,duration:.5},'-=.2');
+  /* ---- opening: the day's items pile up, then the doctor at the end of it ----
+     Beats (James, 11 Sep): items build → "As a doctor…" ; items fade, doctor fades in → "at the end of a long
+     clinical day…" ; she rubs her eyes, slumps back, exhales → "you've still got to check your inbox…" ;
+     the screen fills with results → "check the results…" / "check the correspondence." */
+  const doc=$('#doc'), items=$$('.item'), oline=$$('#ocopy .line'), pings=$$('.ping');
+  const DOC_RATE=.6, DOC_LEN=4.04/DOC_RATE;          // the clip is 4 s; slowed so the beats have room
+  doc.muted=true; doc.defaultPlaybackRate=DOC_RATE; doc.playbackRate=DOC_RATE;
+  try{ doc.load(); }catch(e){}                        // iOS ignores preload; ask for the clip now so its first frame is ready when it fades in
+  // play the clip; if it is not buffered yet, hold the opening timeline so the words wait for the picture (2.5 s cap)
+  const docPlay=()=>{ doc.playbackRate=DOC_RATE; const go=()=>{ const p=doc.play(); if(p&&p.catch) p.catch(()=>{}); };
+    if(doc.readyState>=3||reduce||playing!==tl0){ go(); return; }
+    tl0.pause(); let done=false; const resume=()=>{ if(done) return; done=true; go(); if(playing===tl0) tl0.play(); };
+    doc.addEventListener('canplay',resume,{once:true}); setTimeout(resume,2500); };
+  const docEnd=()=>{ doc.pause(); if(doc.duration) doc.currentTime=Math.max(0,doc.duration-.05); };
+  if(reduce) doc.addEventListener('loadedmetadata',docEnd,{once:true});   // no motion: show the end of the clip
+  // where the monitor sits in the 720x1280 clip, mapped through object-fit onto the screen
+  const docPoint=(vx,vy)=>{ const W=innerWidth,Hh=innerHeight, vw=720,vh=1280, cover=getComputedStyle(doc).objectFit==='cover';
+    const s=cover?Math.max(W/vw,Hh/vh):Math.min(W/vw,Hh/vh); const dw=vw*s,dh=vh*s; return {x:(W-dw)/2+vx*s, y:(Hh-dh)*.46+vy*s}; };
+  const placeIncoming=()=>{ const p=docPoint(535,600); gsap.set('#incoming',{x:p.x,y:p.y}); };   // the middle of the monitor
+  const placeItems=()=>items.forEach((el,i)=>{ const w=el.firstElementChild.width; const sc=gsap.utils.clamp(.48,.8,innerWidth/720*.9)*(.85+((i*7)%4)*.08);
+    gsap.set(el,{scale:sc,transformOrigin:'50% 50%',width:w}); });
+  placeItems(); placeIncoming(); addEventListener('resize',()=>{ placeItems(); placeIncoming(); });
+  const tl0=gsap.timeline({paused:true});
+  // a small avalanche: each item slides in from the top-left, across and down, more and more of them
+  const BUILD=3.2;
+  items.forEach((el,i)=>{ const t=BUILD*Math.pow(i/FALL_N,1.35);       // arrivals get denser
+    const x0=-20+((i*37)%70), y0=-22+((i*53)%40), drift=55+((i*29)%50), dur=2.6+((i*13)%9)/6, rot=((i*41)%50)-25;
+    tl0.fromTo(el,{xPercent:0,left:x0+'vw',top:y0+'vh',rotation:rot-20},
+      {left:(x0+drift)+'vw',top:(y0+drift*1.15)+'vh',rotation:rot+20,duration:dur,ease:'power1.in'},t)
+       .fromTo(el,{opacity:0},{opacity:1,duration:.35,ease:'none'},t); });
+  tl0.to(oline[0],{opacity:1,y:0,duration:.6},1.3)
+     .to('#fall',{opacity:0,duration:.8,ease:'power2.in'},BUILD)
+     .to('#docwrap',{opacity:1,duration:.9,ease:'power1.inOut'},BUILD+.1)   // the clip is still on its first frame: head in her hands
+     .to(oline[0],{opacity:.55,duration:.6},BUILD+.4)
+     .to(oline[1],{opacity:1,y:0,duration:.6},BUILD+.5);                     // "at the end of a long clinical day…"
+  const T=BUILD+1.7;                                   // the clip starts here (rub 0–2 s, exhale + slump 2.3–4 s, then she stays down)
+  tl0.call(docPlay,null,T)
+     .to(oline[1],{opacity:.55,duration:.6},T)
+     .to(oline[2],{opacity:1,y:0,duration:.6},T)       // "you've still got to check your inbox…" as she rubs her eyes and slumps back
+     .to(oline[2],{opacity:.55,duration:.6},T+2.7)
+     .to(oline[3],{opacity:1,y:0,duration:.55},T+2.7)  // the screen is filling
+     .to(oline[3],{opacity:.55,duration:.6},T+4.0)
+     .to(oline[4],{opacity:1,y:0,duration:.55},T+4.0);
+  // incoming results drop onto the screen one after another and pile up there
+  gsap.set(pings,{xPercent:-50,yPercent:-50});
+  pings.forEach((p,i)=>{ const dx=(i%2?1:-1)*(8+((i*23)%18)), t=T+2.2+i*.45;
+    tl0.fromTo(p,{x:dx,y:-110-((i*17)%30),opacity:0,scale:.9},{y:-70+i*15,opacity:1,scale:1,duration:.6,ease:'power2.in'},t); });
+  tl0.to({},{duration:.01},T+DOC_LEN);                 // let the clip finish before the cue appears
+  scenes[idx('#pin0')]={tl:tl0,light:true,after:docEnd,onLeave:docEnd};
 
-  /* ---- opening day: objects rush past, slow down, the inbox appears ---- */
-  const icos=$$('.ico'), lanes=icos.length;
-  const burst=gsap.timeline({repeat:-1,paused:true});
-  icos.forEach((el,i)=>{
-    const top=8+((i*53)%78), dur=1.6+((i*29)%10)/10, delay=(i/lanes)*2.4, dir=i%2?1:-1;
-    gsap.set(el,{top:top+'%',left:0,opacity:0});
-    burst.fromTo(el,{x:dir>0?'-25vw':'115vw',rotation:dir*-40,opacity:0},{x:dir>0?'115vw':'-25vw',rotation:dir*40,opacity:.9,duration:dur,ease:'none',repeat:-1,repeatDelay:.6},delay);
-  });
-  gsap.set('#bigclock',{opacity:0});
-  const spin=gsap.timeline({repeat:-1,paused:true}).to('#bigclock .hand.m',{rotation:360,duration:1.2,ease:'none',svgOrigin:'50 50'},0).to('#bigclock .hand.h',{rotation:30,duration:1.2,ease:'none',svgOrigin:'50 50'},0);
-  const envs0=$$('#envs .env'); gsap.set(envs0,{y:-40});
-  const tl0=gsap.timeline({paused:true, onStart(){ burst.timeScale(2.2).play(); spin.timeScale(2.2).play(); }})
-    .fromTo('#icons',{opacity:1,y:0},{opacity:1,duration:.01},0)
-    .to('#bigclock',{opacity:1,duration:.4},0)
-    .to([burst,spin],{timeScale:.12,duration:2.6,ease:'power2.out'},.3)
-    .to('#bigclock',{opacity:0,scale:.8,duration:.5},2.5)
-    .to('#icons',{opacity:0,y:120,duration:.7,ease:'power2.in'},2.5)
-    .to('#l1',{opacity:1,y:0,duration:.5},2.9)
-    .to('#tray',{opacity:1,duration:.5},2.9)
-    .to(envs0,{opacity:1,y:0,duration:.35,stagger:.12,ease:'back.out(1.6)'},3.2)
-    .to('#l2',{opacity:1,y:0,duration:.5},3.9);
-  scenes[idx('#pin0')]={tl:tl0,light:true,after(){ burst.pause(); spin.pause(); }};
-
-  /* ---- scene 2: the stack becomes a clock, the light goes ---- */
+  /* ---- scene 2 + Q2: the stack becomes a clock, the light goes, the phrase holds, then the question takes its place ---- */
   const envs2=$$('#envs2 .env'), ticks=$$('#ticks .tick');
   const face=$('#face'), FL=face.getTotalLength(); gsap.set(face,{strokeDasharray:FL,strokeDashoffset:FL});
   gsap.set(envs2,{opacity:1}); gsap.set(ticks,{rotation:i=>i*30,svgOrigin:'100 100'}); gsap.set('#hh,#mh',{svgOrigin:'100 100'});
@@ -588,10 +589,17 @@
      .to('#mh',{rotation:720,duration:1.6,ease:'power1.inOut'},1.6)
      .to('#hh',{rotation:60,duration:1.6,ease:'power1.inOut'},1.6)
      .to('#l3',{opacity:1,y:0,duration:.5},2.2);
-  scenes[idx('#pin2')]={tl:tl2,light:false};
+  const HOLD=2.7+Math.max(0,+C.scene2.hold||0);       // one continuous thought: the phrase stays, then becomes the question
+  tl2.to('#l3',{opacity:0,y:-14,duration:.5,ease:'power2.in'},HOLD)
+     .to('#orbit',{opacity:0,scale:.9,duration:.6,ease:'power2.in'},HOLD)
+     .to('#dusk',{opacity:0,duration:.8,ease:'power1.inOut'},HOLD+.3)
+     .set('#q2',{pointerEvents:'auto',visibility:'visible'},HOLD+.3)
+     .to('#q2',{opacity:1,duration:.5},HOLD+.4)
+     .to('#q2 .card',{opacity:1,y:0,scale:1,duration:.7,ease:'power2.out'},HOLD+.45);
+  scenes[idx('#pin2')]={tl:tl2,light:true,skipTo:HOLD,done:()=>answers.q2!=null};   // a forward gesture during the scene jumps to the question; once answered, no replay
 
-  /* ---- scene 3: a result, then the record opens ---- */
-  const pages=$$('#pages .page');
+  /* ---- scene 3: a result, then the record opens; the key sentence lands word by word ---- */
+  const pages=$$('#pages .page'), words=$$('#l5 .w');
   const tl3=gsap.timeline({paused:true})
     .fromTo('#rowcard',{opacity:0,y:40,scale:.9},{opacity:1,y:0,scale:1,duration:.7,ease:'power2.out'})
     .fromTo('#qmark',{scale:0,svgOrigin:'300 46'},{scale:1,duration:.4,ease:'back.out(2)'})
@@ -602,8 +610,9 @@
     .to('#flap',{y:40,skewX:-8,svgOrigin:'100 134',duration:.6,ease:'power2.inOut'},'-=.1')
     .to(pages,{opacity:1,duration:.05,stagger:.12},'-=.2')
     .to(pages,{rotation:i=>(i-2)*17,y:i=>-Math.abs(i-2)*10-30,svgOrigin:'100 126',duration:.9,stagger:.06,ease:'power2.out'},'<')
-    .to('#l4',{opacity:0,y:-10,duration:.3},'<')
-    .to('#l5',{opacity:1,y:0,duration:.5},'-=.3');
+    .to('#l4',{opacity:.55,fontSize:innerWidth>=900?'20px':'17px',fontWeight:500,duration:.5},'<')   // the first sentence steps back
+    .set('#l5',{opacity:1,y:0},'<')
+    .to(words,{opacity:1,y:0,duration:.45,stagger:.11,ease:'power2.out'},'-=.2');
   scenes[idx('#pin3')]={tl:tl3,light:false};
 
   /* ---- scene 4: the noise ---- */
@@ -623,16 +632,25 @@
   const placeChips=()=>chips.forEach((c,i)=>{ const maxX=Math.max(0,innerWidth/2-c.offsetWidth/2-14); const want=(i%2?1:-1)*(70+((i*53)%120));
     gsap.set(c,{xPercent:-50,yPercent:-50,x:gsap.utils.clamp(-maxX,maxX,want),y:40+((i*71)%330),rotation:((i*37)%30)-15,scale:.9}); });
   placeChips(); addEventListener('resize',placeChips);
+  // the MARC logo draws itself here, at "We've developed a tool…" (James: this is where the brand should appear)
+  const logo1=$('#logo1'), chev1=[...logo1.querySelectorAll('path')].slice(0,3), word1=[...logo1.querySelectorAll('path')].slice(3);
+  chev1.forEach(p=>{ const L=p.getTotalLength(); gsap.set(p,{strokeDasharray:L,strokeDashoffset:L,stroke:p.getAttribute('fill'),strokeWidth:1.5,fillOpacity:0}); });
+  gsap.set(word1,{opacity:0,y:6}); gsap.set('#brand',{xPercent:-50,yPercent:-50,opacity:0});
   const tl5=gsap.timeline({paused:true});
   tl5.to('#l7',{opacity:1,y:0,duration:.6})
      .to('#lift',{opacity:1,duration:1.2,ease:'none'},0)
      .set('.scene5 #l7',{color:'#0F1C2E'},.6)
-     .to(chips,{opacity:1,duration:.3,stagger:.05},1.2)
-     .to('#l7',{opacity:0,y:-10,duration:.4},4.6)       // the sentence stays readable for ~4 s
-     .to('#mcard',{opacity:1,duration:.5,ease:'power2.out'},4.8);
+     .set('#brand',{opacity:1},.7)
+     .to(chev1,{strokeDashoffset:0,duration:1.1,stagger:.15,ease:'power2.out'},.7)
+     .to(chev1,{fillOpacity:1,duration:.5,stagger:.1,ease:'power2.out'},1.5)
+     .to(word1,{opacity:1,y:0,duration:.5,stagger:.06,ease:'power2.out'},1.9)
+     .to(chips,{opacity:1,duration:.3,stagger:.05},2.2)
+     .to('#l7',{opacity:0,y:-10,duration:.4},4.9)       // the sentence stays readable for ~4 s
+     .to('#brand',{scale:.34,opacity:0,duration:.6,ease:'power2.in'},4.9)   // …and the logo folds into the card's mark
+     .to('#mcard',{opacity:1,duration:.5,ease:'power2.out'},5.1);
   chips.forEach((c,i)=>{
     tl5.to(c,{x:0,y:0,rotation:0,scale:.6,opacity:0,duration:.55,ease:'power2.in',
-      onComplete:()=>slots[i].classList.add('on'),onReverseComplete:()=>slots[i].classList.remove('on')},5.1+i*.3);
+      onComplete:()=>slots[i].classList.add('on'),onReverseComplete:()=>slots[i].classList.remove('on')},5.4+i*.3);
   });
   tl5.to('#glow',{opacity:1,duration:.8},'-=.1')
      .to('#mcard',{scale:1.03,duration:.6,ease:'power1.inOut'},'<')
@@ -664,59 +682,122 @@
   function cueShow(){ if(!cueWanted()) return; document.body.classList.toggle('light-cue',isLight()); cue.classList.add('show'); }
   function cueReset(){ cue.classList.remove('show'); clearTimeout(cueTimer); cueTimer=setTimeout(cueShow,1500); }
 
-  /* ---- navigation ---- */
+  /* ---- navigation ----
+     Screens follow the finger / the trackpad while you drag, then settle with the momentum you gave them
+     (a flick or a long enough pull commits, a short one springs back). One gesture = one screen. */
   const cards=new Set();
+  const H=()=>innerHeight;
+  const showCard=(s,instant)=>{ const card=s.querySelector('[data-card]'); if(!card||card.dataset.card==='scene'||cards.has(card)) return; cards.add(card);
+    if(instant||reduce) gsap.set(card,{opacity:1,y:0,scale:1}); else gsap.to(card,{opacity:1,y:0,scale:1,duration:.5,ease:'power2.out'}); };
   function onEnter(i,dir){
     const s=slides[i], sc=scenes[i];
     if(sc){
-      if(dir>0&&!(sc.once&&sc.played)){ sc.played=true; playing=sc.tl; sc.tl.timeScale(1).eventCallback('onComplete',()=>{ playing=null; sc.after&&sc.after(); cueReset(); });
-        if(reduce){ sc.tl.progress(1); playing=null; } else sc.tl.restart(); }
+      if(dir>0&&!(sc.once&&sc.played)&&!(sc.done&&sc.done())){ sc.played=true; playing=sc.tl; sc.tl.timeScale(1).eventCallback('onComplete',()=>{ playing=null; sc.after&&sc.after(); cueReset(); });
+        if(reduce){ sc.tl.progress(1); playing=null; sc.after&&sc.after(); } else sc.tl.restart(); }
       else { sc.tl.progress(1); playing=null; }
     }
-    const card=s.querySelector('[data-card]');
-    if(card&&!cards.has(card)){ cards.add(card); gsap.to(card,{opacity:1,y:0,scale:1,duration:reduce?0:.6,ease:'power2.out',delay:.1}); }
     if(s.dataset.step){ mark(+s.dataset.step); pill.classList.add('show'); } else pill.classList.remove('show');
     if(s.querySelector('#result')) buildResult();
     gsap.to('#progress',{scaleX:i/(slides.length-1),duration:.6,ease:'power2.out'});
     cueReset();
   }
-  function onLeave(i){ const sc=scenes[i]; if(sc){ if(playing===sc.tl){ sc.tl.progress(1); playing=null; } sc.after&&sc.after(); sc.onLeave&&sc.onLeave(); } }
+  function onLeave(i){ Object.keys(timers).forEach(disarm); const sc=scenes[i]; if(sc){ if(playing===sc.tl){ sc.tl.progress(1); playing=null; } sc.after&&sc.after(); sc.onLeave&&sc.onLeave(); } }
+
+  // a drag in progress: the outgoing screen and the incoming one move together, `y` px along the way (0 → H)
+  let drag=null;
+  function beginDrag(dir){
+    if(busy||drag) return false;
+    const sc=scenes[cur];                                                                  // a screen that carries its own question: a swipe brings the question forward, not the next screen
+    if(dir>0&&playing&&sc&&sc.skipTo!=null&&playing.time()<sc.skipTo){ playing.seek(sc.skipTo); return false; }
+    const i=cur+dir;
+    if(i<0||i>=slides.length){ drag={dir,y:0,to:null,i:-1}; return true; }      // nothing there: rubber-band only
+    const to=slides[i]; to.classList.add('on'); to.scrollTop=0; gsap.set(to,{y:H()*dir}); showCard(to);
+    drag={dir,y:0,to,i}; cue.classList.remove('show'); clearTimeout(cueTimer);
+    return true;
+  }
+  function applyDrag(){ const d=drag, h=H(); if(!d) return;
+    if(!d.to){ gsap.set(slides[cur],{y:-d.dir*Math.min(d.y,h*.12)}); return; }             // stiff pull at the ends
+    d.y=gsap.utils.clamp(0,h,d.y); gsap.set(slides[cur],{y:-d.dir*d.y}); gsap.set(d.to,{y:d.dir*(h-d.y)}); }
+  function endDrag(v){                                                                     // v: px/ms in the drag direction
+    const d=drag; if(!d) return; drag=null; const h=H(), from=slides[cur];
+    if(!d.to){ busy=true; gsap.to(from,{y:0,duration:.35,ease:'power2.out',onComplete(){ busy=false; }}); return; }
+    const commit = d.y>h*.28 || (v>.35 && d.y>h*.04);
+    busy=true;
+    if(commit){
+      const left=h-d.y, dur=gsap.utils.clamp(.32,.62,left/Math.max(v,.9)/1000);           // keep the speed you flicked at
+      onLeave(cur);
+      gsap.to(d,{y:h,duration:dur,ease:'power2.out',onUpdate(){ gsap.set(from,{y:-d.dir*d.y}); gsap.set(d.to,{y:d.dir*(h-d.y)}); },
+        onComplete(){ from.classList.remove('on'); gsap.set(from,{y:0}); gsap.set(d.to,{y:0}); cur=d.i; busy=false; onEnter(d.i,d.dir); }});
+    } else {
+      gsap.to(d,{y:0,duration:.4,ease:'power2.out',onUpdate(){ gsap.set(from,{y:-d.dir*d.y}); gsap.set(d.to,{y:d.dir*(h-d.y)}); },
+        onComplete(){ d.to.classList.remove('on'); gsap.set(d.to,{y:0}); busy=false; cueReset(); }});
+    }
+  }
+  // programmatic move (keys, auto-advance, buttons): same path, from rest
   function go(i){
-    if(busy||i<0||i>=slides.length||i===cur) return false;
-    busy=true; cue.classList.remove('show'); clearTimeout(cueTimer);
-    const from=slides[cur], to=slides[i], dir=i>cur?1:-1;
-    onLeave(cur);
-    to.classList.add('on'); to.scrollTop=0;
-    gsap.set(to,{yPercent:100*dir});
-    gsap.to(from,{yPercent:-100*dir,duration:D,ease:'power3.inOut'});
-    gsap.to(to,{yPercent:0,duration:D,ease:'power3.inOut',onComplete(){ from.classList.remove('on'); gsap.set(from,{yPercent:0}); cur=i; busy=false; onEnter(i,dir); }});
+    if(busy||drag||i<0||i>=slides.length||i===cur) return false;
+    const dir=i>cur?1:-1;
+    if(i!==cur+dir){ const to=slides[i]; to.classList.add('on'); to.scrollTop=0; showCard(to,true); const from=slides[cur]; onLeave(cur); busy=true;   // a jump (e.g. to the closing)
+      gsap.set(to,{y:H()*dir}); gsap.to(from,{y:-H()*dir,duration:D,ease:'power2.inOut'});
+      gsap.to(to,{y:0,duration:D,ease:'power2.inOut',onComplete(){ from.classList.remove('on'); gsap.set(from,{y:0}); cur=i; busy=false; onEnter(i,dir); }}); return true; }
+    if(!beginDrag(dir)) return false;
+    const d=drag; drag=null; busy=true; const h=H(), from=slides[cur]; onLeave(cur);
+    gsap.to(d,{y:h,duration:D,ease:'power2.inOut',onUpdate(){ gsap.set(from,{y:-d.dir*d.y}); gsap.set(d.to,{y:d.dir*(h-d.y)}); },
+      onComplete(){ from.classList.remove('on'); gsap.set(from,{y:0}); gsap.set(d.to,{y:0}); cur=d.i; busy=false; onEnter(d.i,d.dir); }});
     return true;
   }
   const next=()=>go(cur+1), prev=()=>go(cur-1);
   const goto=sel=>go(idx(sel));
   slides[0].classList.add('on');
 
-  // gestures: a tall card scrolls inside itself first; the swipe only changes screen at its end
   const atBottom=s=>s.scrollTop+s.clientHeight>=s.scrollHeight-2, atTop=s=>s.scrollTop<=0;
-  let wheelLock=0, lastWheel=-1e9;
-  addEventListener('wheel',e=>{
-    const s=slides[cur]; const now=performance.now(); const gap=now-lastWheel; lastWheel=now;
-    if((e.deltaY>0&&!atBottom(s))||(e.deltaY<0&&!atTop(s))) return;   // native inner scroll
-    e.preventDefault();
-    if(busy||now<wheelLock||Math.abs(e.deltaY)<4) return;
-    if(gap<400) return;                                              // tail of the previous gesture (trackpad inertia), not a new one
-    const moved = e.deltaY>0 ? next() : prev();
-    if(moved) wheelLock=now+D*1000+400;
-  },{passive:false});
-  let t0=null;
+  const canLeave=(s,dir)=>dir>0?atBottom(s):atTop(s);        // a tall card scrolls inside itself first
   const onRange=e=>!!(e.target&&e.target.nodeType===1&&e.target.closest('.range'));
-  addEventListener('touchstart',e=>{ if(onRange(e)) { t0=null; return; } const s=slides[cur]; t0={y:e.touches[0].clientY,x:e.touches[0].clientX,top:atTop(s),bottom:atBottom(s),time:performance.now()}; },{passive:true});
-  addEventListener('touchend',e=>{ if(!t0) return; const dy=e.changedTouches[0].clientY-t0.y, dx=e.changedTouches[0].clientX-t0.x; const t=t0; t0=null;
-    if(Math.abs(dy)<50||Math.abs(dx)>Math.abs(dy)) return;
-    if(dy<0&&t.bottom) next(); else if(dy>0&&t.top) prev(); },{passive:true});
-  addEventListener('keydown',e=>{ if(e.target.matches('input,select,textarea')) return;
+
+  /* touch: the screen sticks to the finger */
+  let t0=null;
+  addEventListener('touchstart',e=>{ t0=null; if(onRange(e)||e.touches.length>1) return;
+    t0={y:e.touches[0].clientY,x:e.touches[0].clientX,mode:null,samples:[[performance.now(),0]]}; },{passive:true});
+  addEventListener('touchmove',e=>{ if(!t0) return; const t=e.touches[0], dy=t.clientY-t0.y, dx=t.clientX-t0.x;
+    if(t0.mode===null){                                                    // decide on the first movement, then stick to it
+      if(Math.abs(dx)<5&&Math.abs(dy)<5) return;                             // a tap's wobble is not a drag yet
+      if(Math.abs(dx)>Math.abs(dy)||!e.cancelable){ t0.mode='native'; return; }
+      const dir=dy<0?1:-1; if(!canLeave(slides[cur],dir)){ t0.mode='native'; return; }
+      if(!beginDrag(dir)){ t0.mode='native'; return; } t0.mode='deck'; t0.dir=dir; }
+    if(t0.mode!=='deck') return;
+    e.preventDefault();
+    const y=Math.max(0,-dy*t0.dir); drag.y=y; applyDrag();
+    const now=performance.now(); t0.samples.push([now,y]); while(t0.samples.length>2&&now-t0.samples[0][0]>90) t0.samples.shift(); },{passive:false});
+  const touchDone=e=>{ if(!t0) return; const t=t0; t0=null; if(t.mode!=='deck') return;
+    const s=t.samples, [ta,ya]=s[0], [tb,yb]=s[s.length-1]; const v=tb>ta?(yb-ya)/(tb-ta):0; endDrag(v); };
+  addEventListener('touchend',touchDone,{passive:true}); addEventListener('touchcancel',touchDone,{passive:true});
+
+  /* wheel / trackpad: the screen follows the accumulated scroll; a mouse notch (or a hard flick) is one screen */
+  let w=null;                                                              // current wheel gesture
+  addEventListener('wheel',e=>{
+    const s=slides[cur], now=e.timeStamp, d=e.deltaY*(e.deltaMode===1?16:e.deltaMode===2?H():1), ad=Math.abs(d);
+    if(w&&w.done){                                                         // after a settle: swallow the inertia tail (it must not scroll the screen that just landed)…
+      if(ad<w.last*.85) w.falling=true;                                    // the tail has started to decay…
+      const fresh = now-w.t>250 || (w.falling && ad>w.last*1.5+6 && ad>25); // …so a sharp rise after that is a new push (a gesture's own ramp-up is not)
+      w.t=now; w.last=ad; if(!fresh){ e.preventDefault(); return; } w=null; }
+    if(!drag && ((d>0&&!atBottom(s))||(d<0&&!atTop(s)))){ w=null; return; }   // native inner scroll
+    e.preventDefault();
+    if(busy||ad<2) return;
+    const dir=d>0?1:-1;
+    if(!w){ if(!beginDrag(dir)){ w={dir,t:now,last:ad,n:1,done:true,vel:0}; return; }   // refused (question brought forward, or settling): swallow the rest of this gesture
+      w={dir,t:now,last:ad,n:0,done:false,vel:0}; }
+    if(dir!==w.dir) drag.y=Math.max(0,drag.y-ad); else drag.y+=ad;          // pulling back the other way is allowed
+    if(w.n) w.vel=(dir===w.dir?1:-1)*ad/Math.max(8,now-w.t); w.n++; w.t=now; w.last=ad;   // signed: pulling back must not count as a forward flick
+    clearTimeout(w.timer);
+    const notch = w.n===1 && ad>=80;                                       // a mouse wheel click, or a hard flick: one screen
+    if(drag.to&&(notch||drag.y>H()*.22)){ w.done=true; endDrag(notch?1.2:Math.max(w.vel,.6)); return; }
+    applyDrag();
+    w.timer=setTimeout(()=>{ if(drag){ w.done=true; w.t=performance.now(); endDrag(w.vel); } else w=null; },140);   // the gesture stopped short
+  },{passive:false});
+
+  addEventListener('keydown',e=>{ if(e.target.closest('input,select,textarea')||(e.key===' '&&e.target.closest('button,a,[role=button]'))) return;
     if(['ArrowDown','PageDown',' '].includes(e.key)){ e.preventDefault(); next(); } else if(['ArrowUp','PageUp'].includes(e.key)){ e.preventDefault(); prev(); } });
-  ['wheel','touchstart','keydown'].forEach(ev=>addEventListener(ev,e=>{ if(onRange(e)) return; Object.keys(timers).forEach(disarm); cueReset(); },{passive:true,capture:true}));
+  ['wheel','touchstart','keydown'].forEach(ev=>addEventListener(ev,e=>{ if(ev!=='wheel'&&onRange(e)) return; Object.keys(timers).forEach(disarm); cueReset(); },{passive:true,capture:true}));
 
   /* ---------------- auto-advance after a slider answer ---------------- */
   const advanced={}, timers={}, pending={};
@@ -744,7 +825,7 @@
       rev.classList.add('show'); requestAnimationFrame(()=>{ rev.classList.add('show'); rev.scrollIntoView({block:'nearest',behavior:reduce?'auto':'smooth'}); }); }});
   const r2=$('#r2'); r2.min=C.q2.min; r2.max=C.q2.max; r2.step=C.q2.step; r2.value=C.q2.start;
   slider(r2,{id:'q2',step:2,delay:1400,
-    paint:v=>{ $('#v2').textContent=v; $('#mcm').style.transform=`rotate(${v*6}deg)`; $('#mch').style.transform=`rotate(${v/2}deg)`; }});
+    paint:v=>{ $('#v2').textContent=fmtMin(v); $('#q2 .val small').textContent=v<60?C.q2.unit:''; $('#mcm').style.transform=`rotate(${v*6}deg)`; $('#mch').style.transform=`rotate(${v/2}deg)`; }});
   const r3=$('#r3'); r3.value=C.q3.start;
   const bandsSorted=[...C.q3.bands].sort((a,b)=>a[0]-b[0]);
   const band=v=>{ const hit=bandsSorted.find(b=>v<=b[0]); return (hit||bandsSorted[bandsSorted.length-1]||[0,''])[1]; };
@@ -763,18 +844,18 @@
       n.classList.toggle('show',on.length>0); if(on.length) mark(step); };
     btns.forEach(b=>b.addEventListener('click',()=>{ b.classList.toggle('on'); b.setAttribute('aria-pressed',b.classList.contains('on')); sync(); if(b.dataset.other&&b.classList.contains('on')) inp.focus(); }));
     inp.addEventListener('input',sync);
-    n.addEventListener('click',()=>{ sync(); next(); });
+    n.addEventListener('click',()=>{ sync(); whenFree(next); });
   }
   multi('#p4','#o4','#n4','q4',4);
   multi('#p5','#o5','#n5','q5',5);
 
   /* ---------------- personalised result ---------------- */
-  function count(el,to,suffix){ const o={v:0}; gsap.to(o,{v:to,duration:reduce?0:1.1,ease:'power2.out',onUpdate(){el.textContent=Math.round(o.v)+(suffix||'');}}); }
+  function count(el,to,suffix,fmt){ const o={v:0}; gsap.to(o,{v:to,duration:reduce?0:1.1,ease:'power2.out',onUpdate(){ const n=Math.round(o.v); el.textContent=(fmt?fmt(n):n)+(suffix||''); }}); }
   let built=false;
   function buildResult(){
     if(built) return; built=true;
     const q1=answers.q1??C.q1.start, q2=answers.q2??C.q2.start, q3=answers.q3??C.q3.start;
-    count($('#s-items'),q1,q1>=C.q1.max?'+':''); count($('#s-min'),q2); count($('#s-pct'),q3);
+    count($('#s-items'),q1,q1>=C.q1.max?'+':''); count($('#s-min'),q2,'',fmtMin); $('#s-min').nextElementSibling.textContent=q2<60?C.q2.unit:''; count($('#s-pct'),q3);
     const tag=(sel,arr,other)=>{ const el=$(sel); el.replaceChildren(); const list=(arr||[]).slice(0,4); if(other) list.push(other);
       if(!list.length){ const s=document.createElement('span'); s.style.cssText='background:var(--surface);color:var(--muted)'; s.textContent='—'; el.append(s); return; }
       for(const t of list){ const s=document.createElement('span'); s.textContent=t; el.append(s); } };
@@ -789,7 +870,8 @@
     em.removeAttribute('aria-invalid'); $('#bemailerr').classList.remove('show');
     Object.assign(answers,{beta:true,beta_name:name,beta_email:email,beta_role:role}); finish(); });
   $('#skipbeta').addEventListener('click',()=>{ answers.beta=false; finish(); });
-  function finish(){ submit(); goto('#closing'); }
+  function finish(){ submit(); whenFree(()=>goto('#closing')); }
+  function whenFree(fn){ if(busy||drag) setTimeout(()=>whenFree(fn),60); else fn(); }   // a tap during a spring-back is kept, not dropped
 
   /* =====================================================================
      WHERE THE ANSWERS GO
@@ -823,12 +905,16 @@
 
   // debug hook: ?at=p5:0.6 shows a scene at a given progress, ?at=q3 jumps to a screen
   const at=new URLSearchParams(location.search).get('at');
+  let jumped=false;
   if(at){ const [id,f]=at.split(':'); const el=document.getElementById(id); const i=el?slides.indexOf(el.closest('.slide')):-1;
-    if(i>=0){ slides[cur].classList.remove('on'); cur=i; slides[i].classList.add('on'); const sc=scenes[i];
-      if(sc){ sc.played=true; sc.tl.progress(f!=null?+f:1); } const card=slides[i].querySelector('[data-card]'); if(card){ cards.add(card); gsap.set(card,{opacity:1,y:0,scale:1}); }
+    if(i>=0){ jumped=true; slides[cur].classList.remove('on'); cur=i; slides[i].classList.add('on'); const sc=scenes[i];
+      if(sc){ sc.played=true; sc.tl.progress(f!=null?+f:1); if(i===0) docEnd(); } showCard(slides[i],true);
       if(slides[i].dataset.step){ mark(+slides[i].dataset.step); pill.classList.add('show'); } if(id==='result') buildResult(); gsap.set('#progress',{scaleX:i/(slides.length-1)}); } }
-  window.__deck={go,next,prev,get cur(){return cur;},scenes,slides};
-  cueReset();
+  window.__deck={go,next,prev,get cur(){return cur;},scenes,slides,get busy(){return busy||!!drag;}};
+  // the opening plays as soon as the page is up (the clip is muted, so it may start without a tap)
+  if(!jumped){ const start=()=>onEnter(0,1); if(doc.readyState>=3||reduce) start(); else { let done=false; const once=()=>{ if(done) return; done=true; start(); };
+    doc.addEventListener('canplaythrough',once,{once:true}); doc.addEventListener('error',once,{once:true}); setTimeout(once,1800); } }
+  else cueReset();
 })();
 </script>
 </body>

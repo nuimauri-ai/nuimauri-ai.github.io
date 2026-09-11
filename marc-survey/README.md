@@ -12,8 +12,11 @@ Two files matter:
 Open `content.js`. Each block is one screen. Change the text between the quotes, keep the quotes and commas. Examples:
 
 - Reword a question: edit `question:` in `q1` … `q5`.
+- The opening phrases (one per beat of the animation): `opening.lines`. Keep five, in order — they build up on screen with the items, then the tired-doctor clip.
+- The small "incoming result" notifications that drop onto the monitor at the end of the opening: `opening.incoming`.
+- How long "Thinking about the last clinical day…" stays before it fades into its question: `scene2.hold` (seconds).
 - Add / remove / reorder a tick-box option: edit the list under `options:` in `q4` or `q5`. One line per option.
-- Change the slider range: `min`, `max`, `step`, `start` in `q1` / `q2`.
+- Change the slider range: `min`, `max`, `step`, `start` in `q1` / `q2` (currently 0–100 items and 0–180 minutes).
 - Change the plain-English bands of Q3: `bands:` — each pair is `[upper bound %, label]`.
 - Change the comparison figures ("Other doctors reported around …"): `benchmarks:` at the top. These are placeholders until you have enough real responses.
 - Beta form labels and roles list: `beta:`.
@@ -36,7 +39,11 @@ Each response is one JSON object with these fields:
 
 ## Testing a specific screen
 
-Add `?at=` to the URL to jump straight to a screen, e.g. `index.html?at=q3` (a question) or `index.html?at=pin5:0.5` (the MARC reveal scene frozen at 50 % of its animation). Scene ids: `pin0` opening, `pin2` clock, `pin3` record, `pin4` noise, `pin5` MARC reveal. Screens: `q1`–`q5`, `result`, `beta`, `closing`.
+Add `?at=` to the URL to jump straight to a screen, e.g. `index.html?at=q3` (a question) or `index.html?at=pin5:0.5` (the MARC reveal scene frozen at 50 % of its animation). Scene ids: `pin0` opening (items + tired-doctor clip), `pin2` clock (the Q2 question fades in on this same screen), `pin3` record, `pin4` noise, `pin5` MARC reveal (the logo draws itself here). Screens: `q1`–`q5`, `result`, `beta`, `closing`.
+
+## Assets
+
+`assets/` holds the 13 medical items (transparent PNGs cut from the image James supplied) and `tired-doctor.mp4` (his clip, re-encoded without audio for autoplay on phones). Replacing the clip: keep it 720×1280, and re-check the notification anchor (`docPoint(535,600)` in `index.html`) if the monitor moves.
 
 ## How it moves
 

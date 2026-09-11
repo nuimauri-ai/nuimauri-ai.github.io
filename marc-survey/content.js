@@ -21,34 +21,43 @@ window.CONTENT = {
     cueMouse: "Scroll",
     you: "You",
     others: "Others",
-    counter: " / 5",
+    counter: " of 5",
     sent: "Answers sent."
   },
 
   opening: {
-    kicker: "A two-minute survey for clinicians",
-    scrollHint: "Scroll to begin",
-    line1: "As a doctor, at the end of a long clinical day,",
-    line2: "you’ve still got to check your inbox, results and correspondence."
+    /* One phrase per beat, in order. They build up on screen with the animation:
+       1 while the medical items pile up, 2 as the tired doctor appears, 3 as she rubs her eyes
+       and slumps back, 4 and 5 as the screen fills with incoming results. */
+    lines: [
+      "As a doctor…",
+      "at the end of a long clinical day…",
+      "you’ve still got to check your inbox…",
+      "check the results…",
+      "check the correspondence."
+    ],
+    /* the little notifications that pop up around the monitor at the end: [text, colour] with colour "" (red), "amber" or "blue" */
+    incoming: [["New result",""],["Pathology","amber"],["Letter received","blue"],["Radiology",""],["Discharge summary","blue"],["Result","amber"],["Specialist letter","blue"],["Abnormal result",""]]
   },
 
   q1: {
     chapter: "Workload",
     question: "If you had to guess, how many results, letters or other inbox items would you typically have to sort through?",
     help: "Per clinical day. Drag the slider.",
-    min: 0, max: 200, step: 5, start: 40,
+    min: 0, max: 100, step: 5, start: 40,
     unit: "items",
     reveal: "Other doctors reported around {items}."
   },
 
   scene2: {
-    line1: "Thinking about the last clinical day you worked…"
+    line1: "Thinking about the last clinical day you worked…",
+    hold: 2.2   // seconds the phrase stays on screen before it fades into the question
   },
   q2: {
     chapter: "Time",
     question: "How long did it take you to review your results, inbox and correspondence?",
-    help: "In minutes.",
-    min: 0, max: 240, step: 5, start: 30,
+    help: "Drag the slider.",
+    min: 0, max: 180, step: 5, start: 30,
     unit: "min"
   },
 
@@ -79,7 +88,7 @@ window.CONTENT = {
   q4: {
     chapter: "Current frustrations",
     question: "What are the hardest parts of dealing with results, inbox and correspondence?",
-    help: "Tick all that apply.",
+    help: "Select the ones most relevant to you.",
     options: [
       "The amount of time it takes",
       "Having to open the patient record and reconstruct the clinical story",
@@ -119,7 +128,7 @@ window.CONTENT = {
   q5: {
     chapter: "Adoption",
     question: "What would matter most to you before using something like this in clinical practice?",
-    help: "Tick all that apply.",
+    help: "Select the ones most relevant to you.",
     options: [
       "Accuracy",
       "Seamless integration with existing clinical software",
