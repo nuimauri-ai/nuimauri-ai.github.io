@@ -23,6 +23,8 @@ Open `content.js`. Each block is one screen. Change the text between the quotes,
 
 Save, reload the page. Nothing else needs to change.
 
+One detail after each edit: in `index.html`, bump the number in `<script src="content.js?v=2">` (v=3, v=4…). Browsers cache `content.js` for a few minutes, and a visitor who gets the new page with an old copy of the text file would see a blank screen.
+
 ## Where the answers go
 
 At the bottom of `index.html` there is a line:
