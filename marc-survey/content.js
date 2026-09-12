@@ -9,9 +9,10 @@ window.CONTENT = {
      PLACEHOLDERS until the survey has enough live responses: replace
      them with the real medians, or wire them to the response store. */
   benchmarks: {
-    items:   68,   // "Other doctors reported around ___ inbox items"
+    items:   44,   // "Other doctors reported around ___ inbox items"
     minutes: 45,   // typical minutes spent on results / inbox
-    percent: 40    // typical % needing the record reopened (shown in result.compare)
+    percent: 40,   // typical % needing the record reopened
+    minResponses: 5   // once the backend holds at least this many responses, the live averages replace the three figures above
   },
 
   /* Small interface labels */
@@ -58,7 +59,8 @@ window.CONTENT = {
     question: "How long did it take you to review your results, inbox and correspondence?",
     help: "Drag the slider.",
     min: 0, max: 180, step: 5, start: 30,
-    unit: "min"
+    unit: "min",
+    reveal: "Other doctors reported around {value}."
   },
 
   scene3: {
@@ -70,6 +72,7 @@ window.CONTENT = {
     question: "Roughly what percentage required you to open the patient record and reconstruct the clinical story before you could decide what the result meant for that patient?",
     help: "Drag to answer in plain words. We record the percentage.",
     start: 30,
+    reveal: "Other doctors reported around {value}.",
     /* wording shown while dragging: [upper bound (inclusive), label]. Keep ascending and end at 100. */
     bands: [
       [10, "Almost none"],
@@ -160,6 +163,7 @@ window.CONTENT = {
   },
 
   beta: {
+    thanks: "Thank you!",
     kicker: "Beta",
     title: "We’re planning to launch the MARC beta soon.",
     text: "Would you like to try it in your own clinical workflow and see how much time it could save you?",

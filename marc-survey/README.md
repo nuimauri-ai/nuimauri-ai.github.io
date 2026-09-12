@@ -25,7 +25,18 @@ Save, reload the page. Nothing else needs to change.
 
 One detail after each edit: in `index.html`, bump the number in `<script src="content.js?v=2">` (v=3, v=4…). Browsers cache `content.js` for a few minutes, and a visitor who gets the new page with an old copy of the text file would see a blank screen.
 
-## Where the answers go
+## Going live with Supabase (recommended)
+
+1. Create a free project at supabase.com (any name, any region — Sydney is closest).
+2. In the project: **SQL editor → New query**, paste the whole of `supabase/schema.sql`, Run. This creates the `responses` table, an insert-only permission for the public page, and the `response_stats` view (count + averages) that feeds the "Other doctors reported around…" figures.
+3. **Settings → API**: copy the *Project URL* and the *anon public* key.
+4. In `index.html`, near the bottom, paste them into `SUPABASE_URL` and `SUPABASE_ANON_KEY`. Save, publish.
+
+That is all. From then on every completed survey becomes one row in `responses` (Table editor → responses), and as soon as `benchmarks.minResponses` responses (5 by default, in `content.js`) are in, the comparison figures on Q1, Q2, Q3 and the summary card switch from the placeholders to the live averages, refreshed every time the page loads.
+
+The anon key is safe to ship in the page: with the policies in `schema.sql` it can only add rows, never read, edit or delete them. The `service_role` key must never go in the page.
+
+## Where the answers go (alternative: Google Sheet)
 
 At the bottom of `index.html` there is a line:
 
@@ -33,7 +44,7 @@ At the bottom of `index.html` there is a line:
 const ENDPOINT = '';
 ```
 
-Paste the URL of your collector between the quotes (a Supabase Edge Function or a Google Apps Script web-app URL). While it is empty, nothing is sent. One response is sent once, when the participant joins the beta or taps "Not now" (and as a safety net if they close the tab after Q5).
+If you prefer a Google Sheet instead of Supabase, paste the Apps Script web-app URL between the quotes (see `../scrolly-survey/apps-script/`). While it is empty, nothing is sent. One response is sent once, when the participant joins the beta or taps "Not now" (and as a safety net if they close the tab after Q5).
 
 Each response is one JSON object with these fields:
 

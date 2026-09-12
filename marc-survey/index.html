@@ -9,6 +9,11 @@
 <title>MARC — After the last patient</title>
 <meta property="og:title" content="MARC — After the last patient">
 <meta property="og:description" content="After the last patient, there is still the inbox. Tell us what it costs you.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://nuimauri-ai.github.io/marc-survey/">
+<meta property="og:image" content="https://nuimauri-ai.github.io/marc-survey/assets/og.jpg">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -230,6 +235,7 @@
   .field{margin-top:10px}
   .field label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin:0 0 6px;letter-spacing:.04em;text-transform:uppercase}
   .privacy{font-size:12px;color:var(--muted);margin-top:10px;text-align:center}
+  .thanks{font-size:clamp(30px,8vw,44px);font-weight:800;letter-spacing:-.03em;color:var(--heading);margin:0 0 14px;line-height:1}
 
   /* closing */
   .closing{min-height:100%;display:flex;flex-direction:column;text-align:center;padding:24px;background:var(--surface)}
@@ -315,6 +321,9 @@
     <input class="range" type="range" id="r2" aria-label="Minutes">
     <div class="scale"><span id="r2min"></span><span id="r2max"></span></div>
     <div class="lock"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg><span></span></div>
+    <div class="reveal" id="rev2"><p></p>
+      <div class="cmp"><div class="you"><span></span><b></b><span></span></div><div class="oth"><span></span><b></b><span></span></div></div>
+    </div>
   </div>
 </div></section>
 
@@ -355,6 +364,9 @@
     <input class="range" type="range" id="r3" min="0" max="100" step="1" aria-label="Percentage">
     <div class="scale"><span>0 %</span><span>100 %</span></div>
     <div class="lock"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg><span></span></div>
+    <div class="reveal" id="rev3"><p></p>
+      <div class="cmp"><div class="you"><span></span><b></b><span></span></div><div class="oth"><span></span><b></b><span></span></div></div>
+    </div>
   </div>
 </div></section>
 
@@ -427,6 +439,7 @@
 <!-- ============ BETA ============ -->
 <section class="slide" data-cue="never"><div class="q" id="beta">
   <div class="card" data-card>
+    <p class="thanks"></p>
     <p class="k"></p><h2></h2><p class="help" style="font-size:16px;color:var(--body)"></p>
     <form id="betaform" novalidate>
       <div class="field"><label for="bname"></label><input id="bname" type="text" autocomplete="name"></div>
@@ -450,7 +463,7 @@
 
 </div><!-- /deck -->
 
-<script src="content.js?v=3"></script>
+<script src="content.js?v=4"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script>
 (function(){
@@ -482,12 +495,12 @@
   $('#lab-items').textContent=C.result.labels.items; $('#lab-min').textContent=C.result.labels.minutes; $('#lab-pct').textContent=C.result.labels.percent;
   $('#lab-con').textContent=C.result.labels.concerns; $('#lab-mat').textContent=C.result.labels.matters;
   $('#s-items').nextElementSibling.textContent=C.q1.unit; $('#s-min').nextElementSibling.textContent=C.q2.unit;
-  $('#beta .k').textContent=C.beta.kicker; $('#beta h2').textContent=C.beta.title; $('#beta .help').textContent=C.beta.text;
+  $('#beta .thanks').textContent=C.beta.thanks||''; $('#beta .k').textContent=C.beta.kicker; $('#beta h2').textContent=C.beta.title; $('#beta .help').textContent=C.beta.text;
   $('label[for=bname]').textContent=C.beta.name; $('label[for=bemail]').textContent=C.beta.email; $('label[for=brole]').textContent=C.beta.role;
   $('#brole').innerHTML='<option value="" disabled selected>—</option>'+C.beta.roles.map(r=>`<option>${esc(r)}</option>`).join('');
   $('#join').textContent=C.beta.button; $('#skipbeta').textContent=C.beta.skip; $('#beta .privacy').textContent=C.beta.privacy;
   $('#closing h2').textContent=C.closing.thanks; $('#closing > div > p').textContent=C.closing.sub; $('#closing a').textContent=C.closing.link; $('#closing a').href=C.closing.url;
-  $$('.lock span').forEach(s=>s.textContent=C.ui.lock); $('#q1 .you span').textContent=C.ui.you; $('#q1 .oth span').textContent=C.ui.others; $('#bemailerr').textContent=C.beta.emailError;
+  $$('.lock span').forEach(s=>s.textContent=C.ui.lock); $$('.cmp .you > span:first-child').forEach(s=>s.textContent=C.ui.you); $$('.cmp .oth > span:first-child').forEach(s=>s.textContent=C.ui.others); $('#bemailerr').textContent=C.beta.emailError;
 
   // multi-select pills
   const check='<span class="box"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg></span>';
@@ -577,7 +590,9 @@
   pings.forEach((p,i)=>{ const dx=(i%2?1:-1)*(8+((i*23)%18)), t=T+2.2+i*.45;
     tl0.fromTo(p,{x:dx,y:-110-((i*17)%30),opacity:0,scale:.9},{y:-70+i*15,opacity:1,scale:1,duration:.6,ease:'power2.in'},t); });
   tl0.to({},{duration:.01},T+DOC_LEN);                 // let the clip finish before the cue appears
-  scenes[idx('#pin0')]={tl:tl0,light:true,after:docEnd,onLeave:docEnd};
+  // beats a fast scroller is stepped through, one per gesture; seeking past T keeps the clip in step with the words
+  const syncDoc=t=>{ if(t>=T){ const at=(t-T)*DOC_RATE; try{ doc.currentTime=Math.min(at,(doc.duration||4.04)-.05); }catch(e){} docPlay(); } };
+  scenes[idx('#pin0')]={tl:tl0,light:true,after:docEnd,onLeave:docEnd,stages:[1.3,BUILD+.5,T,T+2.7,T+4.0],onSeek:syncDoc};
 
   /* ---- scene 2 + Q2: the stack becomes a clock, the light goes, the phrase holds, then the question takes its place ---- */
   const envs2=$$('#envs2 .env'), ticks=$$('#ticks .tick');
@@ -597,10 +612,10 @@
   tl2.to('#l3',{opacity:0,y:-14,duration:.5,ease:'power2.in'},HOLD)
      .to('#orbit',{opacity:0,scale:.9,duration:.6,ease:'power2.in'},HOLD)
      .to('#dusk',{opacity:0,duration:.8,ease:'power1.inOut'},HOLD+.3)
-     .set('#q2',{pointerEvents:'auto',visibility:'visible'},HOLD+.3)
+     .set('#q2',{pointerEvents:'auto',visibility:'inherit'},HOLD+.3)   // inherit, not visible: it must disappear with its screen
      .to('#q2',{opacity:1,duration:.5},HOLD+.4)
      .to('#q2 .card',{opacity:1,y:0,scale:1,duration:.7,ease:'power2.out'},HOLD+.45);
-  scenes[idx('#pin2')]={tl:tl2,light:true,skipTo:HOLD,done:()=>answers.q2!=null};   // a forward gesture during the scene jumps to the question; once answered, no replay
+  scenes[idx('#pin2')]={tl:tl2,light:true,stages:[2.2,HOLD],done:()=>answers.q2!=null};   // beats: the phrase, then the question; once answered, no replay
 
   /* ---- scene 3: a result, then the record opens; the key sentence lands word by word ---- */
   const pages=$$('#pages .page'), words=$$('#l5 .w');
@@ -617,7 +632,7 @@
     .to('#l4',{opacity:.55,fontSize:innerWidth>=900?'20px':'17px',fontWeight:500,duration:.5},'<')   // the first sentence steps back
     .set('#l5',{opacity:1,y:0},'<')
     .to(words,{opacity:1,y:0,duration:.45,stagger:.11,ease:'power2.out'},'-=.2');
-  scenes[idx('#pin3')]={tl:tl3,light:false};
+  scenes[idx('#pin3')]={tl:tl3,light:false,stages:[1.0,2.8]};        // the result line, then the folder + key sentence
 
   /* ---- scene 4: the noise ---- */
   const papers=$$('.paper'), bdg=$$('.badge');
@@ -659,7 +674,7 @@
   tl5.to('#glow',{opacity:1,duration:1.2,ease:'power1.inOut'},'-=.2')
      .to('#mcard',{scale:1.02,duration:.9,ease:'power2.inOut'},'<')
      .to('#l8',{opacity:1,y:0,duration:.7,ease:'power2.out'},'<+=.2');
-  scenes[idx('#pin5')]={tl:tl5,light:true};                     // no auto-advance here: the reader takes their time, then swipes
+  scenes[idx('#pin5')]={tl:tl5,light:true,stages:[2.1,5.9,7.0]};   // logo → sentence → sources gather → card; a scroll steps through, no auto-advance
 
   /* ---- closing: the logo comes back together ---- */
   const logo2=$('#logo2 svg'), chev2=[...logo2.querySelectorAll('path')].slice(0,3), word2=[...logo2.querySelectorAll('path')].slice(3);
@@ -712,8 +727,11 @@
   let drag=null;
   function beginDrag(dir){
     if(busy||drag) return false;
-    const sc=scenes[cur];                                                                  // a screen that carries its own question: a swipe brings the question forward, not the next screen
-    if(dir>0&&playing&&sc&&sc.skipTo!=null&&playing.time()<sc.skipTo){ playing.seek(sc.skipTo); return false; }
+    const sc=scenes[cur];
+    if(dir>0&&playing&&sc){                                                                // a scene still playing: the gesture drives it to its next beat, never past unread wording
+      const t=playing.time(), stops=(sc.stages||[]).filter(x=>x>t+.05);
+      if(stops.length){ playing.seek(stops[0]); sc.onSeek&&sc.onSeek(stops[0]); } else { playing.progress(1); }   // progress(1) fires onComplete → playing=null, cue
+      return false; }
     const i=cur+dir;
     if(i<0||i>=slides.length){ drag={dir,y:0,to:null,i:-1}; return true; }      // nothing there: rubber-band only
     const to=slides[i]; to.classList.add('on'); to.scrollTop=0; gsap.set(to,{y:H()*dir}); showCard(to);
@@ -813,6 +831,12 @@
   }
   function disarm(id){ clearTimeout(timers[id]); delete pending[id]; }
 
+  // "Other doctors so far": the live figure from the backend once enough responses are in, the placeholder until then
+  const bench=k=>(stats&&stats.n>=(C.benchmarks.minResponses||1)&&stats[k]!=null)?Math.round(stats[k]):C.benchmarks[k];
+  function compare(sel,v,o,text,show){ const rev=$(sel); rev.querySelector('p').textContent=fmt(text,{value:show(o),items:show(o)});
+    const mx=Math.max(v,o,1); rev.querySelector('.you b').style.setProperty('--w',(v/mx).toFixed(2)); rev.querySelector('.you span:last-child').textContent=show(v);
+    rev.querySelector('.oth b').style.setProperty('--w',(o/mx).toFixed(2)); rev.querySelector('.oth span:last-child').textContent=show(o);
+    rev.classList.add('show'); requestAnimationFrame(()=>rev.scrollIntoView({block:'nearest',behavior:reduce?'auto':'smooth'})); }
   function slider(r,opts){
     const card=r.closest('.card');
     const paint=()=>{ const v=+r.value; r.style.setProperty('--pct',((v-r.min)/(r.max-r.min)*100)+'%'); opts.paint(v); };
@@ -824,20 +848,18 @@
   const cells=$$('#stack1 i');
   slider(r1,{id:'q1',step:1,delay:2600,
     paint:v=>{ $('#v1').textContent=v+(v>=C.q1.max?'+':''); const n=Math.round(v/C.q1.max*40); cells.forEach((c,i)=>c.classList.toggle('on',i<n)); },
-    commit:v=>{ const o=C.benchmarks.items; const rev=$('#rev1'); rev.querySelector('p').textContent=fmt(C.q1.reveal,{items:o});
-      const mx=Math.max(v,o,1); rev.querySelector('.you b').style.setProperty('--w',(v/mx).toFixed(2)); rev.querySelector('.you span:last-child').textContent=v;
-      rev.querySelector('.oth b').style.setProperty('--w',(o/mx).toFixed(2)); rev.querySelector('.oth span:last-child').textContent=o;
-      rev.classList.add('show'); requestAnimationFrame(()=>{ rev.classList.add('show'); rev.scrollIntoView({block:'nearest',behavior:reduce?'auto':'smooth'}); }); }});
+    commit:v=>compare('#rev1',v,bench('items'),C.q1.reveal,x=>x+' '+C.q1.unit)});
   const r2=$('#r2'); r2.min=C.q2.min; r2.max=C.q2.max; r2.step=C.q2.step; r2.value=C.q2.start;
-  slider(r2,{id:'q2',step:2,delay:1400,
-    paint:v=>{ $('#v2').textContent=fmtMin(v); $('#q2 .val small').textContent=v<60?C.q2.unit:''; $('#mcm').style.transform=`rotate(${v*6}deg)`; $('#mch').style.transform=`rotate(${v/2}deg)`; }});
+  slider(r2,{id:'q2',step:2,delay:2600,
+    paint:v=>{ $('#v2').textContent=fmtMin(v); $('#q2 .val small').textContent=v<60?C.q2.unit:''; $('#mcm').style.transform=`rotate(${v*6}deg)`; $('#mch').style.transform=`rotate(${v/2}deg)`; },
+    commit:v=>compare('#rev2',v,bench('minutes'),C.q2.reveal,x=>x<60?x+' '+C.q2.unit:fmtMin(x))});
   const r3=$('#r3'); r3.value=C.q3.start;
   const bandsSorted=[...C.q3.bands].sort((a,b)=>a[0]-b[0]);
   const band=v=>{ const hit=bandsSorted.find(b=>v<=b[0]); return (hit||bandsSorted[bandsSorted.length-1]||[0,''])[1]; };
   const rows=$$('#rows3 div');
-  slider(r3,{id:'q3',step:3,delay:1400,
+  slider(r3,{id:'q3',step:3,delay:2600,
     paint:v=>{ $('#v3').textContent=v; $('#v3w').textContent=band(v); const n=Math.round(v/10); rows.forEach((r,i)=>r.classList.toggle('on',i<n)); },
-    commit:v=>{ answers.q3_label=band(v); }});
+    commit:v=>{ answers.q3_label=band(v); compare('#rev3',v,bench('percent'),C.q3.reveal,x=>x+' %'); }});
 
   /* ---------------- multi-select with "Other" ---------------- */
   function multi(id,other,nextBtn,key,step){
@@ -865,7 +887,7 @@
       if(!list.length){ const s=document.createElement('span'); s.style.cssText='background:var(--surface);color:var(--muted)'; s.textContent='—'; el.append(s); return; }
       for(const t of list){ const s=document.createElement('span'); s.textContent=t; el.append(s); } };
     tag('#t-con',answers.q4,answers.q4_other); tag('#t-mat',answers.q5,answers.q5_other);
-    $('#compare').textContent=fmt(C.result.compare,C.benchmarks);
+    $('#compare').textContent=fmt(C.result.compare,{items:bench('items'),minutes:fmtMin(bench('minutes')),percent:bench('percent')});
   }
 
   /* ---------------- beta form ---------------- */
@@ -884,6 +906,17 @@
      or a Supabase Edge Function). Leave it empty and nothing is sent.
      ===================================================================== */
   const ENDPOINT = '';
+  /* Supabase (recommended): project URL + anon key from Settings → API. With both set, each response is inserted
+     into the `responses` table and the "other doctors so far" figures are read from the `response_stats` view
+     (see supabase/schema.sql). Leave them empty and the static placeholders in content.js are used. */
+  const SUPABASE_URL = '';
+  const SUPABASE_ANON_KEY = '';
+  const sbHeaders=()=>({apikey:SUPABASE_ANON_KEY,Authorization:'Bearer '+SUPABASE_ANON_KEY,'Content-Type':'application/json'});
+  let stats=null;                                                     // {n, items, minutes, percent} from the view, when available
+  if(SUPABASE_URL&&SUPABASE_ANON_KEY){
+    fetch(SUPABASE_URL+'/rest/v1/response_stats?select=*',{headers:sbHeaders()}).then(r=>r.ok?r.json():null)
+      .then(rows=>{ const r=rows&&rows[0]; if(r&&r.n>0) stats={n:+r.n,items:+r.items,minutes:+r.minutes,percent:+r.percent}; }).catch(()=>{});
+  }
 
   const startedAt=Date.now();
   const sessionId='r-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,8);
@@ -899,8 +932,12 @@
   }
   let sent=false;
   function submit(){
-    if(sent||!ENDPOINT) return; sent=true;
+    if(sent||!(ENDPOINT||(SUPABASE_URL&&SUPABASE_ANON_KEY))) return; sent=true;
     const body=JSON.stringify(payload()), status=$('#sendstate');
+    if(SUPABASE_URL&&SUPABASE_ANON_KEY){                               // keepalive so it survives the tab closing
+      fetch(SUPABASE_URL+'/rest/v1/responses',{method:'POST',keepalive:true,headers:{...sbHeaders(),Prefer:'return=minimal'},body})
+        .then(r=>{ if(r.ok){ if(status) status.textContent=C.ui.sent; } else sent=false; }).catch(()=>{ sent=false; });
+      return; }
     try{ const blob=new Blob([body],{type:'text/plain;charset=utf-8'}); if(navigator.sendBeacon&&navigator.sendBeacon(ENDPOINT,blob)){ if(status) status.textContent=C.ui.sent; return; } }catch(e){}
     fetch(ENDPOINT,{method:'POST',mode:'no-cors',keepalive:true,headers:{'Content-Type':'text/plain;charset=utf-8'},body})
       .then(()=>{ if(status) status.textContent=C.ui.sent; }).catch(()=>{ sent=false; });
