@@ -1,1 +1,5 @@
 .DS_Store
+marc-survey-deploy/
+marc-pitch/
+marc-survey/message-*.txt
+marc-survey/GO-LIVE.md

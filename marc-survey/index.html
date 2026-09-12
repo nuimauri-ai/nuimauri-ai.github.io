@@ -81,6 +81,7 @@
   .opening .line{font-size:clamp(21px,5.4vw,36px);margin:0 0 6px;transform:translateY(12px)}
   @media (max-height:640px){ .opening .line{font-size:clamp(18px,4.6vw,30px);margin-bottom:4px} }
   @media (orientation:landscape) and (max-height:500px){          /* landscape phone: the clip is a narrow centred column, the copy goes beside it */
+    .docwrap video{height:100%}                                    /* the copy sits beside the clip here, so no band is reserved under it */
     .opening .copy{right:auto;margin:0;max-width:calc(50vw - 125px);padding-bottom:calc(env(safe-area-inset-bottom) + 18px)}
     .opening .line{font-size:clamp(15px,2.6vw,20px);margin-bottom:3px}
   }
@@ -555,11 +556,13 @@
   const docEnd=()=>{ doc.pause(); if(doc.duration) doc.currentTime=Math.max(0,doc.duration-.05); };
   if(reduce) doc.addEventListener('loadedmetadata',docEnd,{once:true});   // no motion: show the end of the clip
   // where the monitor sits in the 720x1280 clip, mapped through object-fit onto the screen
-  const docPoint=(vx,vy)=>{ const W=doc.clientWidth,Hh=doc.clientHeight, vw=720,vh=1280, cover=getComputedStyle(doc).objectFit==='cover';
-    const s=cover?Math.max(W/vw,Hh/vh):Math.min(W/vw,Hh/vh); const dw=vw*s,dh=vh*s; return {x:(W-dw)/2+vx*s, y:(Hh-dh)*.46+vy*s}; };
+  const docScale=()=>{ const W=doc.clientWidth,Hh=doc.clientHeight, cover=getComputedStyle(doc).objectFit==='cover';
+    return cover?Math.max(W/720,Hh/1280):Math.min(W/720,Hh/1280); };
+  const docPoint=(vx,vy)=>{ const W=doc.clientWidth,Hh=doc.clientHeight, s=docScale(); const dw=720*s,dh=1280*s; return {x:(W-dw)/2+vx*s, y:(Hh-dh)*.46+vy*s}; };
   // reserve the bottom band for the five lines so the clip can never sit behind them
   const fitCopy=()=>$('#pin0').style.setProperty('--copy-h',$('#ocopy').offsetHeight+'px');
-  const placeIncoming=()=>{ const p=docPoint(535,600); gsap.set('#incoming',{x:p.x,y:p.y}); };   // the middle of the monitor
+  // the middle of the monitor; the pile shrinks with the clip so it never outgrows a small landscape column (0.54 = a portrait phone)
+  const placeIncoming=()=>{ const p=docPoint(535,600); gsap.set('#incoming',{x:p.x,y:p.y,scale:gsap.utils.clamp(.5,1.15,docScale()/.54),transformOrigin:'0 0'}); };
   const placeItems=()=>items.forEach((el,i)=>{ const w=el.firstElementChild.width; const sc=gsap.utils.clamp(.48,.8,innerWidth/720*.9)*(.85+((i*7)%4)*.08);
     gsap.set(el,{scale:sc,transformOrigin:'50% 50%',width:w}); });
   const layoutOpening=()=>{ fitCopy(); placeItems(); placeIncoming(); };
