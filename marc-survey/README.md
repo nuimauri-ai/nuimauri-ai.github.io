@@ -15,7 +15,7 @@ Open `content.js`. Each block is one screen. Change the text between the quotes,
 - The opening phrases (one per beat of the animation): `opening.lines`. Keep five, in order — they build up on screen with the items, then the tired-doctor clip.
 - The small "incoming result" notifications that drop onto the monitor at the end of the opening: `opening.incoming`.
 - How long "Thinking about the last clinical day…" stays before it fades into its question: `scene2.hold` (seconds).
-- Add / remove / reorder a tick-box option: edit the list under `options:` in `q4` or `q5`. One line per option.
+- Add / remove / reorder a tick-box option: edit the list under `options:` in `q4` or `q5`. One line per option, written as `{ title: "Bold title", sub: "lighter explanation underneath" }` (leave `sub: ""` for a title alone). Only the title is stored with the response. There is no limit on how many a participant can tick.
 - Change the slider range: `min`, `max`, `step`, `start` in `q1` / `q2` (currently 0–100 items and 0–180 minutes).
 - Change the plain-English bands of Q3: `bands:` — each pair is `[upper bound %, label]`.
 - Change the comparison figures ("Other doctors reported around …"): `benchmarks:` at the top. These are placeholders until you have enough real responses.
@@ -48,7 +48,7 @@ If you prefer a Google Sheet instead of Supabase, paste the Apps Script web-app 
 
 Each response is one JSON object with these fields:
 
-`q1_items, q2_minutes, q3_percent, q3_label, q4_frustrations, q4_other, q5_matters, q5_other, beta, beta_name, beta_email, beta_role, session_id, submitted_at, seconds_taken, device, viewport, referrer, user_agent`
+`q1_items, q2_minutes, q3_percent, q3_label, q4_frustrations (list), q4_other, q5_matters (list), q5_other, beta, beta_name, beta_email, beta_role, session_id, submitted_at, seconds_taken, device, viewport, referrer, user_agent`
 
 ## Testing a specific screen
 

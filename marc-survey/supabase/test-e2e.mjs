@@ -18,7 +18,7 @@ let failed = false;
 const sessionId = 'e2e-' + Date.now().toString(36);
 const row = {
   q1_items: 44, q2_minutes: 45, q3_percent: 40, q3_label: 'About a third',
-  q4_frustrations: 'e2e test', q4_other: '', q5_matters: 'e2e test', q5_other: '',
+  q4_frustrations: ['e2e test', 'Time & workload'], q4_other: '', q5_matters: ['e2e test'], q5_other: '',   // text[] columns
   complete: true, beta: false, beta_name: '', beta_email: '', beta_role: '',
   session_id: sessionId, submitted_at: new Date().toISOString(), seconds_taken: 1,
   device: 'test', viewport: '0x0', referrer: 'e2e-test', user_agent: 'test-e2e.mjs',
@@ -30,7 +30,7 @@ if (!ins.ok) failed = true;
 // 2. stats view
 const st = await fetch(base + '/rest/v1/response_stats?select=*', { headers });
 const stats = st.ok ? await st.json() : null;
-ok('read response_stats view', !!(stats && stats[0]), st.ok ? JSON.stringify(stats && stats[0]) : 'HTTP ' + st.status);
+ok('read response_stats view', !!(stats && stats[0]), st.ok ? JSON.stringify(stats && stats[0]) + (stats && stats[0] && stats[0].items == null ? '  (averages stay null until 5 responses — the page shows its placeholders)' : '') : 'HTTP ' + st.status);
 if (!st.ok) failed = true;
 
 // 3. rows must stay private

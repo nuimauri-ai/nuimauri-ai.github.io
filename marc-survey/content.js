@@ -91,21 +91,15 @@ window.CONTENT = {
   q4: {
     chapter: "Current frustrations",
     question: "What are the hardest parts of dealing with results, inbox and correspondence?",
-    help: "Select the ones most relevant to you.",
+    help: "Choose any that apply",
+    /* Each option = { title, sub }: the title is shown bold, the sub in lighter, smaller text on the line below.
+       Only the title is stored with the response. No limit on how many can be chosen. */
     options: [
-      "The amount of time it takes",
-      "Having to open the patient record and reconstruct the clinical story",
-      "The reason the test was ordered is often not obvious from the inbox / result itself",
-      "Results or correspondence being duplicated, incorrectly labelled or filed",
-      "Doing this work after the clinical day / unpaid overtime",
-      "Worrying that something important may be buried amongst the noise",
-      "Worrying about missing a clinically important result or follow-up",
-      "Most results are normal but still need to be individually reviewed and cleared",
-      "Mildly abnormal results where it is difficult to answer: “Is this important for this patient right now?”",
-      "Reviewing results for patients I don’t remember well",
-      "Following up results or patients on behalf of another doctor",
-      "Chasing patients or arranging further follow-up",
-      "Keeping track of whether required follow-up has actually occurred"
+      { title: "Time & workload",                  sub: "Volume, clearing normal results, after-hours work" },
+      { title: "Reconstructing the clinical story", sub: "Reopening records, remembering why tests were ordered, unfamiliar patients" },
+      { title: "Noise & poor organisation",        sub: "Duplicates, mislabelling, information buried in the inbox" },
+      { title: "Knowing what matters",             sub: "Deciding whether mildly abnormal or unexpected results are important now" },
+      { title: "Follow-up & safety",               sub: "Contacting patients, arranging next steps, making sure nothing gets missed or lost" }
     ],
     otherLabel: "Other",
     otherPlaceholder: "Tell us in a few words",
@@ -130,19 +124,14 @@ window.CONTENT = {
 
   q5: {
     chapter: "Adoption",
-    question: "What would matter most to you before using something like this in clinical practice?",
-    help: "Select the ones most relevant to you.",
+    question: "What would matter most before using something like this in clinical practice?",
+    help: "Choose any that apply",
     options: [
-      "Accuracy",
-      "Seamless integration with existing clinical software",
-      "Speed",
-      "Ability to verify where the information came from",
-      "Privacy and security",
-      "Minimal additional clicks or workflow changes",
-      "Confidence that important information won’t be omitted",
-      "Medico-legal confidence",
-      "Cost",
-      "Ability to customise the amount of information shown"
+      { title: "Accuracy & clinical safety",                    sub: "Reliable enough to support real clinical work" },
+      { title: "Seamless workflow",                             sub: "Integrates with existing software, fast, minimal extra clicks" },
+      { title: "Transparency & trust",                          sub: "Easy to verify where information came from and that nothing important was omitted" },
+      { title: "Privacy, security & medico-legal confidence",   sub: "Safe handling of data and confidence around responsibility" },
+      { title: "Cost & flexibility",                            sub: "Affordable and customisable" }
     ],
     otherLabel: "Other",
     otherPlaceholder: "Tell us in a few words",

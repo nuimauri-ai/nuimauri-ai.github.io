@@ -8,10 +8,10 @@
 <link rel="icon" href="data:,">
 <title>MARC — After the last patient</title>
 <meta property="og:title" content="MARC — After the last patient">
-<meta property="og:description" content="There is still the inbox. See how your workday compares — 2 minutes.">
+<meta property="og:description" content="There is still the inbox. See how your work day compares. ~2 minutes.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://nuimauri-ai.github.io/marc-survey/">
-<meta property="og:image" content="https://nuimauri-ai.github.io/marc-survey/assets/og-v2.jpg">
+<meta property="og:image" content="https://nuimauri-ai.github.io/marc-survey/assets/og-v3.jpg">
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -186,6 +186,9 @@
   .pills .pill.on .box{background:var(--accent);border-color:var(--accent)}
   .pills .pill .box svg{opacity:0;width:12px;height:12px;fill:none;stroke:#fff;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
   .pills .pill.on .box svg{opacity:1}
+  .pills .pill .t{display:block;font-weight:700;color:var(--heading);line-height:1.25}
+  .pills .pill .s{display:block;font-size:12.5px;font-weight:400;color:var(--muted);line-height:1.35;margin-top:3px}
+  .pills .pill.on .s{color:var(--body)}
   .other{margin-top:8px;display:none}
   .other.show{display:block}
   .text,.field input,.field select{width:100%;border:1.5px solid var(--border);border-radius:12px;padding:12px 13px;font-size:16px;outline:none;background:#fff;color:var(--heading)}
@@ -464,7 +467,7 @@
 
 </div><!-- /deck -->
 
-<script src="content.js?v=4"></script>
+<script src="content.js?v=5"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script>
 (function(){
@@ -505,7 +508,9 @@
 
   // multi-select pills
   const check='<span class="box"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg></span>';
-  function pills(id,q){ $(id).innerHTML=q.options.concat([q.otherLabel]).map((o,i)=>`<button type="button" class="pill" aria-pressed="false" data-v="${esc(o)}" ${i===q.options.length?'data-other="1"':''}>${check}<span>${esc(o)}</span></button>`).join(''); }
+  // an option is either a plain string or {title, sub}: the title reads bold, the sub lighter on its own line. Only the title is recorded.
+  const optTitle=o=>typeof o==='string'?o:o.title, optSub=o=>typeof o==='string'?'':(o.sub||'');
+  function pills(id,q){ $(id).innerHTML=q.options.concat([q.otherLabel]).map((o,i)=>`<button type="button" class="pill" aria-pressed="false" data-v="${esc(optTitle(o))}" ${i===q.options.length?'data-other="1"':''}>${check}<span><span class="t">${esc(optTitle(o))}</span>${optSub(o)?`<span class="s">${esc(optSub(o))}</span>`:''}</span></button>`).join(''); }
   pills('#p4',C.q4); pills('#p5',C.q5);
   $('#o4 input').placeholder=C.q4.otherPlaceholder; $('#o5 input').placeholder=C.q5.otherPlaceholder;
   $('#o4 input').setAttribute('aria-label',C.q4.otherLabel+' — '+C.q4.otherPlaceholder); $('#o5 input').setAttribute('aria-label',C.q5.otherLabel+' — '+C.q5.otherPlaceholder);
@@ -912,13 +917,14 @@
   /* Supabase (recommended): project URL + anon key from Settings → API. With both set, each response is inserted
      into the `responses` table and the "other doctors so far" figures are read from the `response_stats` view
      (see supabase/schema.sql). Leave them empty and the static placeholders in content.js are used. */
-  const SUPABASE_URL = '';
-  const SUPABASE_ANON_KEY = '';
+  const SUPABASE_URL = 'https://pwmlpkppctzlgqmuibro.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable_AqfotLEzb4WDhUeda1izrw_4lQ3YiO1';
   const sbHeaders=()=>({apikey:SUPABASE_ANON_KEY,Authorization:'Bearer '+SUPABASE_ANON_KEY,'Content-Type':'application/json'});
   let stats=null;                                                     // {n, items, minutes, percent} from the view, when available
   if(SUPABASE_URL&&SUPABASE_ANON_KEY){
     fetch(SUPABASE_URL+'/rest/v1/response_stats?select=*',{headers:sbHeaders()}).then(r=>r.ok?r.json():null)
-      .then(rows=>{ const r=rows&&rows[0]; if(r&&r.n>0) stats={n:+r.n,items:+r.items,minutes:+r.minutes,percent:+r.percent}; }).catch(()=>{});
+      .then(rows=>{ const r=rows&&rows[0], num=x=>(x==null||x===''||!Number.isFinite(+x))?null:+x;   // the view returns null averages until there are enough responses: keep them null, never 0
+        if(r&&num(r.n)>0) stats={n:num(r.n),items:num(r.items),minutes:num(r.minutes),percent:num(r.percent)}; }).catch(()=>{});
   }
 
   const startedAt=Date.now();
@@ -926,8 +932,8 @@
   function payload(){
     return {
       q1_items:answers.q1??null, q2_minutes:answers.q2??null, q3_percent:answers.q3??null, q3_label:answers.q3_label||'',
-      q4_frustrations:(answers.q4||[]).join(' | '), q4_other:answers.q4_other||'',
-      q5_matters:(answers.q5||[]).join(' | '), q5_other:answers.q5_other||'',
+      q4_frustrations:answers.q4||[], q4_other:answers.q4_other||'',            // text[] columns: one entry per option chosen, no limit
+      q5_matters:answers.q5||[], q5_other:answers.q5_other||'',
       complete:answers.beta!=null, beta:answers.beta??null, beta_name:answers.beta_name||'', beta_email:answers.beta_email||'', beta_role:answers.beta_role||'',
       session_id:sessionId, submitted_at:new Date().toISOString(), seconds_taken:Math.round((Date.now()-startedAt)/1000),
       device:/Mobi|Android/i.test(navigator.userAgent)?'mobile':'desktop', viewport:innerWidth+'x'+innerHeight, referrer:document.referrer||'', user_agent:navigator.userAgent

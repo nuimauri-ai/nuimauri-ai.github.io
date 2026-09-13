@@ -11,9 +11,9 @@ create table if not exists public.responses (
   q2_minutes    integer,
   q3_percent    integer,
   q3_label      text,
-  q4_frustrations text,
+  q4_frustrations text[],   -- one entry per option chosen, no limit
   q4_other      text,
-  q5_matters    text,
+  q5_matters    text[],
   q5_other      text,
   complete      boolean,
   beta          boolean,
@@ -36,14 +36,15 @@ create policy "public can submit a response"
   to anon
   with check (true);
 
--- what the page is allowed to read: only these averages, never individual rows
+-- what the page is allowed to read: only these averages, never individual rows.
+-- The averages stay null until at least 5 responses are in; the page shows its placeholder figures until then.
 create or replace view public.response_stats
   with (security_invoker = false) as
   select
-    count(*)                       as n,
-    round(avg(q1_items))           as items,
-    round(avg(q2_minutes))         as minutes,
-    round(avg(q3_percent))         as percent
+    count(*)                                                        as n,
+    case when count(*) >= 5 then round(avg(q1_items))   end         as items,
+    case when count(*) >= 5 then round(avg(q2_minutes)) end         as minutes,
+    case when count(*) >= 5 then round(avg(q3_percent)) end         as percent
   from public.responses
   where q1_items is not null;
 
