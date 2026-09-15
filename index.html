@@ -7,7 +7,7 @@
 <meta name="description" content="I build fast, mobile-first websites for Sydney cafes, salons and trades. $690 all up, live in 48 hours, no monthly fees. Based in Sydney, ABN registered.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -18,8 +18,8 @@
   --line:oklch(0.88 0.008 260);
   --accent:oklch(0.55 0.14 250);
   --accent-soft:oklch(0.55 0.14 250 / 0.1);
-  --serif:'Playfair Display',Georgia,serif;
-  --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --serif:'Space Grotesk','Helvetica Neue',Arial,sans-serif;
+  --sans:'Manrope',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 @media (prefers-color-scheme:dark){
   :root{
@@ -62,7 +62,7 @@ header{border-bottom:1px solid var(--line);position:sticky;top:0;background:colo
 .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.78rem;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:26px}
 .eyebrow::before{content:"";width:28px;height:1px;background:var(--accent)}
 h1{font-family:var(--serif);font-weight:600;font-size:clamp(2.4rem,6.5vw,4.4rem);line-height:1.06;letter-spacing:-.025em;margin-bottom:24px}
-h1 em{font-style:italic;color:var(--accent)}
+h1 em{font-style:normal;color:var(--accent)}
 .lede{font-size:clamp(1.05rem,2.2vw,1.3rem);color:var(--ink-soft);max-width:62ch;margin-bottom:38px}
 .actions{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
 .btn{display:inline-flex;align-items:center;gap:9px;background:var(--ink);color:var(--paper);text-decoration:none;padding:14px 28px;border-radius:100px;font-weight:500;font-size:.95rem;transition:transform .2s,opacity .2s}
@@ -95,6 +95,17 @@ h2{font-family:var(--serif);font-weight:600;font-size:clamp(1.7rem,4vw,2.6rem);l
 .card h3{font-family:var(--serif);font-size:1.22rem;font-weight:600;letter-spacing:-.01em}
 .card p{font-size:.92rem;color:var(--ink-soft);flex:1}
 .card .go{font-size:.87rem;font-weight:500;display:inline-flex;gap:6px;align-items:center;margin-top:6px}
+.thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;display:block;transition:transform .5s}
+.card:hover .thumb img{transform:scale(1.03)}
+.card.wide{grid-column:1/-1;flex-direction:row}
+.card.wide .thumb{flex:0 0 58%;aspect-ratio:auto;min-height:300px}
+.card.wide .card-body{padding:clamp(24px,3.5vw,40px);justify-content:center;gap:12px}
+.card.wide h3{font-size:clamp(1.4rem,2.6vw,1.9rem)}
+@media(max-width:760px){.card.wide{flex-direction:column}.card.wide .thumb{flex:none;aspect-ratio:16/10;min-height:0}}
+.pill{display:inline-block;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);border:1px solid var(--line);border-radius:100px;padding:4px 10px;margin-right:6px}
+.sub-head{margin:56px 0 24px;display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 18px}
+.sub-head h3{font-family:var(--serif);font-size:1.25rem;font-weight:600;letter-spacing:-.01em}
+.sub-head p{font-size:.92rem;color:var(--ink-soft)}
 
 /* ---------- offer ---------- */
 .offer{background:var(--paper-2);border:1px solid var(--line);border-radius:18px;padding:clamp(28px,5vw,52px);display:grid;grid-template-columns:1fr auto;gap:34px;align-items:center}
@@ -125,6 +136,7 @@ footer{border-top:1px solid var(--line);padding:34px 0 46px;font-size:.85rem;col
     <div class="mark">Nui Mauri<span>.</span></div>
     <nav>
       <a href="#work">Work</a>
+      <a href="#concepts">Concepts</a>
       <a href="#pricing">Pricing</a>
       <a class="cta-sm" href="tel:+61421633401">Call 0421 633 401</a>
     </nav>
@@ -137,7 +149,7 @@ footer{border-top:1px solid var(--line);padding:34px 0 46px;font-size:.85rem;col
   <p class="lede">I build fast, mobile-first websites for Sydney cafes, salons, restaurants and trades. Flat price, live in 48 hours, and you own it outright — no monthly fees, no subscription, no lock-in.</p>
   <div class="actions">
     <a class="btn" href="tel:+61421633401">Call me — 0421 633 401</a>
-    <a class="btn btn-ghost" href="#work">See sample builds</a>
+    <a class="btn btn-ghost" href="#work">See my work</a>
   </div>
 </div>
 
@@ -150,8 +162,68 @@ footer{border-top:1px solid var(--line);padding:34px 0 46px;font-size:.85rem;col
 
 <section id="work" class="wrap">
   <div class="sec-head">
-    <h2>Sample builds</h2>
-    <p>These are concept builds — my own designs for fictional venues, made to show what I can do. They are not client work. If you want to see what yours would look like, I'll build you a real sample with your photos and your Google reviews, free, before you pay anything.</p>
+    <h2>Client work</h2>
+    <p>Real briefs, real deadlines. Shown with the client's permission.</p>
+  </div>
+  <div class="work">
+    <a class="card wide" href="marc-survey-demo/">
+      <div class="thumb"><img src="assets/thumbs/marc-survey-demo.jpg" alt="Two phone screens of the MARC survey: a workload slider and a multi-select question" loading="lazy" width="960" height="600"></div>
+      <div class="card-body">
+        <div class="tag">Client work · Health-tech · Sydney</div>
+        <h3>Interactive survey for MARC</h3>
+        <p>A swipe-through survey for <strong>MARC</strong> (marc.health), a startup helping doctors get through their results inbox. Animated story scenes between the questions, five question types, live comparison against other respondents, and a Supabase backend that stores every answer. Built from the client's brief in under a week, tested on iPhone and desktop.</p>
+        <p><span class="pill">Vanilla JS + GSAP</span><span class="pill">Supabase</span><span class="pill">Mobile-first</span></p>
+        <div class="go">Try the demo — answers aren't saved →</div>
+      </div>
+    </a>
+  </div>
+
+  <div class="sec-head" id="concepts" style="margin-top:72px">
+    <h2>Concept sites for Sydney salons</h2>
+    <p>Four real salons in Sydney that had great Google reviews and no website. I designed and built each site on my own initiative, using their public photos and reviews, as the pitch. They're not commissioned and they aren't the salons' official websites — they show what a finished site looks like before anyone pays for it.</p>
+  </div>
+  <div class="work">
+    <a class="card" href="salon-dart/">
+      <div class="thumb"><img src="assets/thumbs/salon-dart.jpg" alt="Salon D'Art concept homepage" loading="lazy" width="960" height="600"></div>
+      <div class="card-body">
+        <div class="tag">Hair salon · Parramatta</div>
+        <h3>Salon D'Art</h3>
+        <p>A L'Oréal Professionnel colour salon. Dark, editorial layout built around their balayage and Japanese straightening work, with Fresha booking and click-to-call.</p>
+        <div class="go">View the concept →</div>
+      </div>
+    </a>
+    <a class="card" href="yass-co-barbers/">
+      <div class="thumb"><img src="assets/thumbs/yass-co-barbers.jpg" alt="Yass & Co Barbers concept homepage" loading="lazy" width="960" height="600"></div>
+      <div class="card-body">
+        <div class="tag">Barbershop · Inner West</div>
+        <h3>Yass &amp; Co Barbers</h3>
+        <p>Three shops, one site. Hero mosaic of their real cuts, a page per location with its own number and hours, and 427 Google reviews put to work.</p>
+        <div class="go">View the concept →</div>
+      </div>
+    </a>
+    <a class="card" href="mii-nails/">
+      <div class="thumb"><img src="assets/thumbs/mii-nails.jpg" alt="Mii Nails & Lashes concept homepage" loading="lazy" width="960" height="600"></div>
+      <div class="card-body">
+        <div class="tag">Nails &amp; lashes · Darlinghurst</div>
+        <h3>Mii Nails &amp; Lashes</h3>
+        <p>Russian manicure specialists on Oxford Street. Full-screen nail photography, a single pink accent, a clear price list and one-tap booking.</p>
+        <div class="go">View the concept →</div>
+      </div>
+    </a>
+    <a class="card" href="new-in-town-salon/">
+      <div class="thumb"><img src="assets/thumbs/new-in-town-salon.jpg" alt="New in Town Salon concept homepage" loading="lazy" width="960" height="600"></div>
+      <div class="card-body">
+        <div class="tag">Unisex hair salon · Newtown</div>
+        <h3>New in Town Salon</h3>
+        <p>Thirty-five years of cutting hair on King Street. Bright, friendly layout, services and prices, gallery, and a contact form that actually reaches the owner.</p>
+        <div class="go">View the concept →</div>
+      </div>
+    </a>
+  </div>
+
+  <div class="sub-head">
+    <h3>Earlier sample builds</h3>
+    <p>Fictional venues, my own designs, made to show the range.</p>
   </div>
   <div class="work">
     <a class="card" href="azure-rooftop/">
@@ -159,7 +231,7 @@ footer{border-top:1px solid var(--line);padding:34px 0 46px;font-size:.85rem;col
       <div class="card-body">
         <div class="tag">Bar · Restaurant</div>
         <h3>The Azure Rooftop Bar</h3>
-        <p>Full venue site with menus, gallery and a working table-booking flow. Built to show what a hospitality venue can look like beyond a Facebook page.</p>
+        <p>Full venue site with menus, gallery and a working table-booking flow.</p>
         <div class="go">View the build →</div>
       </div>
     </a>
@@ -168,7 +240,7 @@ footer{border-top:1px solid var(--line);padding:34px 0 46px;font-size:.85rem;col
       <div class="card-body">
         <div class="tag">Salon · Beauty</div>
         <h3>Nail salon concept</h3>
-        <p>Service menu with pricing, gallery, Google reviews front and centre, and one-tap booking. Designed for salons running on Fresha with no site of their own.</p>
+        <p>Service menu with pricing, gallery, Google reviews front and centre, and one-tap booking.</p>
         <div class="go">View the build →</div>
       </div>
     </a>
@@ -177,7 +249,7 @@ footer{border-top:1px solid var(--line);padding:34px 0 46px;font-size:.85rem;col
       <div class="card-body">
         <div class="tag">Cafe · Coffee</div>
         <h3>Cafe concept</h3>
-        <p>Menu, opening hours, location map and click-to-call, all readable on a phone in three seconds. For cafes that only exist on Uber Eats right now.</p>
+        <p>Menu, opening hours, location and click-to-call, all readable on a phone in three seconds.</p>
         <div class="go">View the build →</div>
       </div>
     </a>
