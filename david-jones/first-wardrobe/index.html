@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>First Wardrobe Marketing Plan</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;1,6..96,400&family=Manrope:wght@400;600;800&display=swap">
+<style>
+  /* Layout: one scrolling plan built around a single offer. DJ black and white, cherry accent, lilac for the audience. */
+  :root {
+    --paper:#F7F5F0; --ink:#121212; --ink-2:#4A4845; --line:#D9D5CC; --card:#FFFFFF;
+    --cherry:#D9262C; --lilac:#8C6BFF; --mint:#2FA66A;
+    --paid:#D9262C; --owned:#121212; --earned:#8C6BFF;
+    --display:"Bodoni Moda", "Didot", Georgia, serif;
+    --body:"Manrope", "Helvetica Neue", Arial, sans-serif;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+    --paper:#111111; --ink:#F3F0EA; --ink-2:#B9B4AA; --line:#2E2C29; --card:#1B1B1B;
+    --cherry:#FF4A50; --lilac:#A892FF; --mint:#4CC98A; --paid:#FF4A50; --owned:#F3F0EA; --earned:#A892FF; color-scheme: dark; } }
+  :root[data-theme="dark"] {
+    --paper:#111111; --ink:#F3F0EA; --ink-2:#B9B4AA; --line:#2E2C29; --card:#1B1B1B;
+    --cherry:#FF4A50; --lilac:#A892FF; --mint:#4CC98A; --paid:#FF4A50; --owned:#F3F0EA; --earned:#A892FF; color-scheme: dark; }
+
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { margin:0; background:var(--paper); color:var(--ink); font-family:var(--body); font-size:17px; line-height:1.5; padding-inline:clamp(16px, 4vw, 48px); padding-block:0 64px; }
+  h1,h2,h3 { font-family:var(--display); font-weight:400; line-height:1.05; margin:0; text-wrap:balance; }
+  h1 { font-size:clamp(34px, 5vw, 66px); }
+  h2 { font-size:clamp(30px, 4.5vw, 54px); }
+  h3 { font-size:clamp(22px, 2.4vw, 28px); }
+  p { margin:0; }
+  .wrap { max-width:1100px; margin:0 auto; }
+  .eyebrow { font-size:11px; letter-spacing:.22em; text-transform:uppercase; font-weight:800; color:var(--cherry); }
+  .muted { color:var(--ink-2); }
+
+  .bar { position:sticky; top:env(safe-area-inset-top,0px); z-index:9; background:var(--paper); border-bottom:1px solid var(--line); display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 0; }
+  .bar .brand { font-family:var(--display); font-size:20px; letter-spacing:.06em; text-transform:uppercase; }
+  .btn { font:inherit; font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; border:1.5px solid var(--ink); background:transparent; color:var(--ink); padding:8px 14px; border-radius:999px; cursor:pointer; }
+  .btn[aria-pressed="true"] { background:var(--cherry); border-color:var(--cherry); color:#fff; }
+  .btn:focus-visible { outline:2px solid var(--lilac); outline-offset:2px; }
+
+  section { padding-block:64px 36px; border-top:1px solid var(--line); scroll-margin-top:72px; }
+  section:first-of-type { border-top:0; padding-top:40px; }
+  .head { display:flex; gap:22px; align-items:baseline; margin-bottom:26px; }
+  .head .num { font-family:var(--display); font-size:clamp(40px, 5vw, 72px); line-height:.9; color:var(--cherry); }
+  .lead { max-width:62ch; font-size:19px; color:var(--ink-2); margin-top:10px; }
+
+  .hero { display:grid; grid-template-columns:1.1fr .9fr; gap:40px; align-items:center; }
+  .hero h1 .line { display:block; overflow:hidden; }
+  .hero h1 .line span { display:inline-block; animation:rise .9s cubic-bezier(.2,.8,.2,1) both; }
+  .hero h1 .line:nth-child(2) span { animation-delay:.12s; } .hero h1 .line:nth-child(3) span { animation-delay:.24s; }
+  .hero h1 em { font-style:italic; color:var(--cherry); }
+  @keyframes rise { from { transform:translateY(110%); } to { transform:translateY(0); } }
+  .brief { border-left:3px solid var(--cherry); padding-left:16px; font-size:16px; color:var(--ink-2); margin-top:22px; animation:fade 1s .5s both; }
+  .brief strong { color:var(--ink); }
+  @keyframes fade { from { opacity:0; transform:translateY(8px);} to { opacity:1; transform:none; } }
+
+  /* The ticket: the offer as a booking card */
+  .ticket { background:var(--ink); color:var(--paper); padding:28px; position:relative; animation:fade 1s .7s both; max-width:100%; }
+  .ticket::before, .ticket::after { content:""; position:absolute; width:26px; height:26px; border-radius:50%; background:var(--paper); top:50%; transform:translateY(-50%); }
+  .ticket::before { left:-13px; } .ticket::after { right:-13px; }
+  .ticket .t-eyebrow { font-size:11px; letter-spacing:.22em; text-transform:uppercase; font-weight:800; color:var(--lilac); }
+  .ticket .t-title { font-family:var(--display); font-size:clamp(34px, 4vw, 48px); line-height:1; margin:10px 0 4px; }
+  .ticket .t-price { font-family:var(--display); font-size:clamp(50px, 6vw, 80px); line-height:1; color:#FF4A50; font-style:italic; }
+  .ticket dl { display:grid; grid-template-columns:auto 1fr; gap:6px 14px; margin:18px 0 0; font-size:15px; border-top:1px dashed #555; padding-top:16px; }
+  .ticket dt { font-weight:800; font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:#B9B4AA; padding-top:3px; }
+  .ticket dd { margin:0; color:#F3F0EA; }
+  .ticket .timer { display:flex; gap:4px; margin-top:16px; }
+  .ticket .timer i { flex:1; height:6px; background:#333; transform-origin:left; transform:scaleX(0); animation:tick 1.2s ease forwards; }
+  .ticket .timer i:nth-child(1){ animation-delay:1s; background:#FF4A50;} .ticket .timer i:nth-child(2){ animation-delay:1.25s; background:#FF4A50;} .ticket .timer i:nth-child(3){ animation-delay:1.5s; background:#FF4A50;}
+  .ticket .timer i:nth-child(4),.ticket .timer i:nth-child(5),.ticket .timer i:nth-child(6){ background:#FF4A50; } .ticket .timer i:nth-child(4){animation-delay:1.75s} .ticket .timer i:nth-child(5){animation-delay:2s} .ticket .timer i:nth-child(6){animation-delay:2.25s}
+  @keyframes tick { to { transform:scaleX(1); } }
+  .ticket .timer-l { font-size:11px; color:#B9B4AA; margin-top:6px; letter-spacing:.1em; text-transform:uppercase; font-weight:800; }
+
+  .g3 { display:grid; grid-template-columns:repeat(3, 1fr); gap:20px; }
+  .g2 { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  .card { background:var(--card); border:1px solid var(--line); padding:24px; min-width:0; }
+  .card h3 { margin-bottom:10px; }
+  .card .big { font-family:var(--display); font-size:44px; line-height:1; color:var(--lilac); margin-bottom:8px; }
+  ul { margin:0; padding-left:18px; } li { margin-bottom:8px; } li::marker { color:var(--cherry); }
+  .tag { display:inline-block; font-size:11px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; padding:4px 9px; border-radius:999px; background:var(--ink); color:var(--paper); margin-bottom:12px; }
+  .tag.lilac { background:var(--lilac); color:#fff; } .tag.cherry { background:var(--cherry); color:#fff; } .tag.mint { background:var(--mint); color:#fff; }
+
+  /* Journey */
+  .journey { display:grid; grid-template-columns:repeat(5, 1fr); gap:0; margin-top:24px; counter-reset:step; }
+  .step { position:relative; padding:18px 18px 18px 0; border-top:2px solid var(--line); min-width:0; }
+  .step::before { counter-increment:step; content:counter(step); position:absolute; top:-14px; left:0; width:26px; height:26px; border-radius:50%; background:var(--cherry); color:#fff; font-size:12px; font-weight:800; display:grid; place-items:center; }
+  .step.in { border-top-color:var(--cherry); }
+  .step b { display:block; font-family:var(--display); font-size:22px; margin-bottom:4px; margin-top:6px; }
+  .step p { font-size:14px; color:var(--ink-2); }
+  .step .ch { font-size:10px; letter-spacing:.14em; text-transform:uppercase; font-weight:800; margin-top:8px; }
+  .ch.p { color:var(--paid);} .ch.o { color:var(--owned);} .ch.e { color:var(--earned);}
+
+  /* POEM */
+  .poem { display:grid; grid-template-columns:.8fr 1.2fr; gap:36px; align-items:center; }
+  .venn { width:100%; max-width:420px; aspect-ratio:1; margin:0 auto; }
+  .venn svg { width:100%; height:100%; display:block; overflow:visible; }
+  .venn circle { fill-opacity:.14; stroke-width:2.5; stroke-dasharray:1200; stroke-dashoffset:1200; transition:stroke-dashoffset 1.6s ease; }
+  .venn.in circle { stroke-dashoffset:0; }
+  .venn circle.p { fill:var(--paid); stroke:var(--paid); } .venn circle.o { fill:var(--owned); stroke:var(--owned); transition-delay:.25s; } .venn circle.e { fill:var(--earned); stroke:var(--earned); transition-delay:.5s; }
+  .venn text { font-family:var(--display); font-size:36px; fill:var(--ink); }
+  .venn text.small { font-family:var(--body); font-size:11px; font-weight:800; letter-spacing:.15em; }
+  .venn text.c { font-family:var(--body); font-size:10px; font-weight:800; letter-spacing:.12em; }
+  .cols { display:grid; gap:14px; }
+  .col { border:1px solid var(--line); background:var(--card); padding:18px 20px; border-left-width:6px; min-width:0; }
+  .col.p { border-left-color:var(--paid); } .col.o { border-left-color:var(--owned); } .col.e { border-left-color:var(--earned); }
+  .col h3 { display:flex; justify-content:space-between; align-items:baseline; gap:12px; }
+  .col h3 small { font-family:var(--body); font-size:12px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-2); }
+  .col .job { font-size:15px; color:var(--ink-2); margin-bottom:8px; }
+  .col li { font-size:16px; margin-bottom:4px; }
+  .col.p li::marker { color:var(--paid); } .col.o li::marker { color:var(--owned); } .col.e li::marker { color:var(--earned); }
+  .split { margin-top:20px; }
+  .split .track { display:flex; height:40px; overflow:hidden; }
+  .split .seg { display:grid; place-items:center; color:#fff; font-size:13px; font-weight:800; letter-spacing:.08em; width:0; transition:width 1.4s cubic-bezier(.2,.8,.2,1); white-space:nowrap; overflow:hidden; }
+  .split.in .seg { width:var(--w); }
+  .split .seg.p { background:var(--paid); } .split .seg.o { background:var(--owned); color:var(--paper);} .split .seg.e { background:var(--earned); }
+  .split p { font-size:13px; color:var(--ink-2); margin-top:8px; }
+
+  /* Funnel */
+  .funnel { display:grid; gap:8px; margin-top:8px; }
+  .frow { display:grid; grid-template-columns:150px 1fr auto; gap:12px; align-items:center; font-size:15px; }
+  .frow .lab { font-weight:800; font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-2); }
+  .frow .fbar { height:30px; background:var(--line); overflow:hidden; }
+  .frow .fbar i { display:block; height:100%; width:0; background:var(--lilac); transition:width 1.3s cubic-bezier(.2,.8,.2,1); }
+  .frow:nth-child(1) .fbar i { background:var(--cherry); } .frow:nth-child(5) .fbar i { background:var(--mint); }
+  .funnel.in .frow .fbar i { width:var(--w); }
+  .frow .n { font-family:var(--display); font-size:24px; font-variant-numeric:tabular-nums; min-width:80px; text-align:right; }
+
+  .phase .wk { font-size:11px; letter-spacing:.16em; text-transform:uppercase; font-weight:800; color:var(--lilac); }
+  .phase h3 { margin:6px 0 10px; }
+  .phase .tag { margin:10px 0 0; }
+  .kpis { margin-top:20px; display:grid; grid-template-columns:repeat(4, 1fr); gap:20px; }
+  .kpi { border-top:3px solid var(--ink); padding-top:12px; min-width:0; }
+  .kpi b { font-family:var(--display); font-size:30px; display:block; line-height:1; }
+  .kpi p { font-size:14px; color:var(--ink-2); margin-top:6px; }
+
+  .notes { display:none; margin-top:22px; background:#FFF8E1; color:#2A2410; border-left:4px solid #E3B341; padding:14px 16px; font-size:15px; line-height:1.55; }
+  .notes b { display:block; font-size:11px; letter-spacing:.16em; text-transform:uppercase; margin-bottom:6px; color:#9A6B00; }
+  body.present .notes { display:block; }
+  .sources { margin-top:40px; font-size:12px; color:var(--ink-2); border-top:1px solid var(--line); padding-top:14px; }
+
+  .r { transition:opacity .8s ease, transform .8s cubic-bezier(.2,.8,.2,1); }
+  .r.pre { opacity:0; transform:translateY(22px); }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation:none !important; transition:none !important; } .r.pre { opacity:1; transform:none; } .venn circle { stroke-dashoffset:0; } .split .seg { width:var(--w); } .funnel .frow .fbar i { width:var(--w); } .ticket .timer i { transform:none; } }
+
+  @media (max-width: 900px) {
+    .hero, .poem, .g2 { grid-template-columns:1fr; }
+    .g3, .kpis, .journey { grid-template-columns:1fr; }
+    .step { padding-right:0; border-top:0; border-left:2px solid var(--line); padding-left:40px; padding-block:6px 18px; }
+    .step::before { top:6px; left:-14px; }
+    .frow { grid-template-columns:1fr auto; } .frow .lab { grid-column:1 / -1; }
+    .ticket::before, .ticket::after { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="bar">
+    <div class="brand">David Jones · First Wardrobe</div>
+    <button class="btn" id="presentBtn" aria-pressed="false" type="button">Presenter notes</button>
+  </div>
+
+  <!-- HERO -->
+  <section id="top">
+    <div class="hero">
+      <div>
+        <p class="eyebrow">Marketing plan · Gen Z · David Jones</p>
+        <h1 style="margin-top:14px">
+          <span class="line"><span>Thirty free minutes</span></span>
+          <span class="line"><span>with a stylist.</span></span>
+          <span class="line"><span><em>That is the whole campaign.</em></span></span>
+        </h1>
+        <p class="brief"><strong>The problem:</strong> Gen Z does not hate David Jones. They are indifferent, and they do not know what to buy.<br><strong>The answer:</strong> one simple offer that gets them through the door, builds a relationship and sells.</p>
+      </div>
+      <div class="ticket" aria-label="The offer">
+        <div class="t-eyebrow">The offer</div>
+        <div class="t-title">First Wardrobe</div>
+        <div class="t-price">Free</div>
+        <dl>
+          <dt>What</dt><dd>30 minutes one-on-one with a David Jones stylist. No purchase required.</dd>
+          <dt>Who</dt><dd>Anyone aged 18 to 26.</dd>
+          <dt>Where</dt><dd>Flagships first: Elizabeth St Sydney, Bourke St Melbourne. Then every store.</dd>
+          <dt>When</dt><dd>Booked in the DJ app. Thursday late nights and Saturdays.</dd>
+          <dt>Bonus</dt><dd>15% off anything bought that day, plus double Qantas points.</dd>
+        </dl>
+        <div class="timer" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="timer-l">30 minutes · 6 blocks of 5</div>
+      </div>
+    </div>
+    <div class="notes"><b>Say this</b>One offer, one campaign. Thirty free minutes with a stylist for anyone aged 18 to 26. No purchase required. Everything else in this plan exists to fill those 30-minute slots and turn them into customers.</div>
+  </section>
+
+  <!-- WHY -->
+  <section id="why">
+    <div class="head"><div class="num">1</div><div><p class="eyebrow">Why this offer</p><h2>It fixes the three things that keep Gen Z out.</h2></div></div>
+    <div class="g3">
+      <div class="card r"><span class="tag cherry">Barrier</span><h3>"I don't know what to buy."</h3><p class="muted">First job, graduation, first wedding guest. They have the occasion and the money, not the confidence. A stylist removes the fear.</p></div>
+      <div class="card r"><span class="tag cherry">Barrier</span><h3>"It's not for me."</h3><p class="muted">David Jones feels like their parents' store. A free, personal, no-pressure session says the opposite: we made time for you.</p></div>
+      <div class="card r"><span class="tag cherry">Barrier</span><h3>"Why would I go in?"</h3><p class="muted">Nothing online gives them a reason to visit. A booked appointment is a reason, a date and a time.</p></div>
+    </div>
+    <div class="g3" style="margin-top:20px">
+      <div class="card r"><span class="tag mint">Why DJ can win</span><h3>It already has the stylists</h3><p class="muted">Personal shopping exists today, but only for high spenders. We open the door to the next generation.</p></div>
+      <div class="card r"><span class="tag mint">Why DJ can win</span><h3>It has the brands and the floors</h3><p class="muted">One session can show Country Road, Nike, Aje and a $90 shirt in the same hour. No single-brand store can.</p></div>
+      <div class="card r"><span class="tag mint">Why DJ can win</span><h3>It costs almost nothing</h3><p class="muted">Stylist time on quiet Thursday nights and Saturdays. The media budget does the heavy lifting, not the offer.</p></div>
+    </div>
+    <div class="notes"><b>Say this</b>Three barriers: I don't know what to buy, it's not for me, why would I go in. One free session answers all three. And DJ already has the stylists, the brands and the quiet hours, so the offer itself is nearly free.</div>
+  </section>
+
+  <!-- AUDIENCE -->
+  <section id="audience">
+    <div class="head"><div class="num">2</div><div><p class="eyebrow">Audience</p><h2>18 to 26, at a "first" moment.</h2></div></div>
+    <p class="lead">We do not target "Gen Z". We target the moment they need help: a first that comes with a dress code and a budget.</p>
+    <div class="g3" style="margin-top:24px">
+      <div class="card r"><span class="tag lilac">Moment</span><h3>First job</h3><p class="muted">Tom, 25, new grad, first salary. Needs interview and office clothes. Searches "what to wear first job" on TikTok.</p></div>
+      <div class="card r"><span class="tag lilac">Moment</span><h3>First formal event</h3><p class="muted">Maya, 22, invited to a wedding or a graduation ball. One outfit, one budget, zero idea. Would rather ask a person than scroll.</p></div>
+      <div class="card r"><span class="tag lilac">Moment</span><h3>First glow-up</h3><p class="muted">Priya, 19, creator. Wants a "styled by" video. Comes for the content, brings her audience with her.</p></div>
+    </div>
+    <div class="g3" style="margin-top:20px">
+      <div class="card r"><div class="big">86%</div><p class="muted">of 15 to 29 year old TikTok users search on TikTok every week. The session must show up there.</p></div>
+      <div class="card r"><div class="big">77%</div><p class="muted">of Gen Z discover products through creators. Creators booking the session is the ad.</p></div>
+      <div class="card r"><div class="big">0</div><p class="muted">dollars to try. No purchase, no pressure. For an audience that distrusts ads, free is the message.</p></div>
+    </div>
+    <div class="notes"><b>Say this</b>We do not chase a whole generation. We chase a moment: first job, first formal event, first glow-up. Three people, three reasons to book. And the numbers tell us where to find them: TikTok search and creators.</div>
+  </section>
+
+  <!-- JOURNEY -->
+  <section id="journey">
+    <div class="head"><div class="num">3</div><div><p class="eyebrow">Customer journey</p><h2>From a video to a wardrobe in five steps.</h2></div></div>
+    <div class="journey" id="journey">
+      <div class="step r"><b>See</b><p>A creator's "I got styled for free at DJ" video appears in their feed or their search.</p><div class="ch p">Paid + Earned</div></div>
+      <div class="step r"><b>Book</b><p>Tap the link, download the DJ app, pick a slot in 30 seconds. Account created.</p><div class="ch o">Owned</div></div>
+      <div class="step r"><b>Session</b><p>30 minutes with a stylist, three outfits for their occasion and budget, photos sent to the app.</p><div class="ch o">Owned</div></div>
+      <div class="step r"><b>Buy</b><p>15% off and double Qantas points on the day. Or save the looks and buy later in the app.</p><div class="ch o">Owned</div></div>
+      <div class="step r"><b>Share</b><p>Post the before and after, tag #FirstWardrobe, friend books with their referral link.</p><div class="ch e">Earned</div></div>
+    </div>
+    <div class="notes"><b>Say this</b>Five steps. See the video, book in the app, do the session, buy with the bonus, share it. Every step creates data or content: an account, sizes and style, a purchase, a post. The last step feeds the first one.</div>
+  </section>
+
+  <!-- POEM -->
+  <section id="poem">
+    <div class="head"><div class="num">4</div><div><p class="eyebrow">Media plan</p><h2>POEM: fill the slots.</h2></div></div>
+    <p class="lead">Every channel has one job: get a booking. Paid finds them, Owned books them, Earned makes their friends book too.</p>
+    <div class="poem" style="margin-top:24px">
+      <div class="venn" id="venn">
+        <svg viewBox="0 0 400 400" role="img" aria-label="Paid, Owned and Earned media overlapping around the booking">
+          <circle class="p" cx="150" cy="150" r="118"/>
+          <circle class="o" cx="250" cy="150" r="118"/>
+          <circle class="e" cx="200" cy="245" r="118"/>
+          <text x="92" y="118" text-anchor="middle">P</text><text x="92" y="140" text-anchor="middle" class="small">PAID</text>
+          <text x="310" y="118" text-anchor="middle">O</text><text x="310" y="140" text-anchor="middle" class="small">OWNED</text>
+          <text x="200" y="330" text-anchor="middle">E</text><text x="200" y="352" text-anchor="middle" class="small">EARNED</text>
+          <text x="200" y="186" text-anchor="middle" class="c">BOOK A</text><text x="200" y="200" text-anchor="middle" class="c">FREE SESSION</text>
+        </svg>
+      </div>
+      <div class="cols">
+        <div class="col p r"><h3>Paid <small>55% of budget</small></h3><p class="job">Find 18 to 26s at their "first" moment.</p>
+          <ul><li>TikTok Spark Ads on creators' session videos, with a "Book free" button.</li><li>TikTok and Google search ads: "what to wear first job interview", "wedding guest outfit Sydney".</li><li>Instagram and Snapchat ads geo-targeted to unis, CBD offices, graduation season.</li><li>10 creators paid to book, film and post their session.</li></ul></div>
+        <div class="col o r"><h3>Owned <small>15% of budget</small></h3><p class="job">Make booking effortless and keep them after.</p>
+          <ul><li>Booking lives in the DJ app: 30-second flow, occasion and budget picked up front.</li><li>DJ's own TikTok: "30 minutes with a stylist" series, one real session per week.</li><li>Email and SMS to Qantas members under 30, in-store signage, stylists as the faces of the campaign.</li><li>After the session: looks saved in the app, reminder at 7 days, birthday re-book.</li></ul></div>
+        <div class="col e r"><h3>Earned <small>30% of budget</small></h3><p class="job">Turn every session into the next booking.</p>
+          <ul><li>#FirstWardrobe before-and-after posts, reposted by DJ.</li><li>Bring a friend: refer someone and you both get a second session.</li><li>100 micro-creators gifted a session, no obligation to post.</li><li>Press: "David Jones gives Gen Z a free stylist." Uni societies and grad programs as partners.</li></ul></div>
+      </div>
+    </div>
+    <div class="split" id="split">
+      <div class="track"><span class="seg p" style="--w:55%">PAID 55%</span><span class="seg o" style="--w:15%">OWNED 15%</span><span class="seg e" style="--w:30%">EARNED 30%</span></div>
+      <p>Proposed split of the 12-week media budget. Paid is heavy at launch and shrinks as referrals and creator posts take over.</p>
+    </div>
+    <div class="notes"><b>Say this</b>Paid finds them: Spark Ads on creator videos and search ads on the exact questions they type. Owned books them: a 30-second flow in the app, then reminders and saved looks. Earned multiplies: before-and-after posts, bring-a-friend, gifted sessions, press. Fifty-five percent Paid at launch, shrinking as referrals grow.</div>
+  </section>
+
+  <!-- NUMBERS -->
+  <section id="numbers">
+    <div class="head"><div class="num">5</div><div><p class="eyebrow">Targets and timeline</p><h2>12 weeks, 10,000 sessions.</h2></div></div>
+    <div class="g2">
+      <div class="card r">
+        <h3>The funnel we plan for</h3>
+        <div class="funnel" id="funnel">
+          <div class="frow"><span class="lab">Reach 18 to 26</span><div class="fbar"><i style="--w:100%"></i></div><span class="n">2.0M</span></div>
+          <div class="frow"><span class="lab">App bookings</span><div class="fbar"><i style="--w:40%"></i></div><span class="n">12,500</span></div>
+          <div class="frow"><span class="lab">Sessions done</span><div class="fbar"><i style="--w:32%"></i></div><span class="n">10,000</span></div>
+          <div class="frow"><span class="lab">Buy on the day</span><div class="fbar"><i style="--w:14%"></i></div><span class="n">4,500</span></div>
+          <div class="frow"><span class="lab">Return in 90 days</span><div class="fbar"><i style="--w:8%"></i></div><span class="n">2,500</span></div>
+        </div>
+        <p class="muted" style="font-size:13px;margin-top:12px">Assumptions: 80% show rate, 45% buy on the day at a $220 average basket, 25% return within 90 days. Proposals for the workshop, not David Jones figures.</p>
+      </div>
+      <div class="card r">
+        <h3>Three phases</h3>
+        <div class="phase"><div class="wk">Weeks 1 to 2 · Pilot</div><p class="muted">Two flagships, 10 creators booked first, app flow live, stylists trained on a 30-minute format and three outfits per budget.</p></div>
+        <div class="phase" style="margin-top:14px"><div class="wk">Weeks 3 to 6 · Launch</div><p class="muted">Paid at full weight, search ads on, press story out, Thursday nights extended to 9pm. Target 1,000 bookings a week.</p></div>
+        <div class="phase" style="margin-top:14px"><div class="wk">Weeks 7 to 12 · Scale</div><p class="muted">Roll out to all 38 stores, bring-a-friend on, Paid shifts to boosting customers' own videos, graduation-season push.</p></div>
+      </div>
+    </div>
+    <div class="kpis">
+      <div class="kpi r"><b>10,000</b><p>sessions completed in 12 weeks.</p></div>
+      <div class="kpi r"><b>&lt; $15</b><p>media cost per booking.</p></div>
+      <div class="kpi r"><b>45%</b><p>of sessions end in a purchase on the day.</p></div>
+      <div class="kpi r"><b>12,500</b><p>new app accounts under 30, with size, style and occasion data.</p></div>
+    </div>
+    <div class="notes"><b>Say this</b>Ten thousand sessions in twelve weeks. Of those, 45% buy on the day at about $220, which is roughly one million dollars of sales from an offer that costs stylist time. More important, 12,500 new under-30 accounts with real data. The sale is the first result. The relationship is the real one.</div>
+    <p class="sources">Context: David Jones FY25 loss of $95.5M and sales down 8.7%, 38 stores, new CEO June 2026 (Ragtrader, Inside Retail, The Nightly). Gen Z media habits: Sprout Social AU, WARC, Sociallyin 2025. Offer mechanics, targets, funnel and budget split are proposals created for this workshop.</p>
+  </section>
+</div>
+
+<script>
+(function(){
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var btn = document.getElementById('presentBtn');
+  btn.addEventListener('click', function(){
+    var on = document.body.classList.toggle('present');
+    btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    btn.textContent = on ? 'Hide notes' : 'Presenter notes';
+  });
+  var els = Array.prototype.slice.call(document.querySelectorAll('.r'));
+  if (!reduce && 'IntersectionObserver' in window) {
+    var vh = window.innerHeight;
+    els.forEach(function(el){ if (el.getBoundingClientRect().top > vh * 0.95) el.classList.add('pre'); });
+    var io = new IntersectionObserver(function(entries){ entries.forEach(function(e){ if (e.isIntersecting) { e.target.classList.remove('pre'); io.unobserve(e.target); } }); }, { threshold: 0.12 });
+    els.forEach(function(el){ io.observe(el); });
+  }
+  var targets = ['venn','split','funnel'].map(function(id){ return document.getElementById(id); });
+  if ('IntersectionObserver' in window) {
+    var vo = new IntersectionObserver(function(en){ en.forEach(function(e){ if (e.isIntersecting) { e.target.classList.add('in'); vo.unobserve(e.target); } }); }, { threshold: 0.3 });
+    targets.forEach(function(t){ vo.observe(t); });
+  } else { targets.forEach(function(t){ t.classList.add('in'); }); }
+  // Journey steps light up one after another
+  var steps = document.querySelectorAll('#journey .step');
+  if ('IntersectionObserver' in window && !reduce) {
+    var jo = new IntersectionObserver(function(en){ if (en[0].isIntersecting) { steps.forEach(function(s,i){ setTimeout(function(){ s.classList.add('in'); }, i*220); }); jo.disconnect(); } }, { threshold: 0.3 });
+    jo.observe(document.getElementById('journey'));
+  } else { steps.forEach(function(s){ s.classList.add('in'); }); }
+})();
+</script>
+
+</body>
+</html>
